@@ -207,18 +207,20 @@ bool Renderer::Init()
 
 void Renderer::Uninit()
 {
-	SafeRelease(pRenderTargetView_);
-	SafeRelease(pDeviceContext_);
+	SafeRelease(pSwapChain_);
 	SafeRelease(pDevice_);
+	SafeRelease(pDeviceContext_);
+	SafeRelease(pRenderTargetView_);
+	SafeRelease(pVertexShader_);
+	SafeRelease(pPixelShader_);
+	SafeRelease(pInputLayout_);
+	SafeRelease(pVertexBuffer_);
 }
 
 void Renderer::DrawBegin()
 {
-	//レンダーターゲットクリア色
-	float c[] = { 0, 0, 1, 1 };
-
 	//レンダーターゲットクリア
-	pDeviceContext_->ClearRenderTargetView(pRenderTargetView_, &c[0]);
+	pDeviceContext_->ClearRenderTargetView(pRenderTargetView_, SCREEN_COLOR);
 
 	pDeviceContext_->IASetInputLayout(pInputLayout_);
 

@@ -1,10 +1,8 @@
-﻿  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11\ManeuverCombatDx11\Debug\test.cso
-  WICTextureLoader.cpp
-  renderer.cpp
+﻿  renderer.cpp
+  コードを生成中...
+  コンパイル中...
   main.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  input.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   コードを生成中...
-  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11\ManeuverCombatDx11\Debug\3DGameProject.exe
-  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11\ManeuverCombatDx11\Debug\3DGameProject.pdb (Full PDB)
+  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.exe
+  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.pdb (Full PDB)
