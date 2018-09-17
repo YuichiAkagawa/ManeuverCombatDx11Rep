@@ -21,6 +21,8 @@ IDXGISwapChain*				Renderer::pSwapChain_;
 ID3D11Device*				Renderer::pDevice_;
 ID3D11DeviceContext*		Renderer::pDeviceContext_;
 ID3D11RenderTargetView*		Renderer::pRenderTargetView_;
+ID3D11Texture2D*			Renderer::pDepthStencilTexture_;
+ID3D11DepthStencilView*		Renderer::pDepthStencilView_;
 ID3D11VertexShader*			Renderer::pVertexShader_;
 ID3D11PixelShader*			Renderer::pPixelShader_;
 ID3D11InputLayout*			Renderer::pInputLayout_;
@@ -50,7 +52,20 @@ bool Renderer::Init()
 
 	D3D_FEATURE_LEVEL FeatureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	hr = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, &FeatureLevel, 1, D3D11_SDK_VERSION, &scd, &pSwapChain_, &pDevice_, NULL, &pDeviceContext_);
+	//スワップチェーン作成
+	hr = D3D11CreateDeviceAndSwapChain(
+		NULL,
+		D3D_DRIVER_TYPE_HARDWARE,
+		NULL, 
+		0, 
+		&FeatureLevel, 
+		1, 
+		D3D11_SDK_VERSION, 
+		&scd, 
+		&pSwapChain_, 
+		&pDevice_, 
+		NULL, 
+		&pDeviceContext_);
 	if (FAILED(hr))
 	{
 		return false;
@@ -62,8 +77,42 @@ bool Renderer::Init()
 	pDevice_->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView_);
 	pBackBuffer->Release();
 
-	//レンダーターゲット指定　第一引数→ターゲット数
-	pDeviceContext_->OMSetRenderTargets(1, &pRenderTargetView_, 0);
+	//深度・ステンシルバッファの作成
+	D3D11_TEXTURE2D_DESC texDesc;
+	ZeroMemory(&texDesc, sizeof(texDesc));
+	texDesc.Width = SCREEN_WIDTH;
+	texDesc.Height = SCREEN_HEIGHT;
+	texDesc.MipLevels = 1;
+	texDesc.ArraySize = 1;
+	texDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	texDesc.SampleDesc.Count = 1;
+	texDesc.SampleDesc.Quality = 0;
+	texDesc.Usage = D3D11_USAGE_DEFAULT;
+	texDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	texDesc.CPUAccessFlags = 0;
+	texDesc.MiscFlags = 0;
+	hr = pDevice_->CreateTexture2D(
+		&texDesc,
+		nullptr,
+		&pDepthStencilTexture_);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsDesc;
+	ZeroMemory(&dsDesc, sizeof(dsDesc));
+	dsDesc.Format = texDesc.Format;
+	dsDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	dsDesc.Texture2D.MipSlice = 0;
+	hr = pDevice_->CreateDepthStencilView(
+		pDepthStencilTexture_,
+		&dsDesc,
+		&pDepthStencilView_);
+	if (FAILED(hr))
+	{
+		return false;
+	}
 
 	//ビューポートの設定
 	D3D11_VIEWPORT vp;
@@ -207,10 +256,11 @@ bool Renderer::Init()
 
 void Renderer::Uninit()
 {
+	pDeviceContext_->ClearState();
 	SafeRelease(pSwapChain_);
 	SafeRelease(pDevice_);
-	SafeRelease(pDeviceContext_);
 	SafeRelease(pRenderTargetView_);
+
 	SafeRelease(pVertexShader_);
 	SafeRelease(pPixelShader_);
 	SafeRelease(pInputLayout_);
@@ -219,9 +269,14 @@ void Renderer::Uninit()
 
 void Renderer::DrawBegin()
 {
+	//レンダーターゲット指定
+	pDeviceContext_->OMSetRenderTargets(1, &pRenderTargetView_, pDepthStencilView_);
+	
 	//レンダーターゲットクリア
 	pDeviceContext_->ClearRenderTargetView(pRenderTargetView_, SCREEN_COLOR);
+	pDeviceContext_->ClearDepthStencilView(pDepthStencilView_, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
+	//インプットレイアウト指定
 	pDeviceContext_->IASetInputLayout(pInputLayout_);
 
 	//シェーダセット
@@ -242,5 +297,6 @@ void Renderer::DrawBegin()
 
 void Renderer::DrawEnd()
 {
-	pSwapChain_->Present(1, 0);
+	//レンダリング結果表示
+	pSwapChain_->Present(0, 0);
 }

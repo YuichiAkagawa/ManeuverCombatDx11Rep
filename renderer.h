@@ -17,6 +17,8 @@ private:
 	static ID3D11Device*			pDevice_;
 	static ID3D11DeviceContext*		pDeviceContext_;
 	static ID3D11RenderTargetView*	pRenderTargetView_;
+	static ID3D11Texture2D*			pDepthStencilTexture_;
+	static ID3D11DepthStencilView*	pDepthStencilView_;
 	static ID3D11VertexShader*		pVertexShader_;
 	static ID3D11PixelShader*		pPixelShader_;
 	static ID3D11InputLayout*		pInputLayout_;
