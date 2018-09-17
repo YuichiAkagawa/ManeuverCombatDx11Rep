@@ -11,7 +11,7 @@
 
 constexpr UINT SCREEN_WIDTH = 1280;
 constexpr UINT SCREEN_HEIGHT = 720;
-static const float SCREEN_COLOR[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+static const float SCREEN_COLOR[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 constexpr bool WINDOW_MODE = true;
 
 constexpr float	CAMERA_NEAR = 0.1f;

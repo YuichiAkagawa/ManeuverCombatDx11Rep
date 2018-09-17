@@ -27,6 +27,7 @@ ID3D11VertexShader*			Renderer::pVertexShader_;
 ID3D11PixelShader*			Renderer::pPixelShader_;
 ID3D11InputLayout*			Renderer::pInputLayout_;
 ID3D11Buffer*				Renderer::pVertexBuffer_;
+D3D11_VIEWPORT				Renderer::viewport_;
 
 bool Renderer::Init()
 {
@@ -168,9 +169,10 @@ bool Renderer::Init()
 		//インプットレイアウト作成
 		D3D11_INPUT_ELEMENT_DESC desc[] =
 		{
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },/*
-			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },*/
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			//{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			//{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		};
 		UINT numElememts = sizeof(desc) / sizeof(desc[0]);
 		hr = pDevice_->CreateInputLayout(
@@ -231,8 +233,11 @@ bool Renderer::Init()
 
 		VERTEX2D v2d[3];
 		v2d[0].pos = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
+		v2d[0].color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
 		v2d[1].pos = DirectX::XMFLOAT3(-0.5f, 0.5f, 0.0f);
+		v2d[1].color = DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
 		v2d[2].pos = DirectX::XMFLOAT3(0.5f, 0.5f, 0.0f);
+		v2d[2].color = DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
 
 		D3D11_SUBRESOURCE_DATA sd;
 		sd.pSysMem = v2d;
@@ -249,7 +254,13 @@ bool Renderer::Init()
 		}
 	}
 
-
+	//ビューポート作成
+	viewport_.TopLeftX = 0;
+	viewport_.TopLeftY = 0;
+	viewport_.Width = (FLOAT)SCREEN_WIDTH;
+	viewport_.Height = (FLOAT)SCREEN_HEIGHT;
+	viewport_.MinDepth = 0.0f;
+	viewport_.MaxDepth = 1.0f;
 
 	return true;
 }
@@ -260,7 +271,8 @@ void Renderer::Uninit()
 	SafeRelease(pSwapChain_);
 	SafeRelease(pDevice_);
 	SafeRelease(pRenderTargetView_);
-
+	SafeRelease(pDepthStencilTexture_);
+	SafeRelease(pDepthStencilView_);
 	SafeRelease(pVertexShader_);
 	SafeRelease(pPixelShader_);
 	SafeRelease(pInputLayout_);
@@ -279,6 +291,9 @@ void Renderer::DrawBegin()
 	//インプットレイアウト指定
 	pDeviceContext_->IASetInputLayout(pInputLayout_);
 
+	//ビューポートセット
+	pDeviceContext_->RSSetViewports(1, &viewport_);
+
 	//シェーダセット
 	pDeviceContext_->VSSetShader(pVertexShader_, nullptr, 0);
 	pDeviceContext_->PSSetShader(pPixelShader_, nullptr, 0);
@@ -292,6 +307,7 @@ void Renderer::DrawBegin()
 	//描画方法
 	pDeviceContext_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+	//描画
 	pDeviceContext_->Draw(3, 0);
 }
 
