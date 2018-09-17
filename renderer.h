@@ -23,6 +23,7 @@ private:
 	static ID3D11PixelShader*		pPixelShader_;
 	static ID3D11InputLayout*		pInputLayout_;
 	static ID3D11Buffer*			pVertexBuffer_;
+	static ID3D11Buffer*			pIndexBuffer_;
 	static D3D11_VIEWPORT			viewport_;
 
 public:

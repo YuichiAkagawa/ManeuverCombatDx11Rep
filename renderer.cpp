@@ -27,6 +27,7 @@ ID3D11VertexShader*			Renderer::pVertexShader_;
 ID3D11PixelShader*			Renderer::pPixelShader_;
 ID3D11InputLayout*			Renderer::pInputLayout_;
 ID3D11Buffer*				Renderer::pVertexBuffer_;
+ID3D11Buffer*				Renderer::pIndexBuffer_;
 D3D11_VIEWPORT				Renderer::viewport_;
 
 bool Renderer::Init()
@@ -224,23 +225,23 @@ bool Renderer::Init()
 	{
 		//頂点バッファ作成
 		D3D11_BUFFER_DESC vertexDesc;
-		vertexDesc.ByteWidth = sizeof(VERTEX2D) * 3;
+		vertexDesc.ByteWidth = sizeof(VERTEX2D) * 4;
 		vertexDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		vertexDesc.CPUAccessFlags = 0;
 		vertexDesc.MiscFlags = 0;
 		vertexDesc.StructureByteStride = 0;
 		vertexDesc.Usage = D3D11_USAGE_DEFAULT;
 
-		VERTEX2D v2d[3];
-		v2d[0].pos = DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f);
-		v2d[0].color = DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f);
-		v2d[1].pos = DirectX::XMFLOAT3(-0.5f, 0.5f, 0.0f);
-		v2d[1].color = DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f);
-		v2d[2].pos = DirectX::XMFLOAT3(0.5f, 0.5f, 0.0f);
-		v2d[2].color = DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f);
+		VERTEX2D vertex[] =
+		{
+			{ { -0.5f,  0.5f, 0.0f }, { 1.0f, 0.0f, 0.0f, 1.0f } },
+			{ {  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 0.0f, 1.0f } },
+			{ { -0.5f, -0.5f, 0.0f }, { 0.0f, 0.0f, 1.0f, 1.0f } },
+			{ {  0.5f,  0.5f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f } },
+		};
 
 		D3D11_SUBRESOURCE_DATA sd;
-		sd.pSysMem = v2d;
+		sd.pSysMem = vertex;
 		sd.SysMemPitch = 0;
 		sd.SysMemSlicePitch = 0;
 
@@ -248,6 +249,37 @@ bool Renderer::Init()
 			&vertexDesc,
 			&sd,
 			&pVertexBuffer_);
+		if (FAILED(hr))
+		{
+			return false;
+		}
+	}
+
+	{
+		//インデックスバッファ作成
+		D3D11_BUFFER_DESC indexDesc;
+		indexDesc.ByteWidth = sizeof(WORD) * 6;
+		indexDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		indexDesc.CPUAccessFlags = 0;
+		indexDesc.MiscFlags = 0;
+		indexDesc.StructureByteStride = 0;
+		indexDesc.Usage = D3D11_USAGE_DEFAULT;
+
+		WORD index[] =
+		{
+			0, 1, 2,
+			0, 3, 1,
+		};
+
+		D3D11_SUBRESOURCE_DATA sd;
+		sd.pSysMem = index;
+		sd.SysMemPitch = 0;
+		sd.SysMemSlicePitch = 0;
+
+		hr = pDevice_->CreateBuffer(
+			&indexDesc,
+			&sd,
+			&pIndexBuffer_);
 		if (FAILED(hr))
 		{
 			return false;
@@ -277,6 +309,7 @@ void Renderer::Uninit()
 	SafeRelease(pPixelShader_);
 	SafeRelease(pInputLayout_);
 	SafeRelease(pVertexBuffer_);
+	SafeRelease(pIndexBuffer_);
 }
 
 void Renderer::DrawBegin()
@@ -298,17 +331,19 @@ void Renderer::DrawBegin()
 	pDeviceContext_->VSSetShader(pVertexShader_, nullptr, 0);
 	pDeviceContext_->PSSetShader(pPixelShader_, nullptr, 0);
 
+	//頂点バッファセット
 	UINT stride = sizeof(VERTEX2D);
 	UINT offset = 0;
-
-	//頂点バッファセット
 	pDeviceContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
+
+	//インデックスバッファセット
+	pDeviceContext_->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R16_UINT, 0);
 
 	//描画方法
 	pDeviceContext_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//描画
-	pDeviceContext_->Draw(3, 0);
+	pDeviceContext_->DrawIndexed(6, 0, 0);
 }
 
 void Renderer::DrawEnd()
