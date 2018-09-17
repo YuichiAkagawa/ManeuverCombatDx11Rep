@@ -1,0 +1,14 @@
+﻿  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11\ManeuverCombatDx11\test.cso
+  input.cpp
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  main.cpp
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  renderer.cpp
+  WICTextureLoader.cpp
+  コード生成しています。
+  170 of 170 functions (100.0%) were compiled, the rest were copied from previous compilation.
+    4 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11\ManeuverCombatDx11\\3DGameProject.exe
+  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11\ManeuverCombatDx11\\3DGameProject.pdb (Full PDB)
