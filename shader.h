@@ -13,13 +13,17 @@ class Shader
 {
 public:
 	virtual bool Init() = 0;
-	virtual bool Compile();
-	virtual bool Create();
+	virtual bool CreateConstantBuffer() = 0;
 	virtual bool InputLayout() = 0;
-	virtual void Uninit();
-	virtual ID3D11VertexShader* GetVertexShader();
-	virtual ID3D11InputLayout* GetInputLayout();
-	virtual ID3D11PixelShader* GetPixelShader();
+	bool CompileVS();
+	bool CompilePS();
+	bool CreateVS();
+	bool CreatePS();
+	void Uninit();
+	ID3D11VertexShader*		GetVertexShader();
+	ID3D11InputLayout*		GetInputLayout();
+	ID3D11PixelShader*		GetPixelShader();
+	ID3D11Buffer* const*	GetConstantBuffer();
 
 protected:
 	std::string				fileName_;
@@ -28,6 +32,7 @@ protected:
 	ID3D11VertexShader*		pVertexShader_;
 	ID3D11InputLayout*		pInputLayout_;
 	ID3D11PixelShader*		pPixelShader_;
+	ID3D11Buffer*			pConstantBuffer_;
 };
 
 #endif // !_SHADER_H_

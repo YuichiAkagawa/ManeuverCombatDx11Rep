@@ -7,6 +7,7 @@
 
 #include <d3d11.h>
 #include "main.h"
+#include "renderer.h"
 #include "shader.h"
 #include "shader_cube.h"
 #include "shader_test.h"
@@ -36,12 +37,22 @@ bool ShaderManager::Init()
 			return false;
 		}
 
-		if (!pShader_[i]->Compile())
+		if (!pShader_[i]->CompileVS())
 		{
 			return false;
 		}
 
-		if (!pShader_[i]->Create())
+		if (!pShader_[i]->CompilePS())
+		{
+			return false;
+		}
+
+		if (!pShader_[i]->CreateVS())
+		{
+			return false;
+		}
+
+		if (!pShader_[i]->CreatePS())
 		{
 			return false;
 		}
@@ -51,6 +62,10 @@ bool ShaderManager::Init()
 			return false;
 		}
 
+		if (!pShader_[i]->CreateConstantBuffer())
+		{
+			return false;
+		}
 	}
 	return true;
 }
@@ -77,4 +92,22 @@ ID3D11InputLayout* ShaderManager::GetInputLayout(int num)
 ID3D11PixelShader* ShaderManager::GetPixelShader(int num)
 {
 	return pShader_[num]->GetPixelShader();
+}
+
+ID3D11Buffer* const* ShaderManager::GetConstantBuffer(int num)
+{
+	return pShader_[num]->GetConstantBuffer();
+}
+
+void ShaderManager::SetShader(int num)
+{
+	//インプットレイアウト指定
+	Renderer::GetDeviceContext()->IASetInputLayout(pShader_[num]->GetInputLayout());
+
+	//シェーダセット
+	Renderer::GetDeviceContext()->VSSetShader(pShader_[num]->GetVertexShader(), nullptr, 0);
+	Renderer::GetDeviceContext()->PSSetShader(pShader_[num]->GetPixelShader(), nullptr, 0);
+
+	//コンスタントバッファセット
+	Renderer::GetDeviceContext()->VSSetConstantBuffers(0, 1, pShader_[num]->GetConstantBuffer());
 }

@@ -12,22 +12,14 @@
 class Cube
 {
 private:
-	struct VERTEX2D
+	struct VERTEX3D
 	{
 		DirectX::XMFLOAT3 pos;
-		DirectX::XMFLOAT4 color;
-	};
-
-	struct CONSTANT_BUFFER
-	{
-		DirectX::XMFLOAT4X4 mtxWorld;
-		DirectX::XMFLOAT4X4 mtxView;
-		DirectX::XMFLOAT4X4 mtxProj;
+		DirectX::XMFLOAT3 normal;
 	};
 
 	ID3D11Buffer*			pVertexBuffer_;
 	ID3D11Buffer*			pIndexBuffer_;
-	ID3D11Buffer*			pConstantBuffer_;
 public:
 	bool Init();
 	void Uninit();

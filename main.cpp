@@ -253,7 +253,7 @@ void Draw()
 	g_pCube->Draw();
 
 	//ポリゴン描画
-	g_pPolygon2d->Draw();
+	//g_pPolygon2d->Draw();
 
 	//レンダラー描画終了処理
 	Renderer::DrawEnd();

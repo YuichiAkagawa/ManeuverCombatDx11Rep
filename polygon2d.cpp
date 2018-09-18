@@ -98,12 +98,8 @@ void Polygon2D::Draw()
 	//描画方法
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	//インプットレイアウト指定
-	Renderer::GetDeviceContext()->IASetInputLayout(ShaderManager::GetInputLayout(ShaderManager::TEST));
-
 	//シェーダセット
-	Renderer::GetDeviceContext()->VSSetShader(ShaderManager::GetVertexShader(ShaderManager::TEST), nullptr, 0);
-	Renderer::GetDeviceContext()->PSSetShader(ShaderManager::GetPixelShader(ShaderManager::TEST), nullptr, 0);
+	ShaderManager::SetShader(ShaderManager::TEST);
 
 	//描画
 	Renderer::GetDeviceContext()->DrawIndexed(6, 0, 0);

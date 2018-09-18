@@ -17,7 +17,7 @@ constexpr DWORD SHADER_FLAGS = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
 constexpr DWORD SHADER_FLAGS = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_OPTIMIZATION_LEVEL3;
 #endif
 
-bool Shader::Compile()
+bool Shader::CompileVS()
 {
 	{
 		//頂点シェーダコンパイル
@@ -37,7 +37,11 @@ bool Shader::Compile()
 			return false;
 		}
 	}
+	return true;
+}
 
+bool Shader::CompilePS()
+{
 	{
 		//ピクセルシェーダコンパイル
 		ID3DBlob* pError = nullptr;
@@ -59,7 +63,7 @@ bool Shader::Compile()
 	return true;
 }
 
-bool Shader::Create()
+bool Shader::CreateVS()
 {
 	{
 		//頂点シェーダ生成
@@ -74,6 +78,11 @@ bool Shader::Create()
 		}
 	}
 
+	return true;
+}
+
+bool Shader::CreatePS()
+{
 	{
 		//シェーダ生成
 		HRESULT hr = Renderer::GetDevice()->CreatePixelShader(
@@ -92,8 +101,11 @@ bool Shader::Create()
 void Shader::Uninit()
 {
 	SafeRelease(pVertexShader_);
+	SafeRelease(pCompiledVertexShader_);
 	SafeRelease(pInputLayout_);
 	SafeRelease(pPixelShader_);
+	SafeRelease(pCompiledPixelShader_);
+	SafeRelease(pConstantBuffer_);
 }
 
 ID3D11VertexShader* Shader::GetVertexShader()
@@ -109,4 +121,9 @@ ID3D11InputLayout* Shader::GetInputLayout()
 ID3D11PixelShader* Shader::GetPixelShader()
 {
 	return pPixelShader_;
+}
+
+ID3D11Buffer* const* Shader::GetConstantBuffer()
+{
+	return &pConstantBuffer_;
 }

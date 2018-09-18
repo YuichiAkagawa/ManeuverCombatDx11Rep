@@ -9,6 +9,7 @@
 #include "main.h"
 #include "renderer.h"
 #include "shader_manager.h"
+#include "shader_cube.h"
 #include "cube.h"
 
 bool Cube::Init()
@@ -16,44 +17,44 @@ bool Cube::Init()
 	{
 		//頂点バッファ作成
 		D3D11_BUFFER_DESC vertexDesc;
-		vertexDesc.ByteWidth = sizeof(VERTEX2D) * 24;
+		vertexDesc.ByteWidth = sizeof(VERTEX3D) * 24;
 		vertexDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		vertexDesc.CPUAccessFlags = 0;
 		vertexDesc.MiscFlags = 0;
 		vertexDesc.StructureByteStride = 0;
 		vertexDesc.Usage = D3D11_USAGE_DEFAULT;
 
-		VERTEX2D vertex[] =
+		VERTEX3D vertex[] =
 		{
-			{ { -0.5f,  0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f } },
-			{ { 0.5f,  0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f } },
-			{ { -0.5f, -0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f } },
-			{ { 0.5f, -0.5f, -0.5f },{ 1.0f, 0.0f, 0.0f, 1.0f } },
+			{ { -0.5f,  0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f } },
+			{ { 0.5f,  0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f } },
+			{ { -0.5f, -0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f } },
+			{ { 0.5f, -0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f } },
 
-			{ { -0.5f,  0.5f,  0.5f },{ 0.0f, 1.0f, 1.0f, 1.0f } },
-			{ { -0.5f, -0.5f,  0.5f },{ 0.0f, 1.0f, 1.0f, 1.0f } },
-			{ { 0.5f,  0.5f,  0.5f },{ 0.0f, 1.0f, 1.0f, 1.0f } },
-			{ { 0.5f, -0.5f,  0.5f },{ 0.0f, 1.0f, 1.0f, 1.0f } },
+			{ { -0.5f,  0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f } },
+			{ { -0.5f, -0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f } },
+			{ { 0.5f,  0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f } },
+			{ { 0.5f, -0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f } },
 
-			{ { -0.5f,  0.5f,  0.5f },{ 1.0f, 1.0f, 0.0f, 1.0f } },
-			{ { -0.5f,  0.5f, -0.5f },{ 1.0f, 1.0f, 0.0f, 1.0f } },
-			{ { -0.5f, -0.5f,  0.5f },{ 1.0f, 1.0f, 0.0f, 1.0f } },
-			{ { -0.5f, -0.5f, -0.5f },{ 1.0f, 1.0f, 0.0f, 1.0f } },
+			{ { -0.5f,  0.5f,  0.5f },{ -1.0f,  0.0f,  0.0f } },
+			{ { -0.5f,  0.5f, -0.5f },{ -1.0f,  0.0f,  0.0f } },
+			{ { -0.5f, -0.5f,  0.5f },{ -1.0f,  0.0f,  0.0f } },
+			{ { -0.5f, -0.5f, -0.5f },{ -1.0f,  0.0f,  0.0f } },
 
-			{ { 0.5f,  0.5f,  0.5f },{ 0.0f, 0.0f, 1.0f, 1.0f } },
-			{ { 0.5f, -0.5f,  0.5f },{ 0.0f, 0.0f, 1.0f, 1.0f } },
-			{ { 0.5f,  0.5f, -0.5f },{ 0.0f, 0.0f, 1.0f, 1.0f } },
-			{ { 0.5f, -0.5f, -0.5f },{ 0.0f, 0.0f, 1.0f, 1.0f } },
+			{ { 0.5f,  0.5f,  0.5f },{ 1.0f,  0.0f,  0.0f } },
+			{ { 0.5f, -0.5f,  0.5f },{ 1.0f,  0.0f,  0.0f } },
+			{ { 0.5f,  0.5f, -0.5f },{ 1.0f,  0.0f,  0.0f } },
+			{ { 0.5f, -0.5f, -0.5f },{ 1.0f,  0.0f,  0.0f } },
 
-			{ { -0.5f,  0.5f,  0.5f },{ 1.0f, 0.0f, 1.0f, 1.0f } },
-			{ { 0.5f,  0.5f,  0.5f },{ 1.0f, 0.0f, 1.0f, 1.0f } },
-			{ { -0.5f,  0.5f, -0.5f },{ 1.0f, 0.0f, 1.0f, 1.0f } },
-			{ { 0.5f,  0.5f, -0.5f },{ 1.0f, 0.0f, 1.0f, 1.0f } },
+			{ { -0.5f,  0.5f,  0.5f },{ 0.0f,  1.0f,  0.0f } },
+			{ { 0.5f,  0.5f,  0.5f },{ 0.0f,  1.0f,  0.0f } },
+			{ { -0.5f,  0.5f, -0.5f },{ 0.0f,  1.0f,  0.0f } },
+			{ { 0.5f,  0.5f, -0.5f },{ 0.0f,  1.0f,  0.0f } },
 
-			{ { -0.5f, -0.5f,  0.5f },{ 0.0f, 1.0f, 0.0f, 1.0f } },
-			{ { -0.5f, -0.5f, -0.5f },{ 0.0f, 1.0f, 0.0f, 1.0f } },
-			{ { 0.5f, -0.5f,  0.5f },{ 0.0f, 1.0f, 0.0f, 1.0f } },
-			{ { 0.5f, -0.5f, -0.5f },{ 0.0f, 1.0f, 0.0f, 1.0f } },
+			{ { -0.5f, -0.5f,  0.5f },{ 0.0f, -1.0f,  0.0f } },
+			{ { -0.5f, -0.5f, -0.5f },{ 0.0f, -1.0f,  0.0f } },
+			{ { 0.5f, -0.5f,  0.5f },{ 0.0f, -1.0f,  0.0f } },
+			{ { 0.5f, -0.5f, -0.5f },{ 0.0f, -1.0f,  0.0f } },
 		};
 
 		D3D11_SUBRESOURCE_DATA sd;
@@ -107,19 +108,6 @@ bool Cube::Init()
 	}
 
 	{
-		D3D11_BUFFER_DESC cbDesc;
-		cbDesc.ByteWidth = sizeof(CONSTANT_BUFFER);
-		cbDesc.Usage = D3D11_USAGE_DEFAULT;
-		cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		cbDesc.CPUAccessFlags = 0;
-		cbDesc.MiscFlags = 0;
-		cbDesc.StructureByteStride = 0;
-
-		HRESULT hr = Renderer::GetDevice()->CreateBuffer(&cbDesc, NULL, &pConstantBuffer_);
-		if (FAILED(hr))
-		{
-			return false;
-		}
 
 		DirectX::XMMATRIX worldMatrix = DirectX::XMMatrixTranslation(0.0f, 0.0f, 0.0f);
 
@@ -134,11 +122,14 @@ bool Cube::Init()
 			CAMERA_NEAR,
 			CAMERA_FAR);
 
-		CONSTANT_BUFFER cb;
-		XMStoreFloat4x4(&cb.mtxWorld, XMMatrixTranspose(worldMatrix));
-		XMStoreFloat4x4(&cb.mtxView, XMMatrixTranspose(viewMatrix));
-		XMStoreFloat4x4(&cb.mtxProj, XMMatrixTranspose(projMatrix));
-		Renderer::GetDeviceContext()->UpdateSubresource(pConstantBuffer_, 0, NULL, &cb, 0, 0);
+		DirectX::XMVECTOR vecLight = DirectX::XMVector3Normalize(DirectX::XMVectorSet(0.0f, 0.5f, -1.0f, 0.0f));
+
+		ShaderCube::CONSTANT_BUFFER cb;
+		DirectX::XMStoreFloat4x4(&cb.mtxWorld, DirectX::XMMatrixTranspose(worldMatrix));
+		DirectX::XMStoreFloat4x4(&cb.mtxView, DirectX::XMMatrixTranspose(viewMatrix));
+		DirectX::XMStoreFloat4x4(&cb.mtxProj, DirectX::XMMatrixTranspose(projMatrix));
+		DirectX::XMStoreFloat4(&cb.vecLight, vecLight);
+		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::CUBE), 0, NULL, &cb, 0, 0);
 	}
 
 	return true;
@@ -152,7 +143,7 @@ void Cube::Uninit()
 void Cube::Draw()
 {
 	//頂点バッファセット
-	UINT stride = sizeof(VERTEX2D);
+	UINT stride = sizeof(VERTEX3D);
 	UINT offset = 0;
 	Renderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 
@@ -162,15 +153,8 @@ void Cube::Draw()
 	//描画方法
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	//インプットレイアウト指定
-	Renderer::GetDeviceContext()->IASetInputLayout(ShaderManager::GetInputLayout(ShaderManager::CUBE));
-
 	//シェーダセット
-	Renderer::GetDeviceContext()->VSSetShader(ShaderManager::GetVertexShader(ShaderManager::CUBE), nullptr, 0);
-	Renderer::GetDeviceContext()->PSSetShader(ShaderManager::GetPixelShader(ShaderManager::CUBE), nullptr, 0);
-	
-	//コンスタントバッファセット
-	Renderer::GetDeviceContext()->VSSetConstantBuffers(0, 1, &pConstantBuffer_);
+	ShaderManager::SetShader(ShaderManager::CUBE);
 
 	//描画
 	Renderer::GetDeviceContext()->DrawIndexed(36, 0, 0);

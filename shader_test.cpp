@@ -41,3 +41,9 @@ bool ShaderTest::InputLayout()
 	}
 	return true;
 }
+
+bool ShaderTest::CreateConstantBuffer()
+{
+
+	return true;
+}

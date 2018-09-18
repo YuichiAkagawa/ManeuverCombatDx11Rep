@@ -13,6 +13,7 @@ class ShaderTest : public Shader
 public:
 	bool Init()override;
 	bool InputLayout()override;
+	bool CreateConstantBuffer()override;
 };
 
 #endif // !_SHADER_TEST_H_
