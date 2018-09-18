@@ -185,6 +185,9 @@
   <ItemGroup>
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="pixel_shader.cpp" />
+    <ClCompile Include="pixel_shader_manager.cpp" />
+    <ClCompile Include="pixel_shader_test.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="vertex_shader.cpp" />
     <ClCompile Include="vertex_shader_manager.cpp" />
@@ -192,6 +195,9 @@
     <ClCompile Include="WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="pixel_shader.h" />
+    <ClInclude Include="pixel_shader_manager.h" />
+    <ClInclude Include="pixel_shader_test.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="input.h" />

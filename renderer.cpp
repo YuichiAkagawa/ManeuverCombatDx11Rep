@@ -10,6 +10,7 @@
 #include <string>
 #include "main.h"
 #include "vertex_shader_manager.h"
+#include "pixel_shader_manager.h"
 #include "renderer.h"
 
 #if defined(DEBUG) || defined(_DEBUG)
@@ -24,7 +25,6 @@ ID3D11DeviceContext*		Renderer::pDeviceContext_;
 ID3D11RenderTargetView*		Renderer::pRenderTargetView_;
 ID3D11Texture2D*			Renderer::pDepthStencilTexture_;
 ID3D11DepthStencilView*		Renderer::pDepthStencilView_;
-ID3D11PixelShader*			Renderer::pPixelShader_;
 ID3D11Buffer*				Renderer::pVertexBuffer_;
 ID3D11Buffer*				Renderer::pIndexBuffer_;
 D3D11_VIEWPORT				Renderer::viewport_;
@@ -135,45 +135,15 @@ bool Renderer::Init()
 	pDeviceContext_->RSSetState(rs);
 
 	//頂点シェーダ
+	if (!VertexShaderManager::Init())
 	{
-		if (!VertexShaderManager::Init())
-		{
-			return false;
-		}
+		return false;
 	}
 
 	//ピクセルシェーダ
+	if (!PixelShaderManager::Init())
 	{
-		//シェーダコンパイル
-		std::string str = "test.hlsl";
-		ID3DBlob* pCompiledShader = nullptr;
-		ID3DBlob* pError = nullptr;
-		
-		hr = D3DCompileFromFile(
-			std::wstring(str.begin(), str.end()).c_str(),
-			nullptr,
-			D3D_COMPILE_STANDARD_FILE_INCLUDE,
-			"PS",
-			"ps_5_0",
-			SHADER_FLAGS,
-			0,
-			&pCompiledShader,
-			&pError);
-		if (FAILED(hr))
-		{
-			return false;
-		}
-
-		//シェーダ生成
-		hr = pDevice_->CreatePixelShader(
-			pCompiledShader->GetBufferPointer(),
-			pCompiledShader->GetBufferSize(),
-			nullptr,
-			&pPixelShader_);
-		if (FAILED(hr))
-		{
-			return false;
-		}
+		return false;
 	}
 
 	{
@@ -254,13 +224,13 @@ bool Renderer::Init()
 void Renderer::Uninit()
 {
 	VertexShaderManager::Uninit();
+	PixelShaderManager::Uninit();
 	pDeviceContext_->ClearState();
 	SafeRelease(pSwapChain_);
 	SafeRelease(pDevice_);
 	SafeRelease(pRenderTargetView_);
 	SafeRelease(pDepthStencilTexture_);
 	SafeRelease(pDepthStencilView_);
-	SafeRelease(pPixelShader_);
 	SafeRelease(pVertexBuffer_);
 	SafeRelease(pIndexBuffer_);
 }
@@ -282,7 +252,7 @@ void Renderer::DrawBegin()
 
 	//シェーダセット
 	pDeviceContext_->VSSetShader(VertexShaderManager::GetVertexShader(VertexShaderManager::VS_TEST), nullptr, 0);
-	pDeviceContext_->PSSetShader(pPixelShader_, nullptr, 0);
+	pDeviceContext_->PSSetShader(PixelShaderManager::GetPixelShader(PixelShaderManager::PS_TEST), nullptr, 0);
 
 	//頂点バッファセット
 	UINT stride = sizeof(VERTEX2D);
