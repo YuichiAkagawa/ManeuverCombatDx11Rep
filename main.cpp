@@ -12,8 +12,11 @@
 
 #include "cube.h"
 #include "polygon2d.h"
+#include "process_calculator.h"
 #include "renderer.h"
 #include "resource.h"
+#include "scene_game01.h"
+#include "scene_manager.h"
 #include "input.h"
 #include "main.h"
 
@@ -24,6 +27,10 @@ constexpr double	FRAME_DIRAY = 1000.0f / 60.0f;
 static HWND							g_hWnd;									
 static LARGE_INTEGER				g_freq;
 static double						g_freqFrame;
+static ProcessCalculator			g_allProcessCal, g_updateProcessCal, g_drawProcessCal;
+static Scene*						g_pCurrentScene;
+static bool							g_isImgui;
+
 static Polygon2D*					g_pPolygon2d;
 static Cube*						g_pCube;
 
@@ -129,12 +136,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 		}
 		else
 		{
+			//全処理時間計測開始
+			g_allProcessCal.StartCalculate();
+
+			//更新処理時間計測開始
+			g_updateProcessCal.StartCalculate();
 
 			//--更新処理--//
 			Update();
 
+			//更新処理時間計測終了
+			g_updateProcessCal.EndCalculate();
+
+			//描画処理時間計測開始
+			g_drawProcessCal.StartCalculate();
+
 			//--描画処理--//
 			Draw();
+
+			//描画処理時間計測終了
+			g_drawProcessCal.EndCalculate();
+
+			//処理時間計測終了
+			g_allProcessCal.EndCalculate();
 
 			//フレーム待機
 			WaitFrame();
@@ -213,9 +237,18 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 	{
 		return false;
 	}
-
+	
 	//ImGuiセットアップ
 	ImGuiSetup();
+
+	//現在のシーン初期化
+	g_pCurrentScene = nullptr;
+
+	//シーン初期化処理
+	if (!SceneManager::SetScene(new SceneGame01))
+	{
+		return false;
+	}
 
 	//ポリゴン生成
 	g_pPolygon2d = new Polygon2D;
@@ -231,6 +264,9 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 		return false;
 	}
 
+	//imgui描画フラグ
+	g_isImgui = false;
+
 	return true;
 }
 
@@ -239,6 +275,9 @@ void Uninit()
 	//imgui終了処理
 	ImGui_ImplDX11_Shutdown();
 	ImGui::DestroyContext();
+
+	//シーン終了処理
+	SceneManager::Uninit();
 
 	//ポリゴン破棄
 	g_pPolygon2d->Uninit();
@@ -263,14 +302,63 @@ void Update()
 	//キーボード更新処理
 	UpdateKeyboard();
 
-	//imgui
-	ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiSetCond_Once);
-	ImGui::SetNextWindowSize(ImVec2(380, 450), ImGuiSetCond_Once);
+	//imgui描画切り替え
+	if (GetKeyboardTrigger(DIK_TAB))
+	{
+		if (g_isImgui)
+		{
+			g_isImgui = false;
+		}
+		else
+		{
+			g_isImgui = true;
+		}
+	}
 
-	ImGui::Begin("Stats");
-	ImGui::Text("Application average %.3f ms / frame(%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	//ImGui
+	if (g_isImgui)
+	{
+		ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiSetCond_Once);
+		ImGui::SetNextWindowSize(ImVec2(380, 450), ImGuiSetCond_Once);
 
-	ImGui::End();
+		ImGui::Begin("Stats");
+		ImGui::Text("Application average %.3f ms / frame(%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		ImGui::Spacing();
+
+		ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Once);
+		if (ImGui::CollapsingHeader("ProcessTime"))
+		{
+			ImGui::Text("ProcessTime : %.3f ms", g_allProcessCal.GetProcessTimeMS());
+			ImGui::Text("UpdateProcessTime : %.3f ms", g_updateProcessCal.GetProcessTimeMS());
+			ImGui::Text("DrawProcessTime : %.3f ms", g_drawProcessCal.GetProcessTimeMS());
+
+			bool processTimeClear = false;
+			ImGui::SetNextTreeNodeOpen(true, ImGuiSetCond_Once);
+			if (ImGui::TreeNode("ProcessTimeMax"))
+			{
+				ImGui::Text("ProcessTimeMax : %.3f ms", g_allProcessCal.GetProcessTimeMaxMS());
+				ImGui::Text("UpdateProcessTimeMax : %.3f ms", g_updateProcessCal.GetProcessTimeMaxMS());
+				ImGui::Text("DrawProcessTimeMax : %.3f ms", g_drawProcessCal.GetProcessTimeMaxMS());
+				processTimeClear = ImGui::Button("Reset");
+				ImGui::TreePop();
+			}
+
+			//シーンが遷移したかどうか
+			//リセットボタンが押されたかどうか
+			if (SceneManager::GetScene() != g_pCurrentScene || processTimeClear)
+			{
+				//処理時間計測値初期化
+				g_allProcessCal.Reset();
+				g_updateProcessCal.Reset();
+				g_drawProcessCal.Reset();
+			}
+			g_pCurrentScene = SceneManager::GetScene();
+		}
+		ImGui::End();
+	}
+
+	//シーン更新処理
+	SceneManager::Update();
 
 	//imgui更新終了
 	ImGui::EndFrame();
@@ -287,9 +375,15 @@ void Draw()
 	//ポリゴン描画
 	//g_pPolygon2d->Draw();
 
-	//ImGui描画
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	//シーン描画
+	SceneManager::Draw();
+
+	//imgui描画
+	if (g_isImgui)
+	{
+		ImGui::Render();
+		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	}
 
 	//レンダラー描画終了処理
 	Renderer::DrawEnd();
@@ -329,4 +423,9 @@ void ImGuiSetup()
 	//imguiスタイルセットアップ
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsClassic();
+}
+
+bool GetIsImgui()
+{
+	return g_isImgui;
 }

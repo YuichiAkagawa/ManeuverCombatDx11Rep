@@ -26,6 +26,7 @@ void				Draw();
 HWND				GetHWND();
 void				WaitFrame();
 void				ImGuiSetup();
+bool				GetIsImgui();
 
 template <typename T>
 inline void SafeDelete(T*& p) {

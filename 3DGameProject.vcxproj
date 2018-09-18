@@ -201,6 +201,8 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="actor.cpp" />
+    <ClCompile Include="actor_manager.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -208,7 +210,12 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="polygon2d.cpp" />
+    <ClCompile Include="process_calculator.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="scene.cpp" />
+    <ClCompile Include="scene_game01.cpp" />
+    <ClCompile Include="scene_game02.cpp" />
+    <ClCompile Include="scene_manager.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="shader_cube.cpp" />
     <ClCompile Include="shader_manager.cpp" />
@@ -216,6 +223,8 @@
     <ClCompile Include="WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="actor.h" />
+    <ClInclude Include="actor_manager.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
@@ -225,10 +234,15 @@
     <ClInclude Include="imgui\stb_textedit.h" />
     <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="polygon2d.h" />
+    <ClInclude Include="process_calculator.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="scene.h" />
+    <ClInclude Include="scene_game01.h" />
+    <ClInclude Include="scene_game02.h" />
+    <ClInclude Include="scene_manager.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="shader_cube.h" />
     <ClInclude Include="shader_manager.h" />
