@@ -15,6 +15,12 @@
     <Filter Include="WICTextureLoader">
       <UniqueIdentifier>{fdc538b6-1ce8-4eeb-995a-129eacf920f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\vertex_shader">
+      <UniqueIdentifier>{cb3b23f9-f54e-4599-b089-05ff89f838c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\vertex_shader">
+      <UniqueIdentifier>{af8b1cca-db83-4ecc-8c58-d8f2ff5a8ea7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -28,6 +34,15 @@
     </ClCompile>
     <ClCompile Include="WICTextureLoader.cpp">
       <Filter>WICTextureLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="vertex_shader.cpp">
+      <Filter>ソース ファイル\vertex_shader</Filter>
+    </ClCompile>
+    <ClCompile Include="vertex_shader_test.cpp">
+      <Filter>ソース ファイル\vertex_shader</Filter>
+    </ClCompile>
+    <ClCompile Include="vertex_shader_manager.cpp">
+      <Filter>ソース ファイル\vertex_shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +60,15 @@
     </ClInclude>
     <ClInclude Include="WICTextureLoader.h">
       <Filter>WICTextureLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_shader.h">
+      <Filter>ヘッダー ファイル\vertex_shader</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_shader_test.h">
+      <Filter>ヘッダー ファイル\vertex_shader</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_shader_manager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

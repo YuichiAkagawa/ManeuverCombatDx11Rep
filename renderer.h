@@ -19,9 +19,9 @@ private:
 	static ID3D11RenderTargetView*	pRenderTargetView_;
 	static ID3D11Texture2D*			pDepthStencilTexture_;
 	static ID3D11DepthStencilView*	pDepthStencilView_;
-	static ID3D11VertexShader*		pVertexShader_;
+
 	static ID3D11PixelShader*		pPixelShader_;
-	static ID3D11InputLayout*		pInputLayout_;
+
 	static ID3D11Buffer*			pVertexBuffer_;
 	static ID3D11Buffer*			pIndexBuffer_;
 	static D3D11_VIEWPORT			viewport_;
@@ -37,6 +37,7 @@ public:
 	static void					Uninit();
 	static void					DrawBegin();
 	static void					DrawEnd();
+	static ID3D11Device*		GetDevice();
 };
 
 #endif // !_RENDERER_H_

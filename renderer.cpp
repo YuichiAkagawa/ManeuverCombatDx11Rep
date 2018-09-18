@@ -9,6 +9,7 @@
 #include <DirectXMath.h>
 #include <string>
 #include "main.h"
+#include "vertex_shader_manager.h"
 #include "renderer.h"
 
 #if defined(DEBUG) || defined(_DEBUG)
@@ -23,9 +24,7 @@ ID3D11DeviceContext*		Renderer::pDeviceContext_;
 ID3D11RenderTargetView*		Renderer::pRenderTargetView_;
 ID3D11Texture2D*			Renderer::pDepthStencilTexture_;
 ID3D11DepthStencilView*		Renderer::pDepthStencilView_;
-ID3D11VertexShader*			Renderer::pVertexShader_;
 ID3D11PixelShader*			Renderer::pPixelShader_;
-ID3D11InputLayout*			Renderer::pInputLayout_;
 ID3D11Buffer*				Renderer::pVertexBuffer_;
 ID3D11Buffer*				Renderer::pIndexBuffer_;
 D3D11_VIEWPORT				Renderer::viewport_;
@@ -137,52 +136,7 @@ bool Renderer::Init()
 
 	//頂点シェーダ
 	{
-		//シェーダコンパイル
-		std::string str = "test.hlsl";
-		ID3DBlob* pCompiledShader = nullptr;
-		ID3DBlob* pError = nullptr;
-		hr = D3DCompileFromFile(
-			std::wstring(str.begin(), str.end()).c_str(),
-			nullptr,
-			D3D_COMPILE_STANDARD_FILE_INCLUDE,
-			"VS",
-			"vs_5_0",
-			SHADER_FLAGS,
-			0,
-			&pCompiledShader,
-			&pError);
-		if (FAILED(hr))
-		{
-			return false;
-		}
-
-		//シェーダ生成
-		hr = pDevice_->CreateVertexShader(
-			pCompiledShader->GetBufferPointer(),
-			pCompiledShader->GetBufferSize(),
-			nullptr,
-			&pVertexShader_);
-		if (FAILED(hr))
-		{
-			return false;
-		}
-
-		//インプットレイアウト作成
-		D3D11_INPUT_ELEMENT_DESC desc[] =
-		{
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			//{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			//{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		};
-		UINT numElememts = sizeof(desc) / sizeof(desc[0]);
-		hr = pDevice_->CreateInputLayout(
-			desc,
-			numElememts,
-			pCompiledShader->GetBufferPointer(),
-			pCompiledShader->GetBufferSize(),
-			&pInputLayout_);
-		if (FAILED(hr))
+		if (!VertexShaderManager::Init())
 		{
 			return false;
 		}
@@ -299,15 +253,14 @@ bool Renderer::Init()
 
 void Renderer::Uninit()
 {
+	VertexShaderManager::Uninit();
 	pDeviceContext_->ClearState();
 	SafeRelease(pSwapChain_);
 	SafeRelease(pDevice_);
 	SafeRelease(pRenderTargetView_);
 	SafeRelease(pDepthStencilTexture_);
 	SafeRelease(pDepthStencilView_);
-	SafeRelease(pVertexShader_);
 	SafeRelease(pPixelShader_);
-	SafeRelease(pInputLayout_);
 	SafeRelease(pVertexBuffer_);
 	SafeRelease(pIndexBuffer_);
 }
@@ -322,13 +275,13 @@ void Renderer::DrawBegin()
 	pDeviceContext_->ClearDepthStencilView(pDepthStencilView_, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	//インプットレイアウト指定
-	pDeviceContext_->IASetInputLayout(pInputLayout_);
+	pDeviceContext_->IASetInputLayout(VertexShaderManager::GetInputLayout(VertexShaderManager::VS_TEST));
 
 	//ビューポートセット
 	pDeviceContext_->RSSetViewports(1, &viewport_);
 
 	//シェーダセット
-	pDeviceContext_->VSSetShader(pVertexShader_, nullptr, 0);
+	pDeviceContext_->VSSetShader(VertexShaderManager::GetVertexShader(VertexShaderManager::VS_TEST), nullptr, 0);
 	pDeviceContext_->PSSetShader(pPixelShader_, nullptr, 0);
 
 	//頂点バッファセット
@@ -350,4 +303,9 @@ void Renderer::DrawEnd()
 {
 	//レンダリング結果表示
 	pSwapChain_->Present(0, 0);
+}
+
+ID3D11Device* Renderer::GetDevice()
+{
+	return pDevice_;
 }

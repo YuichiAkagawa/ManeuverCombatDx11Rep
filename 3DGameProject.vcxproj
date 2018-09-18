@@ -186,6 +186,9 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="vertex_shader.cpp" />
+    <ClCompile Include="vertex_shader_manager.cpp" />
+    <ClCompile Include="vertex_shader_test.cpp" />
     <ClCompile Include="WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +196,9 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="vertex_shader.h" />
+    <ClInclude Include="vertex_shader_manager.h" />
+    <ClInclude Include="vertex_shader_test.h" />
     <ClInclude Include="WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
