@@ -10,8 +10,6 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_dx11.h"
 
-#include "cube.h"
-#include "polygon2d.h"
 #include "process_calculator.h"
 #include "renderer.h"
 #include "resource.h"
@@ -30,9 +28,6 @@ static double						g_freqFrame;
 static ProcessCalculator			g_allProcessCal, g_updateProcessCal, g_drawProcessCal;
 static Scene*						g_pCurrentScene;
 static bool							g_isImgui;
-
-static Polygon2D*					g_pPolygon2d;
-static Cube*						g_pCube;
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -250,20 +245,6 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 		return false;
 	}
 
-	//ポリゴン生成
-	g_pPolygon2d = new Polygon2D;
-	if (!g_pPolygon2d->Init())
-	{
-		return false;
-	}
-
-	//キューブ生成
-	g_pCube = new Cube;
-	if (!g_pCube->Init())
-	{
-		return false;
-	}
-
 	//imgui描画フラグ
 	g_isImgui = false;
 
@@ -278,14 +259,6 @@ void Uninit()
 
 	//シーン終了処理
 	SceneManager::Uninit();
-
-	//ポリゴン破棄
-	g_pPolygon2d->Uninit();
-	SafeDelete(g_pPolygon2d);
-
-	//キューブ破棄
-	g_pCube->Uninit();
-	SafeDelete(g_pCube);
 
 	//キーボード終了処理
 	UninitKeyboard();
@@ -368,12 +341,6 @@ void Draw()
 {
 	//レンダラー描画開始処理
 	Renderer::DrawBegin();
-
-	//キューブ描画
-	g_pCube->Draw();
-
-	//ポリゴン描画
-	//g_pPolygon2d->Draw();
 
 	//シーン描画
 	SceneManager::Draw();

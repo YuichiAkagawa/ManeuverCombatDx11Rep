@@ -13,11 +13,13 @@
 #include <typeinfo>
 
 class Actor;
+class TextureManager;
 
 class ActorManager
 {
 private:
 	std::vector<Actor*> actorList_;
+	TextureManager* pTextureManager_;
 
 	void Stats();
 	void CheckType(const type_info* typeInfo);
@@ -29,6 +31,7 @@ public:
 	void Update();
 	void Draw();
 	Actor* GetActor(int name, int number);
+	void SetTextureManager(TextureManager* pTextureManager);
 
 	template <typename T>
 	int CreateActor(T* pActor)
@@ -43,9 +46,6 @@ public:
 			}
 		});
 		pActor->SetNumber(number);
-
-		//モデルマネージャのポインタセット
-		pActor->SetXModelManager(pXModelManager_);
 
 		//テクスチャマネージャのポインタセット
 		pActor->SetTextureManager(pTextureManager_);

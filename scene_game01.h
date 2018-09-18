@@ -9,13 +9,16 @@
 #define _SCENE_GAME01_H_
 
 #include "scene.h"
+#include "texture.h"
+class Cube;
 
 class SceneGame01 : public Scene
 {
 public:
 	SceneGame01()
 	{
-
+		//読み込むテクスチャ
+		sceneTexture_.emplace_back(TextureManager::SAMPLE);
 	}
 	~SceneGame01()
 	{
@@ -26,7 +29,7 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
-
+	Cube* pCube_;
 };
 
 #endif // !_SCENE_GAME01_H_

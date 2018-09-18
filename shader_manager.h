@@ -8,6 +8,8 @@
 #ifndef _SHADER_MANAGER_
 #define _SHADER_MANAGER_
 
+#include <d3d11.h>
+
 class Shader;
 
 class ShaderManager

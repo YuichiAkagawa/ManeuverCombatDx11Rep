@@ -9,6 +9,7 @@
 #include "actor.h"
 #include "main.h"
 #include "process_calculator.h"
+#include "texture.h"
 #include "actor_manager.h"
 
 bool ActorManager::Init()
@@ -94,6 +95,11 @@ Actor* ActorManager::GetActor(int name, int number)
 		//ŠY“–‚·‚éƒ|ƒCƒ“ƒ^‚ª‚È‚©‚Á‚½ê‡null
 		return nullptr;
 	}
+}
+
+void ActorManager::SetTextureManager(TextureManager* pTextureManager)
+{
+	pTextureManager_ = pTextureManager;
 }
 
 void ActorManager::Stats()

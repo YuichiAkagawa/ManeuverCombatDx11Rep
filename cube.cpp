@@ -5,15 +5,12 @@
 //**
 //**-------------------------------------------------------**
 
-#include <d3d11.h>
 #include "main.h"
 #include "renderer.h"
 #include "shader_manager.h"
 #include "shader_cube.h"
+#include "texture.h"
 #include "cube.h"
-
-#include <string>
-#include "WICTextureLoader.h"
 
 bool Cube::Init()
 {
@@ -134,16 +131,6 @@ bool Cube::Init()
 		DirectX::XMStoreFloat4(&cb.vecLight, vecLight);
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::CUBE), 0, NULL, &cb, 0, 0);
 	}
-	
-	//テクスチャ読み込み
-	{
-		//テクスチャ読み込み
-		HRESULT hr = DirectX::CreateWICTextureFromFile(Renderer::GetDevice(), L"sample.png", &pResource_, &pShaderResourceView_);
-		if (FAILED(hr))
-		{
-			return false;
-		}
-	}
 
 	//テクスチャサンプラー
 	{
@@ -169,7 +156,7 @@ void Cube::Uninit()
 
 }
 
-void Cube::Draw()
+void Cube::Draw(TextureManager* pTextureManager)
 {
 	//頂点バッファセット
 	UINT stride = sizeof(VERTEX3D);
@@ -193,7 +180,7 @@ void Cube::Draw()
 	Renderer::GetDeviceContext()->VSSetConstantBuffers(0, 1, ShaderManager::GetConstantBuffer(ShaderManager::CUBE));
 
 	//テクスチャセット
-	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &pShaderResourceView_);
+	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, pTextureManager->GetInstance(TextureManager::SAMPLE)->GetTexture());
 	Renderer::GetDeviceContext()->PSSetSamplers(0, 1, &pSamplerState_);
 
 	//描画

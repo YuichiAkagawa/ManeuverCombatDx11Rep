@@ -8,6 +8,8 @@
 #ifndef _RENDERER_H_
 #define _RENDERER_H_
 
+#include <d3d11.h>
+
 class Renderer
 {
 private:

@@ -98,6 +98,9 @@
     <ClCompile Include="scene_game02.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -174,6 +177,9 @@
     </ClInclude>
     <ClInclude Include="scene_game02.h">
       <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

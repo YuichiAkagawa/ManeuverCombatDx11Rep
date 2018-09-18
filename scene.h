@@ -10,12 +10,14 @@
 #include <vector>
 #include "actor_manager.h"
 
+class TextureManager;
+
 class Scene
 {
 protected:
 	ActorManager actorManager_;
-	std::vector <int> sceneModel_;
 	std::vector <int> sceneTexture_;
+	TextureManager* pTextureManager_;
 	unsigned int startTime_;
 	float time_;
 public:
@@ -26,7 +28,6 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 
-	const std::vector <int>& GetSceneModel()const;
 	const std::vector <int>& GetSceneTexture()const;
 };
 

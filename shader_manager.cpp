@@ -5,7 +5,6 @@
 //**
 //**-------------------------------------------------------**
 
-#include <d3d11.h>
 #include "main.h"
 #include "renderer.h"
 #include "shader.h"
