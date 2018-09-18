@@ -16,19 +16,10 @@ struct VS_OUT
 	float4 color : COLOR0;
 };
 
-cbuffer ConstantBuffer
-{
-	float4x4 mtxWorld;
-	float4x4 mtxView;
-	float4x4 mtxProj;
-};
-
 VS_OUT VS(VS_IN input)
 {
 	VS_OUT output;
-	output.pos = mul(input.pos, mtxWorld);
-	output.pos = mul(output.pos, mtxView);
-	output.pos = mul(output.pos, mtxProj);
+	output.pos = input.pos;
 	output.color = input.color;
 	return output;
 }

@@ -204,12 +204,12 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 		return false;
 	}
 
-	////ポリゴン生成
-	//g_pPolygon2d = new Polygon2D;
-	//if (!g_pPolygon2d->Init())
-	//{
-	//	return false;
-	//}
+	//ポリゴン生成
+	g_pPolygon2d = new Polygon2D;
+	if (!g_pPolygon2d->Init())
+	{
+		return false;
+	}
 
 	//キューブ生成
 	g_pCube = new Cube;
@@ -223,9 +223,9 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 
 void Uninit()
 {
-	////ポリゴン破棄
-	//g_pPolygon2d->Uninit();
-	//SafeDelete(g_pPolygon2d);
+	//ポリゴン破棄
+	g_pPolygon2d->Uninit();
+	SafeDelete(g_pPolygon2d);
 
 	//キューブ破棄
 	g_pCube->Uninit();
@@ -249,11 +249,11 @@ void Draw()
 	//レンダラー描画開始処理
 	Renderer::DrawBegin();
 
-	////ポリゴン描画
-	//g_pPolygon2d->Draw();
-
 	//キューブ描画
 	g_pCube->Draw();
+
+	//ポリゴン描画
+	g_pPolygon2d->Draw();
 
 	//レンダラー描画終了処理
 	Renderer::DrawEnd();

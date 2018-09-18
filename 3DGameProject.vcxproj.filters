@@ -41,19 +41,16 @@
     <ClCompile Include="cube.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="pixel_shader.cpp">
-      <Filter>ソース ファイル\shader</Filter>
-    </ClCompile>
-    <ClCompile Include="pixel_shader_test.cpp">
-      <Filter>ソース ファイル\shader</Filter>
-    </ClCompile>
-    <ClCompile Include="vertex_shader.cpp">
-      <Filter>ソース ファイル\shader</Filter>
-    </ClCompile>
-    <ClCompile Include="vertex_shader_test.cpp">
-      <Filter>ソース ファイル\shader</Filter>
-    </ClCompile>
     <ClCompile Include="shader_manager.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="shader.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_test.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_cube.cpp">
       <Filter>ソース ファイル\shader</Filter>
     </ClCompile>
   </ItemGroup>
@@ -79,19 +76,16 @@
     <ClInclude Include="cube.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="pixel_shader.h">
-      <Filter>ヘッダー ファイル\shader</Filter>
-    </ClInclude>
-    <ClInclude Include="pixel_shader_test.h">
-      <Filter>ヘッダー ファイル\shader</Filter>
-    </ClInclude>
-    <ClInclude Include="vertex_shader.h">
-      <Filter>ヘッダー ファイル\shader</Filter>
-    </ClInclude>
-    <ClInclude Include="vertex_shader_test.h">
-      <Filter>ヘッダー ファイル\shader</Filter>
-    </ClInclude>
     <ClInclude Include="shader_manager.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_test.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_cube.h">
       <Filter>ヘッダー ファイル\shader</Filter>
     </ClInclude>
   </ItemGroup>
