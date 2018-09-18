@@ -98,16 +98,3 @@ ID3D11Buffer* const* ShaderManager::GetConstantBuffer(int num)
 {
 	return pShader_[num]->GetConstantBuffer();
 }
-
-void ShaderManager::SetShader(int num)
-{
-	//インプットレイアウト指定
-	Renderer::GetDeviceContext()->IASetInputLayout(pShader_[num]->GetInputLayout());
-
-	//シェーダセット
-	Renderer::GetDeviceContext()->VSSetShader(pShader_[num]->GetVertexShader(), nullptr, 0);
-	Renderer::GetDeviceContext()->PSSetShader(pShader_[num]->GetPixelShader(), nullptr, 0);
-
-	//コンスタントバッファセット
-	Renderer::GetDeviceContext()->VSSetConstantBuffers(0, 1, pShader_[num]->GetConstantBuffer());
-}

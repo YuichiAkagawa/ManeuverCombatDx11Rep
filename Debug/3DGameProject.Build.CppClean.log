@@ -2,7 +2,6 @@ e:\programs\maneuvercombatdx11rep\debug\cube.cso
 e:\programs\maneuvercombatdx11rep\debug\test.cso
 e:\programs\maneuvercombatdx11rep\debug\vc140.pdb
 e:\programs\maneuvercombatdx11rep\debug\vc140.idb
-e:\programs\maneuvercombatdx11rep\debug\cube.obj
 e:\programs\maneuvercombatdx11rep\debug\input.obj
 e:\programs\maneuvercombatdx11rep\debug\main.obj
 e:\programs\maneuvercombatdx11rep\debug\polygon2d.obj
@@ -12,6 +11,17 @@ e:\programs\maneuvercombatdx11rep\debug\shader_cube.obj
 e:\programs\maneuvercombatdx11rep\debug\shader_manager.obj
 e:\programs\maneuvercombatdx11rep\debug\shader_test.obj
 e:\programs\maneuvercombatdx11rep\debug\wictextureloader.obj
+e:\programs\maneuvercombatdx11rep\debug\cube.obj
+e:\programs\maneuvercombatdx11rep\debug\imgui.obj
+e:\programs\maneuvercombatdx11rep\debug\imgui_draw.obj
+e:\programs\maneuvercombatdx11rep\debug\imgui_impl_dx11.obj
+e:\programs\maneuvercombatdx11rep\debug\process_calculator.obj
+e:\programs\maneuvercombatdx11rep\debug\actor.obj
+e:\programs\maneuvercombatdx11rep\debug\actor_manager.obj
+e:\programs\maneuvercombatdx11rep\debug\scene.obj
+e:\programs\maneuvercombatdx11rep\debug\scene_game01.obj
+e:\programs\maneuvercombatdx11rep\debug\scene_manager.obj
+e:\programs\maneuvercombatdx11rep\debug\scene_game02.obj
 e:\programs\maneuvercombatdx11rep\debug\3dgameproject.ilk
 e:\programs\maneuvercombatdx11rep\debug\3dgameproject.exe
 e:\programs\maneuvercombatdx11rep\debug\3dgameproject.pdb

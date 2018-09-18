@@ -12,6 +12,9 @@
 #include "shader_cube.h"
 #include "cube.h"
 
+#include <string>
+#include "WICTextureLoader.h"
+
 bool Cube::Init()
 {
 	{
@@ -26,35 +29,35 @@ bool Cube::Init()
 
 		VERTEX3D vertex[] =
 		{
-			{ { -0.5f,  0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f } },
-			{ { 0.5f,  0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f } },
-			{ { -0.5f, -0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f } },
-			{ { 0.5f, -0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f } },
+			{ { -0.5f,  0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f }, { 0.0f, 0.0f } },
+			{ { 0.5f,  0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f }, { 1.0f, 0.0f } },
+			{ { -0.5f, -0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f }, { 0.0f, 1.0f } },
+			{ { 0.5f, -0.5f, -0.5f },{ 0.0f,  0.0f, -1.0f }, { 1.0f, 1.0f } },
 
-			{ { -0.5f,  0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f } },
-			{ { -0.5f, -0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f } },
-			{ { 0.5f,  0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f } },
-			{ { 0.5f, -0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f } },
+			{ { -0.5f,  0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f } },
+			{ { -0.5f, -0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f } },
+			{ { 0.5f,  0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f }, { 0.0f, 1.0f } },
+			{ { 0.5f, -0.5f,  0.5f },{ 0.0f,  0.0f,  1.0f }, { 1.0f, 1.0f } },
 
-			{ { -0.5f,  0.5f,  0.5f },{ -1.0f,  0.0f,  0.0f } },
-			{ { -0.5f,  0.5f, -0.5f },{ -1.0f,  0.0f,  0.0f } },
-			{ { -0.5f, -0.5f,  0.5f },{ -1.0f,  0.0f,  0.0f } },
-			{ { -0.5f, -0.5f, -0.5f },{ -1.0f,  0.0f,  0.0f } },
+			{ { -0.5f,  0.5f,  0.5f },{ -1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f }  },
+			{ { -0.5f,  0.5f, -0.5f },{ -1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f }  },
+			{ { -0.5f, -0.5f,  0.5f },{ -1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f }  },
+			{ { -0.5f, -0.5f, -0.5f },{ -1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f }  },
 
-			{ { 0.5f,  0.5f,  0.5f },{ 1.0f,  0.0f,  0.0f } },
-			{ { 0.5f, -0.5f,  0.5f },{ 1.0f,  0.0f,  0.0f } },
-			{ { 0.5f,  0.5f, -0.5f },{ 1.0f,  0.0f,  0.0f } },
-			{ { 0.5f, -0.5f, -0.5f },{ 1.0f,  0.0f,  0.0f } },
+			{ { 0.5f,  0.5f,  0.5f },{ 1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f }  },
+			{ { 0.5f, -0.5f,  0.5f },{ 1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f }  },
+			{ { 0.5f,  0.5f, -0.5f },{ 1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f }  },
+			{ { 0.5f, -0.5f, -0.5f },{ 1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f }  },
 
-			{ { -0.5f,  0.5f,  0.5f },{ 0.0f,  1.0f,  0.0f } },
-			{ { 0.5f,  0.5f,  0.5f },{ 0.0f,  1.0f,  0.0f } },
-			{ { -0.5f,  0.5f, -0.5f },{ 0.0f,  1.0f,  0.0f } },
-			{ { 0.5f,  0.5f, -0.5f },{ 0.0f,  1.0f,  0.0f } },
+			{ { -0.5f,  0.5f,  0.5f },{ 0.0f,  1.0f,  0.0f }, { 0.0f, 0.0f } },
+			{ { 0.5f,  0.5f,  0.5f },{ 0.0f,  1.0f,  0.0f }, { 1.0f, 0.0f } },
+			{ { -0.5f,  0.5f, -0.5f },{ 0.0f,  1.0f,  0.0f }, { 0.0f, 1.0f } },
+			{ { 0.5f,  0.5f, -0.5f },{ 0.0f,  1.0f,  0.0f }, { 1.0f, 1.0f } },
 
-			{ { -0.5f, -0.5f,  0.5f },{ 0.0f, -1.0f,  0.0f } },
-			{ { -0.5f, -0.5f, -0.5f },{ 0.0f, -1.0f,  0.0f } },
-			{ { 0.5f, -0.5f,  0.5f },{ 0.0f, -1.0f,  0.0f } },
-			{ { 0.5f, -0.5f, -0.5f },{ 0.0f, -1.0f,  0.0f } },
+			{ { -0.5f, -0.5f,  0.5f },{ 0.0f, -1.0f,  0.0f }, { 0.0f, 0.0f } },
+			{ { -0.5f, -0.5f, -0.5f },{ 0.0f, -1.0f,  0.0f }, { 1.0f, 0.0f } },
+			{ { 0.5f, -0.5f,  0.5f },{ 0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f } },
+			{ { 0.5f, -0.5f, -0.5f },{ 0.0f, -1.0f,  0.0f }, { 1.0f, 1.0f } },
 		};
 
 		D3D11_SUBRESOURCE_DATA sd;
@@ -131,6 +134,32 @@ bool Cube::Init()
 		DirectX::XMStoreFloat4(&cb.vecLight, vecLight);
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::CUBE), 0, NULL, &cb, 0, 0);
 	}
+	
+	//テクスチャ読み込み
+	{
+		//テクスチャ読み込み
+		HRESULT hr = DirectX::CreateWICTextureFromFile(Renderer::GetDevice(), L"sample.png", &pResource_, &pShaderResourceView_);
+		if (FAILED(hr))
+		{
+			return false;
+		}
+	}
+
+	//テクスチャサンプラー
+	{
+		D3D11_SAMPLER_DESC smpDesc;
+
+		::ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
+		smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		HRESULT hr = Renderer::GetDevice() ->CreateSamplerState(&smpDesc, &pSamplerState_);
+		if (FAILED(hr))
+		{
+			return false;
+		}
+	}
 
 	return true;
 }
@@ -153,8 +182,19 @@ void Cube::Draw()
 	//描画方法
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+	//インプットレイアウト指定
+	Renderer::GetDeviceContext()->IASetInputLayout(ShaderManager::GetInputLayout(ShaderManager::CUBE));
+
 	//シェーダセット
-	ShaderManager::SetShader(ShaderManager::CUBE);
+	Renderer::GetDeviceContext()->VSSetShader(ShaderManager::GetVertexShader(ShaderManager::CUBE), nullptr, 0);
+	Renderer::GetDeviceContext()->PSSetShader(ShaderManager::GetPixelShader(ShaderManager::CUBE), nullptr, 0);
+
+	//コンスタントバッファセット
+	Renderer::GetDeviceContext()->VSSetConstantBuffers(0, 1, ShaderManager::GetConstantBuffer(ShaderManager::CUBE));
+
+	//テクスチャセット
+	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &pShaderResourceView_);
+	Renderer::GetDeviceContext()->PSSetSamplers(0, 1, &pSamplerState_);
 
 	//描画
 	Renderer::GetDeviceContext()->DrawIndexed(36, 0, 0);

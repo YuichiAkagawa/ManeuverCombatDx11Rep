@@ -16,10 +16,15 @@ private:
 	{
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT3 normal;
+		DirectX::XMFLOAT2 texcoord;
 	};
 
 	ID3D11Buffer*			pVertexBuffer_;
 	ID3D11Buffer*			pIndexBuffer_;
+
+	ID3D11ShaderResourceView *pShaderResourceView_ = nullptr;
+	ID3D11Resource *pResource_ = nullptr;
+	ID3D11SamplerState* pSamplerState_;
 public:
 	bool Init();
 	void Uninit();

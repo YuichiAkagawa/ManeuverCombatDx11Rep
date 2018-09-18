@@ -29,7 +29,6 @@ public:
 	static ID3D11InputLayout* GetInputLayout(int num);
 	static ID3D11PixelShader* GetPixelShader(int num);
 	static ID3D11Buffer* const* GetConstantBuffer(int num);
-	static void SetShader(int num);
 private:
 	static Shader* pShader_[MAX];
 };
