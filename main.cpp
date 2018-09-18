@@ -6,6 +6,10 @@
 //**-------------------------------------------------------**
 #include <crtdbg.h>
 #include <d3d11.h>
+
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_dx11.h"
+
 #include "cube.h"
 #include "polygon2d.h"
 #include "renderer.h"
@@ -22,6 +26,8 @@ static LARGE_INTEGER				g_freq;
 static double						g_freqFrame;
 static Polygon2D*					g_pPolygon2d;
 static Cube*						g_pCube;
+
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
@@ -143,6 +149,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	//imguiウィンドウプロシージャハンドラー
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+		return true;
+
 	switch (uMsg)
 	{
 	case WM_DESTROY:
@@ -204,6 +214,9 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 		return false;
 	}
 
+	//ImGuiセットアップ
+	ImGuiSetup();
+
 	//ポリゴン生成
 	g_pPolygon2d = new Polygon2D;
 	if (!g_pPolygon2d->Init())
@@ -223,6 +236,10 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 
 void Uninit()
 {
+	//imgui終了処理
+	ImGui_ImplDX11_Shutdown();
+	ImGui::DestroyContext();
+
 	//ポリゴン破棄
 	g_pPolygon2d->Uninit();
 	SafeDelete(g_pPolygon2d);
@@ -240,8 +257,23 @@ void Uninit()
 
 void Update()
 {
+	//imgui更新
+	ImGui_ImplDX11_NewFrame();
+
 	//キーボード更新処理
 	UpdateKeyboard();
+
+	//imgui
+	ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiSetCond_Once);
+	ImGui::SetNextWindowSize(ImVec2(380, 450), ImGuiSetCond_Once);
+
+	ImGui::Begin("Stats");
+	ImGui::Text("Application average %.3f ms / frame(%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+	ImGui::End();
+
+	//imgui更新終了
+	ImGui::EndFrame();
 }
 
 void Draw()
@@ -254,6 +286,10 @@ void Draw()
 
 	//ポリゴン描画
 	//g_pPolygon2d->Draw();
+
+	//ImGui描画
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 	//レンダラー描画終了処理
 	Renderer::DrawEnd();
@@ -277,4 +313,20 @@ void WaitFrame()
 		Sleep(0);
 		QueryPerformanceCounter((LARGE_INTEGER*)&lastTime);
 	} while ((lastTime - currentTime) / g_freqFrame < WAIT_TIME);
+}
+
+void ImGuiSetup()
+{
+	//imguiセットアップ
+	ImGui_ImplDX11_InvalidateDeviceObjects();
+	ImGui_ImplDX11_CreateDeviceObjects();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	(void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+	ImGui_ImplDX11_Init(g_hWnd, Renderer::GetDevice(), Renderer::GetDeviceContext());
+
+	//imguiスタイルセットアップ
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsClassic();
 }
