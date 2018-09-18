@@ -6,6 +6,7 @@
 //**-------------------------------------------------------**
 #include <crtdbg.h>
 #include <d3d11.h>
+#include "polygon2d.h"
 #include "renderer.h"
 #include "resource.h"
 #include "input.h"
@@ -18,6 +19,7 @@ constexpr double	FRAME_DIRAY = 1000.0f / 60.0f;
 static HWND							g_hWnd;									
 static LARGE_INTEGER				g_freq;
 static double						g_freqFrame;
+static Polygon2D*					g_pPolygon2d;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
@@ -200,11 +202,22 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 		return false;
 	}
 
+	//ポリゴン生成
+	g_pPolygon2d = new Polygon2D;
+	if (!g_pPolygon2d->Init())
+	{
+		return false;
+	}
+
 	return true;
 }
 
 void Uninit()
 {
+	//ポリゴン破棄
+	g_pPolygon2d->Uninit();
+	SafeDelete(g_pPolygon2d);
+
 	//キーボード終了処理
 	UninitKeyboard();
 
@@ -222,6 +235,9 @@ void Draw()
 {
 	//レンダラー描画開始処理
 	Renderer::DrawBegin();
+
+	//ポリゴン描画
+	g_pPolygon2d->Draw();
 
 	//レンダラー描画終了処理
 	Renderer::DrawEnd();

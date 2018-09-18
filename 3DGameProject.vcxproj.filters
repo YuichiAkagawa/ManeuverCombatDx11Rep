@@ -59,6 +59,9 @@
     <ClCompile Include="pixel_shader_manager.cpp">
       <Filter>ソース ファイル\pixel_shader</Filter>
     </ClCompile>
+    <ClCompile Include="polygon2d.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -93,6 +96,9 @@
     </ClInclude>
     <ClInclude Include="pixel_shader_manager.h">
       <Filter>ヘッダー ファイル\pixel_shader</Filter>
+    </ClInclude>
+    <ClInclude Include="polygon2d.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

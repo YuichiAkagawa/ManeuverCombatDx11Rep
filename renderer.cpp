@@ -25,9 +25,6 @@ ID3D11DeviceContext*		Renderer::pDeviceContext_;
 ID3D11RenderTargetView*		Renderer::pRenderTargetView_;
 ID3D11Texture2D*			Renderer::pDepthStencilTexture_;
 ID3D11DepthStencilView*		Renderer::pDepthStencilView_;
-ID3D11Buffer*				Renderer::pVertexBuffer_;
-ID3D11Buffer*				Renderer::pIndexBuffer_;
-D3D11_VIEWPORT				Renderer::viewport_;
 
 bool Renderer::Init()
 {
@@ -146,78 +143,6 @@ bool Renderer::Init()
 		return false;
 	}
 
-	{
-		//頂点バッファ作成
-		D3D11_BUFFER_DESC vertexDesc;
-		vertexDesc.ByteWidth = sizeof(VERTEX2D) * 4;
-		vertexDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		vertexDesc.CPUAccessFlags = 0;
-		vertexDesc.MiscFlags = 0;
-		vertexDesc.StructureByteStride = 0;
-		vertexDesc.Usage = D3D11_USAGE_DEFAULT;
-
-		VERTEX2D vertex[] =
-		{
-			{ { -0.5f,  0.5f, 0.0f }, { 1.0f, 0.0f, 0.0f, 1.0f } },
-			{ {  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 0.0f, 1.0f } },
-			{ { -0.5f, -0.5f, 0.0f }, { 0.0f, 0.0f, 1.0f, 1.0f } },
-			{ {  0.5f,  0.5f, 0.0f }, { 1.0f, 1.0f, 1.0f, 1.0f } },
-		};
-
-		D3D11_SUBRESOURCE_DATA sd;
-		sd.pSysMem = vertex;
-		sd.SysMemPitch = 0;
-		sd.SysMemSlicePitch = 0;
-
-		hr = pDevice_->CreateBuffer(
-			&vertexDesc,
-			&sd,
-			&pVertexBuffer_);
-		if (FAILED(hr))
-		{
-			return false;
-		}
-	}
-
-	{
-		//インデックスバッファ作成
-		D3D11_BUFFER_DESC indexDesc;
-		indexDesc.ByteWidth = sizeof(WORD) * 6;
-		indexDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		indexDesc.CPUAccessFlags = 0;
-		indexDesc.MiscFlags = 0;
-		indexDesc.StructureByteStride = 0;
-		indexDesc.Usage = D3D11_USAGE_DEFAULT;
-
-		WORD index[] =
-		{
-			0, 1, 2,
-			0, 3, 1,
-		};
-
-		D3D11_SUBRESOURCE_DATA sd;
-		sd.pSysMem = index;
-		sd.SysMemPitch = 0;
-		sd.SysMemSlicePitch = 0;
-
-		hr = pDevice_->CreateBuffer(
-			&indexDesc,
-			&sd,
-			&pIndexBuffer_);
-		if (FAILED(hr))
-		{
-			return false;
-		}
-	}
-
-	//ビューポート作成
-	viewport_.TopLeftX = 0;
-	viewport_.TopLeftY = 0;
-	viewport_.Width = (FLOAT)SCREEN_WIDTH;
-	viewport_.Height = (FLOAT)SCREEN_HEIGHT;
-	viewport_.MinDepth = 0.0f;
-	viewport_.MaxDepth = 1.0f;
-
 	return true;
 }
 
@@ -231,8 +156,6 @@ void Renderer::Uninit()
 	SafeRelease(pRenderTargetView_);
 	SafeRelease(pDepthStencilTexture_);
 	SafeRelease(pDepthStencilView_);
-	SafeRelease(pVertexBuffer_);
-	SafeRelease(pIndexBuffer_);
 }
 
 void Renderer::DrawBegin()
@@ -244,29 +167,6 @@ void Renderer::DrawBegin()
 	pDeviceContext_->ClearRenderTargetView(pRenderTargetView_, SCREEN_COLOR);
 	pDeviceContext_->ClearDepthStencilView(pDepthStencilView_, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	//インプットレイアウト指定
-	pDeviceContext_->IASetInputLayout(VertexShaderManager::GetInputLayout(VertexShaderManager::VS_TEST));
-
-	//ビューポートセット
-	pDeviceContext_->RSSetViewports(1, &viewport_);
-
-	//シェーダセット
-	pDeviceContext_->VSSetShader(VertexShaderManager::GetVertexShader(VertexShaderManager::VS_TEST), nullptr, 0);
-	pDeviceContext_->PSSetShader(PixelShaderManager::GetPixelShader(PixelShaderManager::PS_TEST), nullptr, 0);
-
-	//頂点バッファセット
-	UINT stride = sizeof(VERTEX2D);
-	UINT offset = 0;
-	pDeviceContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
-
-	//インデックスバッファセット
-	pDeviceContext_->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R16_UINT, 0);
-
-	//描画方法
-	pDeviceContext_->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	//描画
-	pDeviceContext_->DrawIndexed(6, 0, 0);
 }
 
 void Renderer::DrawEnd()
@@ -278,4 +178,9 @@ void Renderer::DrawEnd()
 ID3D11Device* Renderer::GetDevice()
 {
 	return pDevice_;
+}
+
+ID3D11DeviceContext* Renderer::GetDeviceContext()
+{
+	return pDeviceContext_;
 }
