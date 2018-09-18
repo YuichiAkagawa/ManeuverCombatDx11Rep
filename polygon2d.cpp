@@ -77,13 +77,15 @@ bool Polygon2D::Init()
 		}
 	}
 
-	//ビューポート作成
-	viewport_.TopLeftX = 0;
-	viewport_.TopLeftY = 0;
-	viewport_.Width = (FLOAT)SCREEN_WIDTH;
-	viewport_.Height = (FLOAT)SCREEN_HEIGHT;
-	viewport_.MinDepth = 0.0f;
-	viewport_.MaxDepth = 1.0f;
+	{
+		//ビューポート作成
+		viewport_.TopLeftX = 0;
+		viewport_.TopLeftY = 0;
+		viewport_.Width = (FLOAT)SCREEN_WIDTH;
+		viewport_.Height = (FLOAT)SCREEN_HEIGHT;
+		viewport_.MinDepth = 0.0f;
+		viewport_.MaxDepth = 1.0f;
+	}
 
 	return true;
 }
