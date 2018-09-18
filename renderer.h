@@ -17,7 +17,6 @@ private:
 	static ID3D11RenderTargetView*	pRenderTargetView_;
 	static ID3D11Texture2D*			pDepthStencilTexture_;
 	static ID3D11DepthStencilView*	pDepthStencilView_;
-
 public:
 	static bool					Init();
 	static void					Uninit();

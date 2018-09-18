@@ -21,7 +21,7 @@ private:
 
 	ID3D11Buffer*			pVertexBuffer_;
 	ID3D11Buffer*			pIndexBuffer_;
-	D3D11_VIEWPORT			viewport_;
+
 public:
 	bool Init();
 	void Uninit();

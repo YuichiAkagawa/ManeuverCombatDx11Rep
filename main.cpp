@@ -6,6 +6,7 @@
 //**-------------------------------------------------------**
 #include <crtdbg.h>
 #include <d3d11.h>
+#include "cube.h"
 #include "polygon2d.h"
 #include "renderer.h"
 #include "resource.h"
@@ -20,6 +21,7 @@ static HWND							g_hWnd;
 static LARGE_INTEGER				g_freq;
 static double						g_freqFrame;
 static Polygon2D*					g_pPolygon2d;
+static Cube*						g_pCube;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
@@ -202,9 +204,16 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 		return false;
 	}
 
-	//ポリゴン生成
-	g_pPolygon2d = new Polygon2D;
-	if (!g_pPolygon2d->Init())
+	////ポリゴン生成
+	//g_pPolygon2d = new Polygon2D;
+	//if (!g_pPolygon2d->Init())
+	//{
+	//	return false;
+	//}
+
+	//キューブ生成
+	g_pCube = new Cube;
+	if (!g_pCube->Init())
 	{
 		return false;
 	}
@@ -214,9 +223,13 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 
 void Uninit()
 {
-	//ポリゴン破棄
-	g_pPolygon2d->Uninit();
-	SafeDelete(g_pPolygon2d);
+	////ポリゴン破棄
+	//g_pPolygon2d->Uninit();
+	//SafeDelete(g_pPolygon2d);
+
+	//キューブ破棄
+	g_pCube->Uninit();
+	SafeDelete(g_pCube);
 
 	//キーボード終了処理
 	UninitKeyboard();
@@ -236,8 +249,11 @@ void Draw()
 	//レンダラー描画開始処理
 	Renderer::DrawBegin();
 
-	//ポリゴン描画
-	g_pPolygon2d->Draw();
+	////ポリゴン描画
+	//g_pPolygon2d->Draw();
+
+	//キューブ描画
+	g_pCube->Draw();
 
 	//レンダラー描画終了処理
 	Renderer::DrawEnd();

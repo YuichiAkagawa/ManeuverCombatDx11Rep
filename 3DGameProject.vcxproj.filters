@@ -15,17 +15,11 @@
     <Filter Include="WICTextureLoader">
       <UniqueIdentifier>{fdc538b6-1ce8-4eeb-995a-129eacf920f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\vertex_shader">
-      <UniqueIdentifier>{cb3b23f9-f54e-4599-b089-05ff89f838c7}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\shader">
+      <UniqueIdentifier>{1d7e1096-d41f-436b-b940-6f1bff33cf93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\vertex_shader">
-      <UniqueIdentifier>{af8b1cca-db83-4ecc-8c58-d8f2ff5a8ea7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\pixel_shader">
-      <UniqueIdentifier>{802bf349-67b0-406a-8a9a-3f4d280c12a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\pixel_shader">
-      <UniqueIdentifier>{dc880078-b06d-4f30-bb77-ffc8eaf2ed70}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\shader">
+      <UniqueIdentifier>{0f4ee78f-cd03-4723-8666-121a8138acc9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,26 +35,26 @@
     <ClCompile Include="WICTextureLoader.cpp">
       <Filter>WICTextureLoader</Filter>
     </ClCompile>
-    <ClCompile Include="vertex_shader.cpp">
-      <Filter>ソース ファイル\vertex_shader</Filter>
-    </ClCompile>
-    <ClCompile Include="vertex_shader_test.cpp">
-      <Filter>ソース ファイル\vertex_shader</Filter>
-    </ClCompile>
-    <ClCompile Include="vertex_shader_manager.cpp">
-      <Filter>ソース ファイル\vertex_shader</Filter>
-    </ClCompile>
-    <ClCompile Include="pixel_shader.cpp">
-      <Filter>ソース ファイル\pixel_shader</Filter>
-    </ClCompile>
-    <ClCompile Include="pixel_shader_test.cpp">
-      <Filter>ソース ファイル\pixel_shader</Filter>
-    </ClCompile>
-    <ClCompile Include="pixel_shader_manager.cpp">
-      <Filter>ソース ファイル\pixel_shader</Filter>
-    </ClCompile>
     <ClCompile Include="polygon2d.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="cube.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="pixel_shader.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="pixel_shader_test.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="vertex_shader.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="vertex_shader_test.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_manager.cpp">
+      <Filter>ソース ファイル\shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,26 +73,26 @@
     <ClInclude Include="WICTextureLoader.h">
       <Filter>WICTextureLoader</Filter>
     </ClInclude>
-    <ClInclude Include="vertex_shader.h">
-      <Filter>ヘッダー ファイル\vertex_shader</Filter>
-    </ClInclude>
-    <ClInclude Include="vertex_shader_test.h">
-      <Filter>ヘッダー ファイル\vertex_shader</Filter>
-    </ClInclude>
-    <ClInclude Include="pixel_shader.h">
-      <Filter>ヘッダー ファイル\pixel_shader</Filter>
-    </ClInclude>
-    <ClInclude Include="pixel_shader_test.h">
-      <Filter>ヘッダー ファイル\pixel_shader</Filter>
-    </ClInclude>
-    <ClInclude Include="vertex_shader_manager.h">
-      <Filter>ヘッダー ファイル\vertex_shader</Filter>
-    </ClInclude>
-    <ClInclude Include="pixel_shader_manager.h">
-      <Filter>ヘッダー ファイル\pixel_shader</Filter>
-    </ClInclude>
     <ClInclude Include="polygon2d.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="cube.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="pixel_shader.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="pixel_shader_test.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_shader.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex_shader_test.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_manager.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="test.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="cube.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

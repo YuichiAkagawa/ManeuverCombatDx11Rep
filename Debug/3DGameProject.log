@@ -1,17 +1,3 @@
-﻿  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11Rep\Debug\test.cso
-  WICTextureLoader.cpp
-  vertex_shader_test.cpp
-  vertex_shader_manager.cpp
-  vertex_shader.cpp
-  renderer.cpp
-  polygon2d.cpp
-  pixel_shader_test.cpp
-  pixel_shader_manager.cpp
-  pixel_shader.cpp
-  main.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  input.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  コードを生成中...
+﻿  cube.cpp
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.pdb (Full PDB)

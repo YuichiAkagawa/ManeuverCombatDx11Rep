@@ -7,8 +7,7 @@
 #include <d3d11.h>
 #include "main.h"
 #include "renderer.h"
-#include "vertex_shader_manager.h"
-#include "pixel_shader_manager.h"
+#include "shader_manager.h"
 #include "polygon2d.h"
 
 bool Polygon2D::Init()
@@ -77,16 +76,6 @@ bool Polygon2D::Init()
 		}
 	}
 
-	{
-		//ビューポート作成
-		viewport_.TopLeftX = 0;
-		viewport_.TopLeftY = 0;
-		viewport_.Width = (FLOAT)SCREEN_WIDTH;
-		viewport_.Height = (FLOAT)SCREEN_HEIGHT;
-		viewport_.MinDepth = 0.0f;
-		viewport_.MaxDepth = 1.0f;
-	}
-
 	return true;
 }
 
@@ -109,15 +98,12 @@ void Polygon2D::Draw()
 	//描画方法
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	//ビューポートセット
-	Renderer::GetDeviceContext()->RSSetViewports(1, &viewport_);
-
 	//インプットレイアウト指定
-	Renderer::GetDeviceContext()->IASetInputLayout(VertexShaderManager::GetInputLayout(VertexShaderManager::VS_TEST));
+	Renderer::GetDeviceContext()->IASetInputLayout(ShaderManager::GetInputLayout(ShaderManager::TEST));
 
 	//シェーダセット
-	Renderer::GetDeviceContext()->VSSetShader(VertexShaderManager::GetVertexShader(VertexShaderManager::VS_TEST), nullptr, 0);
-	Renderer::GetDeviceContext()->PSSetShader(PixelShaderManager::GetPixelShader(PixelShaderManager::PS_TEST), nullptr, 0);
+	Renderer::GetDeviceContext()->VSSetShader(ShaderManager::GetVertexShader(ShaderManager::TEST), nullptr, 0);
+	Renderer::GetDeviceContext()->PSSetShader(ShaderManager::GetPixelShader(ShaderManager::TEST), nullptr, 0);
 
 	//描画
 	Renderer::GetDeviceContext()->DrawIndexed(6, 0, 0);

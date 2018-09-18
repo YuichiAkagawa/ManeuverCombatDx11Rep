@@ -9,8 +9,7 @@
 #include <DirectXMath.h>
 #include <string>
 #include "main.h"
-#include "vertex_shader_manager.h"
-#include "pixel_shader_manager.h"
+#include "shader_manager.h"
 #include "renderer.h"
 
 #if defined(DEBUG) || defined(_DEBUG)
@@ -142,14 +141,8 @@ bool Renderer::Init()
 		pDeviceContext_->RSSetState(rs);
 	}
 
-	//頂点シェーダ
-	if (!VertexShaderManager::Init())
-	{
-		return false;
-	}
-
-	//ピクセルシェーダ
-	if (!PixelShaderManager::Init())
+	//シェーダ初期化
+	if (!ShaderManager::Init())
 	{
 		return false;
 	}
@@ -159,8 +152,7 @@ bool Renderer::Init()
 
 void Renderer::Uninit()
 {
-	VertexShaderManager::Uninit();
-	PixelShaderManager::Uninit();
+	ShaderManager::Uninit();
 	pDeviceContext_->ClearState();
 	SafeRelease(pSwapChain_);
 	SafeRelease(pDevice_);

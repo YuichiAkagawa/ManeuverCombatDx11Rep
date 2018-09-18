@@ -183,29 +183,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cube.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pixel_shader.cpp" />
-    <ClCompile Include="pixel_shader_manager.cpp" />
     <ClCompile Include="pixel_shader_test.cpp" />
     <ClCompile Include="polygon2d.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="shader_manager.cpp" />
     <ClCompile Include="vertex_shader.cpp" />
-    <ClCompile Include="vertex_shader_manager.cpp" />
     <ClCompile Include="vertex_shader_test.cpp" />
     <ClCompile Include="WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cube.h" />
     <ClInclude Include="pixel_shader.h" />
-    <ClInclude Include="pixel_shader_manager.h" />
     <ClInclude Include="pixel_shader_test.h" />
     <ClInclude Include="polygon2d.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="shader_manager.h" />
     <ClInclude Include="vertex_shader.h" />
-    <ClInclude Include="vertex_shader_manager.h" />
     <ClInclude Include="vertex_shader_test.h" />
     <ClInclude Include="WICTextureLoader.h" />
   </ItemGroup>
@@ -216,6 +216,12 @@
     <Image Include="resource\texture\icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="cube.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="test.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
