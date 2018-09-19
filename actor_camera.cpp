@@ -68,13 +68,6 @@ void ActorCamera::Uninit()
 void ActorCamera::Update()
 {
 	mtxView_ = EditMath::LookAtLH(pos_, posAt_, vecUp_);
-
-	mtxProjection_ = EditMath::PerspectiveFovLH(
-		XMConvertToRadians(CAMERA_FOV / 2.0f),
-		(float)SCREEN_WIDTH / SCREEN_HEIGHT,
-		CAMERA_NEAR,
-		CAMERA_FAR);
-
 }
 
 void ActorCamera::Stats()

@@ -25,6 +25,7 @@ public:
 	static DirectX::XMFLOAT3 Transform(const DirectX::XMFLOAT3& vec, const DirectX::XMFLOAT4X4& mtx);
 
 	static DirectX::XMFLOAT4X4 Identity();
+	static DirectX::XMFLOAT4X4 Transpose(const DirectX::XMFLOAT4X4& mtx);
 	static DirectX::XMFLOAT4X4 LookAtLH(const DirectX::XMFLOAT3& pos, const DirectX::XMFLOAT3& posAt, const DirectX::XMFLOAT3& vecUp);
 	static DirectX::XMFLOAT4X4 PerspectiveFovLH(float fov, float aspect, float nearZ, float farZ);
 	static DirectX::XMFLOAT4X4 RotationX(float angle);

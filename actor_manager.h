@@ -65,6 +65,7 @@ public:
 		NAME_CAMERA,
 		NAME_FREE_CAMERA,
 		NAME_CAMERA_SELECTER,
+		NAME_CUBE,
 		NAME_MAX
 	};
 
@@ -73,6 +74,7 @@ public:
 		TAG_UNKNOWN = 0,
 		TAG_CAMERA,
 		TAG_CAMERA_SELECTER,
+		TAG_CUBE,
 		TAG_MAX
 	};
 
@@ -80,6 +82,7 @@ public:
 	{
 		LAYER_UNKNOWN = 0,
 		LAYER_ETC,
+		LAYER_CUBE,
 		LAYER_MAX
 	};
 };

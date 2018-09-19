@@ -68,12 +68,6 @@
     <ClCompile Include="WICTextureLoader.cpp">
       <Filter>WICTextureLoader</Filter>
     </ClCompile>
-    <ClCompile Include="polygon2d.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="cube.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="shader_manager.cpp">
       <Filter>ソース ファイル\shader</Filter>
     </ClCompile>
@@ -140,6 +134,9 @@
     <ClCompile Include="edit_math.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="actor_cube.cpp">
+      <Filter>ソース ファイル\actor\actor3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -156,12 +153,6 @@
     </ClInclude>
     <ClInclude Include="WICTextureLoader.h">
       <Filter>WICTextureLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="polygon2d.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="cube.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="shader_manager.h">
       <Filter>ヘッダー ファイル\shader</Filter>
@@ -240,6 +231,9 @@
     </ClInclude>
     <ClInclude Include="edit_math.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_cube.h">
+      <Filter>ヘッダー ファイル\actor\actor3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

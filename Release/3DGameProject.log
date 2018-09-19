@@ -1,40 +1,7 @@
-﻿  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11Rep\test.cso
-  actor.cpp
-  actor_3d.cpp
-  actor_camera.cpp
-  actor_camera_selecter.cpp
-  actor_character.cpp
-  actor_free_camera.cpp
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  actor_manager.cpp
-  cube.cpp
-  edit_math.cpp
-  imgui.cpp
-  imgui_draw.cpp
-  imgui_impl_dx11.cpp
-  input.cpp
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  main.cpp
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  polygon2d.cpp
-  process_calculator.cpp
-  renderer.cpp
-  sampler_state.cpp
-  scene.cpp
-  scene_game01.cpp
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  コンパイル中...
-  scene_game02.cpp
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  scene_manager.cpp
-  shader.cpp
-  shader_cube.cpp
-  shader_manager.cpp
-  shader_test.cpp
-  texture.cpp
-  WICTextureLoader.cpp
-  コード生成しています。
-  All 1557 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+﻿  コード生成しています。
+  46 of 1590 functions ( 2.9%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    34 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\\3DGameProject.pdb (Full PDB)

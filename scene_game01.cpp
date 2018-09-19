@@ -6,8 +6,8 @@
 //**-------------------------------------------------------**
 #include "actor.h"
 #include "actor_camera_selecter.h"
+#include "actor_cube.h"
 #include "actor_manager.h"
-#include "cube.h"
 #include "imgui/imgui.h"
 #include "input.h"
 #include "main.h"
@@ -35,11 +35,7 @@ bool SceneGame01::Init()
 	actorManager_.CreateActor(pCameraSelecter_);
 
 	//キューブ生成
-	pCube_ = new Cube;
-	if (!pCube_->Init())
-	{
-		return false;
-	}
+	actorManager_.CreateActor(new ActorCube(&actorManager_));
 
 	//時間初期化
 	startTime_ = timeGetTime();
@@ -54,9 +50,6 @@ bool SceneGame01::Init()
 
 void SceneGame01::Uninit()
 {
-	pCube_->Uninit();
-	SafeDelete(pCube_);
-
 	actorManager_.Uninit();
 	pTextureManager_->Uninit();
 	SafeDelete(pTextureManager_);
@@ -74,6 +67,12 @@ void SceneGame01::Update()
 	//時間更新
 	time_ = (float(timeGetTime() - startTime_)) / 1000.0f;
 
+	//次のカメラを選択
+	if (GetKeyboardTrigger(DIK_C))
+	{
+		pCameraSelecter_->SelectNextType();
+	}
+
 	if (GetKeyboardTrigger(DIK_SPACE))
 	{
 		SceneManager::SetScene(new SceneGame02);
@@ -82,6 +81,5 @@ void SceneGame01::Update()
 
 void SceneGame01::Draw()
 {
-	pCube_->Draw(pTextureManager_);
 	actorManager_.Draw();
 }

@@ -90,6 +90,15 @@ XMFLOAT4X4 EditMath::Identity()
 	return mtx;
 }
 
+DirectX::XMFLOAT4X4 EditMath::Transpose(const DirectX::XMFLOAT4X4& mtx)
+{
+	XMMATRIX xmMtx = XMLoadFloat4x4(&mtx);
+	xmMtx = XMMatrixTranspose(xmMtx);
+	XMFLOAT4X4 mtxReturn;
+	XMStoreFloat4x4(&mtxReturn, xmMtx);
+	return mtxReturn;
+}
+
 XMFLOAT4X4 EditMath::LookAtLH(const XMFLOAT3& pos, const XMFLOAT3& posAt, const XMFLOAT3& vecUp)
 {
 	XMVECTOR xmPos = XMLoadFloat3(&pos);

@@ -9,7 +9,9 @@
 #include "actor.h"
 #include "actor_3d.h"
 #include "actor_camera.h"
+#include "actor_camera_selecter.h"
 #include "actor_character.h"
+#include "actor_cube.h"
 #include "actor_free_camera.h"
 #include "main.h"
 #include "process_calculator.h"
@@ -130,8 +132,17 @@ void ActorManager::Stats()
 				CheckType(&typeid(ActorCharcter*));
 				ImGui::EndMenu();
 			}
-
+			if (ImGui::BeginMenu("ActorCube"))
+			{
+				CheckType(&typeid(ActorCube*));
+				ImGui::EndMenu();
+			}
 			CheckType(&typeid(Actor3d*));
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("ActorCameraSelecter"))
+		{
+			CheckType(&typeid(ActorCameraSelecter*));
 			ImGui::EndMenu();
 		}
 		CheckType(&typeid(Actor*));

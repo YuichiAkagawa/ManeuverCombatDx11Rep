@@ -29,7 +29,6 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
-	Cube* pCube_;
 };
 
 #endif // !_SCENE_GAME01_H_
