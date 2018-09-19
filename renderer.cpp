@@ -8,6 +8,7 @@
 #include <DirectXMath.h>
 #include <string>
 #include "main.h"
+#include "sampler_state.h"
 #include "shader_manager.h"
 #include "renderer.h"
 
@@ -146,11 +147,18 @@ bool Renderer::Init()
 		return false;
 	}
 
+	//サンプラーステート初期化
+	if (!SamplerState::Init())
+	{
+		return false;
+	}
+
 	return true;
 }
 
 void Renderer::Uninit()
 {
+	SamplerState::Uninit();
 	ShaderManager::Uninit();
 	pDeviceContext_->ClearState();
 	SafeRelease(pSwapChain_);

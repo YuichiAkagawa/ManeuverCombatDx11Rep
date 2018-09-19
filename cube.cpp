@@ -7,6 +7,7 @@
 
 #include "main.h"
 #include "renderer.h"
+#include "sampler_state.h"
 #include "shader_manager.h"
 #include "shader_cube.h"
 #include "texture.h"
@@ -132,22 +133,6 @@ bool Cube::Init()
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::CUBE), 0, NULL, &cb, 0, 0);
 	}
 
-	//テクスチャサンプラー
-	{
-		D3D11_SAMPLER_DESC smpDesc;
-
-		::ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
-		smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-		smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-		smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-		HRESULT hr = Renderer::GetDevice() ->CreateSamplerState(&smpDesc, &pSamplerState_);
-		if (FAILED(hr))
-		{
-			return false;
-		}
-	}
-
 	return true;
 }
 
@@ -181,7 +166,7 @@ void Cube::Draw(TextureManager* pTextureManager)
 
 	//テクスチャセット
 	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, pTextureManager->GetInstance(TextureManager::SAMPLE)->GetTexture());
-	Renderer::GetDeviceContext()->PSSetSamplers(0, 1, &pSamplerState_);
+	Renderer::GetDeviceContext()->PSSetSamplers(0, 1, SamplerState::GetSamplerState(SamplerState::SAMPLER_TYPE_01));
 
 	//描画
 	Renderer::GetDeviceContext()->DrawIndexed(36, 0, 0);

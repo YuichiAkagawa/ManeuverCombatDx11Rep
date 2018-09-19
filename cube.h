@@ -22,8 +22,6 @@ private:
 
 	ID3D11Buffer*			pVertexBuffer_;
 	ID3D11Buffer*			pIndexBuffer_;
-
-	ID3D11SamplerState* pSamplerState_;
 public:
 	bool Init();
 	void Uninit();

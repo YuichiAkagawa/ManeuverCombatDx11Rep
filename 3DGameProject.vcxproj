@@ -212,6 +212,7 @@
     <ClCompile Include="polygon2d.cpp" />
     <ClCompile Include="process_calculator.cpp" />
     <ClCompile Include="renderer.cpp" />
+    <ClCompile Include="sampler_state.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="scene_game01.cpp" />
     <ClCompile Include="scene_game02.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="sampler_state.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="scene_game01.h" />
     <ClInclude Include="scene_game02.h" />
