@@ -7,6 +7,10 @@
 #include <typeinfo>
 #include "imgui/imgui.h"
 #include "actor.h"
+#include "actor_3d.h"
+#include "actor_camera.h"
+#include "actor_character.h"
+#include "actor_free_camera.h"
 #include "main.h"
 #include "process_calculator.h"
 #include "texture.h"
@@ -108,10 +112,32 @@ void ActorManager::Stats()
 	ImGui::Begin("Stats");
 	if (ImGui::BeginMenu("Actor"))
 	{
+		if (ImGui::BeginMenu("Actor3d"))
+		{
+			if (ImGui::BeginMenu("ActorCamera"))
+			{
+				if (ImGui::BeginMenu("ActorFreeCamera"))
+				{
+					CheckType(&typeid(ActorFreeCamera*));
+					ImGui::EndMenu();
+				}
+				CheckType(&typeid(ActorCamera*));
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("ActorCharcter"))
+			{
 
+				CheckType(&typeid(ActorCharcter*));
+				ImGui::EndMenu();
+			}
+
+			CheckType(&typeid(Actor3d*));
+			ImGui::EndMenu();
+		}
 		CheckType(&typeid(Actor*));
 		ImGui::EndMenu();
 	}
+
 	ImGui::End();
 
 	//Stats•\Ž¦

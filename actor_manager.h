@@ -62,18 +62,24 @@ public:
 	enum NAME
 	{
 		NAME_UNKNOWN = 0,
+		NAME_CAMERA,
+		NAME_FREE_CAMERA,
+		NAME_CAMERA_SELECTER,
 		NAME_MAX
 	};
 
 	enum TAG
 	{
 		TAG_UNKNOWN = 0,
+		TAG_CAMERA,
+		TAG_CAMERA_SELECTER,
 		TAG_MAX
 	};
 
 	enum LAYER
 	{
 		LAYER_UNKNOWN = 0,
+		LAYER_ETC,
 		LAYER_MAX
 	};
 };

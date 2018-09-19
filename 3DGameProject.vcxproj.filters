@@ -36,6 +36,24 @@
     <Filter Include="ヘッダー ファイル\scene">
       <UniqueIdentifier>{3bc32096-38fe-4a07-aeb3-7e68cbf93151}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\actor\actor3d">
+      <UniqueIdentifier>{b688e8f9-63c1-4950-a2d6-5f347ae6df49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\actor\actor3d">
+      <UniqueIdentifier>{30f3b6bf-1960-4bd3-9835-bc440b4ac7a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\actor\actor3d\actor_character">
+      <UniqueIdentifier>{e1fb36e1-635d-45e4-8ee8-4fbff0f5712d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\actor\actor3d\actor_character">
+      <UniqueIdentifier>{62d56da7-f8f7-4699-9dd5-c815c87575f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\actor\actor3d\actor_camera">
+      <UniqueIdentifier>{f5205e39-3cf6-4320-a2a5-9ede58fcb322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\actor\actor3d\actor_camera">
+      <UniqueIdentifier>{02f936f6-838a-41b3-b74c-0667ac5e3b4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -102,6 +120,24 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="sampler_state.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_3d.cpp">
+      <Filter>ソース ファイル\actor\actor3d</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_character.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_character</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_camera.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_camera</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_camera_selecter.cpp">
+      <Filter>ソース ファイル\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_free_camera.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_camera</Filter>
+    </ClCompile>
+    <ClCompile Include="edit_math.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -185,6 +221,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="sampler_state.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_3d.h">
+      <Filter>ヘッダー ファイル\actor\actor3d</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_character.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_character</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_camera.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_camera_selecter.h">
+      <Filter>ヘッダー ファイル\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_free_camera.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_camera</Filter>
+    </ClInclude>
+    <ClInclude Include="edit_math.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,6 +9,7 @@
 #include "imgui/imgui.h"
 #include "main.h"
 #include "process_calculator.h"
+#include "texture.h"
 #include "actor.h"
 
 Actor::Actor(ActorManager* pActorManager)
@@ -104,6 +105,11 @@ ProcessCalculator& Actor::GetUpdateProcessCalc()
 ProcessCalculator& Actor::GetDrawProcessCalc()
 {
 	return drawProcessCalc_;
+}
+
+void Actor::SetTextureManager(TextureManager* pTextureManager)
+{
+	pTextureManager_ = pTextureManager;
 }
 
 void Actor::SetName(int name)

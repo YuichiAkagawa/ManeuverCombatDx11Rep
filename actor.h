@@ -13,11 +13,13 @@
 #include "process_calculator.h"
 
 class ActorManager;
+class TextureManager;
 
 class Actor
 {
 protected:
 	ActorManager* pActorManager_;
+	TextureManager* pTextureManager_;
 	int name_;
 	std::string nameUnique_;
 	const std::type_info* typeInfo_;
@@ -52,6 +54,7 @@ public:
 	ProcessCalculator& GetDrawProcessCalc();
 
 	//Setter
+	void SetTextureManager(TextureManager* pTextureManager);
 	void SetName(int name);
 	void SetNameUnique(const std::string& nameUnique);
 	void SetTypeInfo(const std::type_info* typeInfo);

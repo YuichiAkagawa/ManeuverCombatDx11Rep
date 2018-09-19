@@ -9,6 +9,7 @@
 
 #include <vector>
 #include "actor_manager.h"
+#include "actor_camera_selecter.h"
 
 class TextureManager;
 
@@ -16,6 +17,7 @@ class Scene
 {
 protected:
 	ActorManager actorManager_;
+	ActorCameraSelecter* pCameraSelecter_;
 	std::vector <int> sceneTexture_;
 	TextureManager* pTextureManager_;
 	unsigned int startTime_;

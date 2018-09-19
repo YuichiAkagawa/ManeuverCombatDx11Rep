@@ -5,6 +5,7 @@
 //**
 //**-------------------------------------------------------**
 #include "actor.h"
+#include "actor_camera_selecter.h"
 #include "actor_manager.h"
 #include "cube.h"
 #include "imgui/imgui.h"
@@ -29,6 +30,10 @@ bool SceneGame01::Init()
 	//テクスチャマネージャセット
 	actorManager_.SetTextureManager(pTextureManager_);
 
+	//セレクター生成
+	pCameraSelecter_ = new ActorCameraSelecter(&actorManager_);
+	actorManager_.CreateActor(pCameraSelecter_);
+
 	//キューブ生成
 	pCube_ = new Cube;
 	if (!pCube_->Init())
@@ -50,6 +55,8 @@ bool SceneGame01::Init()
 void SceneGame01::Uninit()
 {
 	pCube_->Uninit();
+	SafeDelete(pCube_);
+
 	actorManager_.Uninit();
 	pTextureManager_->Uninit();
 	SafeDelete(pTextureManager_);

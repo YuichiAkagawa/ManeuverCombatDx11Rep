@@ -9,14 +9,15 @@
 #define _POLYGON2D_H_
 
 #include <DirectXMath.h>
+using namespace DirectX;
 
 class Polygon2D
 {
 private:
 	struct VERTEX2D
 	{
-		DirectX::XMFLOAT3 pos;
-		DirectX::XMFLOAT4 color;
+		XMFLOAT3 pos;
+		XMFLOAT4 color;
 	};
 
 	ID3D11Buffer*			pVertexBuffer_;

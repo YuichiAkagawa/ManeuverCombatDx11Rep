@@ -6,6 +6,7 @@
 //**-------------------------------------------------------**
 #include <crtdbg.h>
 #include <d3d11.h>
+#include <DirectXMath.h>
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_dx11.h"
@@ -233,6 +234,12 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 		return false;
 	}
 	
+	//DirectXMath対応チェック
+	if (!DirectX::XMVerifyCPUSupport())
+	{
+		return false;
+	}
+
 	//ImGuiセットアップ
 	ImGuiSetup();
 
