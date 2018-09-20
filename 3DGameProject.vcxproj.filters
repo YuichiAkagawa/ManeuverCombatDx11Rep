@@ -137,6 +137,12 @@
     <ClCompile Include="actor_cube.cpp">
       <Filter>ソース ファイル\actor\actor3d</Filter>
     </ClCompile>
+    <ClCompile Include="actor_fbx_model.cpp">
+      <Filter>ソース ファイル\actor\actor3d</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_fbx.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -235,12 +241,21 @@
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="actor_fbx_model.h">
+      <Filter>ヘッダー ファイル\actor\actor3d</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_fbx.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="test.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="cube.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="fbx.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

@@ -7,6 +7,7 @@
 #include "actor.h"
 #include "actor_camera_selecter.h"
 #include "actor_cube.h"
+#include "actor_fbx_model.h"
 #include "actor_manager.h"
 #include "imgui/imgui.h"
 #include "input.h"
@@ -35,7 +36,10 @@ bool SceneGame01::Init()
 	actorManager_.CreateActor(pCameraSelecter_);
 
 	//キューブ生成
-	actorManager_.CreateActor(new ActorCube(&actorManager_));
+	//actorManager_.CreateActor(new ActorCube(&actorManager_));
+
+	//FBXモデル生成
+	actorManager_.CreateActor(new ActorFbxModel(&actorManager_));
 
 	//時間初期化
 	startTime_ = timeGetTime();

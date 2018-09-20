@@ -1,4 +1,6 @@
-﻿  main.cpp
+﻿  actor_free_camera.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  actor_fbx_model.cpp
+  コードを生成中...
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.pdb (Full PDB)

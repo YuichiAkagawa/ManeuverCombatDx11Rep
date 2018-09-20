@@ -9,6 +9,7 @@
 #include "renderer.h"
 #include "shader.h"
 #include "shader_cube.h"
+#include "shader_fbx.h"
 #include "shader_test.h"
 #include "shader_manager.h"
 
@@ -18,6 +19,7 @@ bool ShaderManager::Create()
 {
 	pShader_[CUBE] = new ShaderCube;
 	pShader_[TEST] = new ShaderTest;
+	pShader_[FBX] = new ShaderFbx;
 
 	return true;
 }

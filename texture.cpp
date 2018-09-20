@@ -4,6 +4,7 @@
 //**               Author: Akagawa Yuichi
 //**
 //**-------------------------------------------------------**
+#include <codecvt> 
 #include "main.h"
 #include "renderer.h"
 #include "scene.h"
@@ -16,7 +17,12 @@ bool Texture::Init(int textureName)
 {
 	//テクスチャ読み込み
 	ID3D11Resource *pResource = nullptr;
-	HRESULT hr = DirectX::CreateWICTextureFromFile(Renderer::GetDevice(), g_pTextureFile[textureName].fileName, &pResource, &pTexture_);
+
+	//stringをwstringに変換
+	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> wsc;
+	std::wstring wsFileName = wsc.from_bytes(g_pTextureFile[textureName].fileName.c_str());
+
+	HRESULT hr = DirectX::CreateWICTextureFromFile(Renderer::GetDevice(), wsFileName.c_str(), &pResource, &pTexture_);
 	if (FAILED(hr))
 	{
 		MessageBox(nullptr, "テクスチャの読み込みに失敗しました", "ERROR", MB_OK);

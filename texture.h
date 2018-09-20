@@ -9,17 +9,18 @@
 #define _TEXTURE_H_
 
 #include <d3d11.h>
+#include <string>
 
-typedef struct
+struct TEXTURE_DATA
 {
-	const wchar_t fileName[256];
+	std::string fileName;
 	unsigned int width;
 	unsigned int height;
-} TEXTURE_DATA;
+};
 
 static const TEXTURE_DATA g_pTextureFile[] =
 {
-	{ L"resource/texture/sample.png", 256, 256 },
+	{ "resource/texture/sample.png", 256, 256 },
 };
 
 class Texture

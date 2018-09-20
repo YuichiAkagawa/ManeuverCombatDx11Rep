@@ -22,6 +22,7 @@ public:
 		UNKNOWN = -1,
 		TEST,
 		CUBE,
+		FBX,
 		MAX
 	};
 
