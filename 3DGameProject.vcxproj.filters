@@ -145,9 +145,6 @@
     <ClInclude Include="input.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="renderer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -235,12 +232,9 @@
     <ClInclude Include="actor_cube.h">
       <Filter>ヘッダー ファイル\actor\actor3d</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="3DGameProject.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="resource\texture\icon.ico" />
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="test.hlsl">
@@ -249,5 +243,11 @@
     <FxCompile Include="cube.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="3DGameProject.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\texture\icon.ico" />
   </ItemGroup>
 </Project>

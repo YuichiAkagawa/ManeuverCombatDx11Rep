@@ -248,9 +248,9 @@
     <ClInclude Include="imgui\stb_truetype.h" />
     <ClInclude Include="process_calculator.h" />
     <ClInclude Include="renderer.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="sampler_state.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="scene_game01.h" />
@@ -262,12 +262,6 @@
     <ClInclude Include="shader_test.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="WICTextureLoader.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="3DGameProject.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="resource\texture\icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="cube.hlsl">
@@ -282,6 +276,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="3DGameProject.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\texture\icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
