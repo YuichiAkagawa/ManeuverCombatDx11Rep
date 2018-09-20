@@ -10,31 +10,31 @@
 
 using namespace DirectX;
 
-XMFLOAT3 EditMath::Add(const XMFLOAT3& valueLeft, const XMFLOAT3& valueRight)
+XMFLOAT3 EditMath::Addition(const XMFLOAT3& valueLeft, const XMFLOAT3& valueRight)
 {
 	XMFLOAT3 xmFloat3 = { valueLeft.x + valueRight.x, valueLeft.y + valueRight.y, valueLeft.z + valueRight.z };
 	return xmFloat3;
 }
 
-XMFLOAT3 EditMath::Sub(const XMFLOAT3& valueLeft, const XMFLOAT3& valueRight)
+XMFLOAT3 EditMath::Subtraction(const XMFLOAT3& valueLeft, const XMFLOAT3& valueRight)
 {
 	XMFLOAT3 xmFloat3 = { valueLeft.x - valueRight.x, valueLeft.y - valueRight.y, valueLeft.z - valueRight.z };
 	return xmFloat3;
 }
 
-XMFLOAT3 EditMath::Mul(const DirectX::XMFLOAT3& valueLeft, float valueRight)
+XMFLOAT3 EditMath::Multiplication(const DirectX::XMFLOAT3& valueLeft, float valueRight)
 {
 	XMFLOAT3 xmFloat3 = { valueLeft.x * valueRight, valueLeft.y * valueRight, valueLeft.z * valueRight };
 	return xmFloat3;
 }
 
-XMFLOAT3 EditMath::Mul(const XMFLOAT3& valueLeft, const XMFLOAT3& valueRight)
+XMFLOAT3 EditMath::Multiplication(const XMFLOAT3& valueLeft, const XMFLOAT3& valueRight)
 {
 	XMFLOAT3 xmFloat3 = { valueLeft.x * valueRight.x, valueLeft.y * valueRight.y, valueLeft.z * valueRight.z };
 	return xmFloat3;
 }
 
-XMFLOAT3 EditMath::Div(const XMFLOAT3& valueLeft, const XMFLOAT3& valueRight)
+XMFLOAT3 EditMath::Division(const XMFLOAT3& valueLeft, const XMFLOAT3& valueRight)
 {
 	XMFLOAT3 xmFloat3 = { valueLeft.x / valueRight.x, valueLeft.y / valueRight.y, valueLeft.z / valueRight.z };
 	return xmFloat3;
@@ -122,6 +122,14 @@ XMFLOAT4X4 EditMath::PerspectiveFovLH(float fov, float aspect, float nearZ, floa
 	return mtxProjection;
 }
 
+XMFLOAT4X4 EditMath::Scaling(float x, float y, float z)
+{
+	XMMATRIX xmMtx = XMMatrixScaling(x, y, z);
+	XMFLOAT4X4 mtx;
+	XMStoreFloat4x4(&mtx, xmMtx);
+	return mtx;
+}
+
 XMFLOAT4X4 EditMath::RotationX(float angle)
 {
 	XMMATRIX xmMtx = XMMatrixRotationX(angle);
@@ -153,4 +161,30 @@ XMFLOAT4X4 EditMath::RotationAxis(const XMFLOAT3& vec, float angle)
 	XMFLOAT4X4 mtx;
 	XMStoreFloat4x4(&mtx, xmMtx);
 	return mtx;
+}
+
+XMFLOAT4X4 EditMath::Translation(float x, float y, float z)
+{
+	XMMATRIX xmMtx = XMMatrixTranslation(x, y, z);
+	XMFLOAT4X4 mtx;
+	XMStoreFloat4x4(&mtx, xmMtx);
+	return mtx;
+}
+
+XMFLOAT4X4 EditMath::Translation(const DirectX::XMFLOAT3& value)
+{
+	XMMATRIX xmMtx = XMMatrixTranslation(value.x, value.y, value.z);
+	XMFLOAT4X4 mtx;
+	XMStoreFloat4x4(&mtx, xmMtx);
+	return mtx;
+}
+
+XMFLOAT4X4 EditMath::Multiplication(const XMFLOAT4X4& valueLeft, const XMFLOAT4X4& valueRight)
+{
+	XMMATRIX xmMtxLeft = XMLoadFloat4x4(&valueLeft);
+	XMMATRIX xmMtxRight = XMLoadFloat4x4(&valueRight);
+	XMMATRIX xmMtxReturn = XMMatrixMultiply(xmMtxLeft, xmMtxRight);
+	XMFLOAT4X4 mtxReturn;
+	XMStoreFloat4x4(&mtxReturn, xmMtxReturn);
+	return mtxReturn;
 }

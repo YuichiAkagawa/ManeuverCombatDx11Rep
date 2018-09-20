@@ -43,7 +43,7 @@ bool ActorFreeCamera::Init()
 	pos_ = DEFAULT_POS;
 	posAt_ = DEFAULT_POS_AT;
 
-	vecFront_ = EditMath::Sub(posAt_, pos_);
+	vecFront_ = EditMath::Subtraction(posAt_, pos_);
 	vecFront_ = EditMath::Normalize(vecFront_);
 
 	vecUp_ = XMFLOAT3(0.0f, 1.0f, 0.0f);
@@ -70,14 +70,14 @@ void ActorFreeCamera::Uninit()
 
 void ActorFreeCamera::Update()
 {
-	vecFront_ = EditMath::Sub(posAt_, pos_);
+	vecFront_ = EditMath::Subtraction(posAt_, pos_);
 	vecFront_ = EditMath::Normalize(vecFront_);
 
 	vecRight_ = EditMath::Cross(vecUp_, vecFront_);
 	vecRight_ = EditMath::Normalize(vecRight_);
 
-	vecCamAt_ = EditMath::Sub(posAt_, pos_);
-	vecAtCam_ = EditMath::Sub(pos_, posAt_);
+	vecCamAt_ = EditMath::Subtraction(posAt_, pos_);
+	vecAtCam_ = EditMath::Subtraction(pos_, posAt_);
 
 	//前進
 	if (GetKeyboardPress(DIK_W))
@@ -85,9 +85,9 @@ void ActorFreeCamera::Update()
 		XMFLOAT3 vec = vecFront_;
 		vec.y = 0.0f;
 		vec = EditMath::Normalize(vec);
-		vec = EditMath::Mul(vec, CAM_SPEED);
-		pos_ = EditMath::Add(pos_, vec);
-		posAt_ = EditMath::Add(posAt_, vec);
+		vec = EditMath::Multiplication(vec, CAM_SPEED);
+		pos_ = EditMath::Addition(pos_, vec);
+		posAt_ = EditMath::Addition(posAt_, vec);
 	}
 
 	//後退
@@ -96,9 +96,9 @@ void ActorFreeCamera::Update()
 		XMFLOAT3 vec = vecFront_;
 		vec.y = 0.0f;
 		vec = EditMath::Normalize(vec);
-		vec = EditMath::Mul(vec, CAM_SPEED);
-		pos_ = EditMath::Sub(pos_, vec);
-		posAt_ = EditMath::Sub(posAt_, vec);
+		vec = EditMath::Multiplication(vec, CAM_SPEED);
+		pos_ = EditMath::Subtraction(pos_, vec);
+		posAt_ = EditMath::Subtraction(posAt_, vec);
 	}
 
 	//右移動
@@ -107,9 +107,9 @@ void ActorFreeCamera::Update()
 		XMFLOAT3 vec = vecRight_;
 		vec.y = 0.0f;
 		vec = EditMath::Normalize(vec);
-		vec = EditMath::Mul(vec, CAM_SPEED);
-		pos_ = EditMath::Add(pos_, vec);
-		posAt_ = EditMath::Add(posAt_, vec);
+		vec = EditMath::Multiplication(vec, CAM_SPEED);
+		pos_ = EditMath::Addition(pos_, vec);
+		posAt_ = EditMath::Addition(posAt_, vec);
 	}
 
 	//左移動
@@ -118,25 +118,25 @@ void ActorFreeCamera::Update()
 		XMFLOAT3 vec = vecRight_;
 		vec.y = 0.0f;
 		vec = EditMath::Normalize(vec);
-		vec = EditMath::Mul(vec, CAM_SPEED);
-		pos_ = EditMath::Sub(pos_, vec);
-		posAt_ = EditMath::Sub(posAt_, vec);
+		vec = EditMath::Multiplication(vec, CAM_SPEED);
+		pos_ = EditMath::Subtraction(pos_, vec);
+		posAt_ = EditMath::Subtraction(posAt_, vec);
 	}
 
 	//上昇
 	if (GetKeyboardPress(DIK_E))
 	{
-		XMFLOAT3 vec = EditMath::Mul(vecUp_, CAM_SPEED);
-		pos_ = EditMath::Add(pos_, vec);
-		posAt_ = EditMath::Add(posAt_, vec);
+		XMFLOAT3 vec = EditMath::Multiplication(vecUp_, CAM_SPEED);
+		pos_ = EditMath::Addition(pos_, vec);
+		posAt_ = EditMath::Addition(posAt_, vec);
 	}
 
 	//下降
 	if (GetKeyboardPress(DIK_Q))
 	{
-		XMFLOAT3 vec = EditMath::Mul(vecUp_, CAM_SPEED);
-		pos_ = EditMath::Sub(pos_, vec);
-		posAt_ = EditMath::Sub(posAt_, vec);
+		XMFLOAT3 vec = EditMath::Multiplication(vecUp_, CAM_SPEED);
+		pos_ = EditMath::Subtraction(pos_, vec);
+		posAt_ = EditMath::Subtraction(posAt_, vec);
 	}
 
 	//視点右移動
@@ -148,7 +148,7 @@ void ActorFreeCamera::Update()
 		vecFront_ = EditMath::Transform(vecFront_, mtxRotY);
 		vecRight_ = EditMath::Transform(vecRight_, mtxRotY);
 
-		posAt_ = EditMath::Add(pos_, vecCamAt_);
+		posAt_ = EditMath::Addition(pos_, vecCamAt_);
 	}
 
 	//視点左移動
@@ -160,7 +160,7 @@ void ActorFreeCamera::Update()
 		vecFront_ = EditMath::Transform(vecFront_, mtxRotY);
 		vecRight_ = EditMath::Transform(vecRight_, mtxRotY);
 
-		posAt_ = EditMath::Add(pos_, vecCamAt_);
+		posAt_ = EditMath::Addition(pos_, vecCamAt_);
 	}
 
 	//視点上移動
@@ -181,7 +181,7 @@ void ActorFreeCamera::Update()
 			vecCamAt_ = EditMath::Transform(vecCamAt_, mtxRot);
 			vecRight_ = EditMath::Transform(vecRight_, mtxRot);
 
-			posAt_ = EditMath::Add(pos_, vecCamAt_);
+			posAt_ = EditMath::Addition(pos_, vecCamAt_);
 		}
 	}
 
@@ -203,7 +203,7 @@ void ActorFreeCamera::Update()
 			vecCamAt_ = EditMath::Transform(vecCamAt_, mtxRot);
 			vecRight_ = EditMath::Transform(vecRight_, mtxRot);
 
-			posAt_ = EditMath::Add(pos_, vecCamAt_);
+			posAt_ = EditMath::Addition(pos_, vecCamAt_);
 		}
 	}
 

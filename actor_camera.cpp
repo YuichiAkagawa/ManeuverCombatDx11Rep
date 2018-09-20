@@ -40,7 +40,7 @@ bool ActorCamera::Init()
 	pos_ = DEFAULT_POS;
 	posAt_ = DEFAULT_POS_AT;
 
-	vecFront_ = EditMath::Sub(posAt_, pos_);
+	vecFront_ = EditMath::Subtraction(posAt_, pos_);
 	vecFront_ = EditMath::Normalize(vecFront_);
 
 	vecUp_ = XMFLOAT3(0.0f, 1.0f, 0.0f);
