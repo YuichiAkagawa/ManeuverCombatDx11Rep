@@ -36,7 +36,7 @@ bool SceneGame01::Init()
 	actorManager_.CreateActor(pCameraSelecter_);
 
 	//キューブ生成
-	//actorManager_.CreateActor(new ActorCube(&actorManager_));
+	actorManager_.CreateActor(new ActorCube(&actorManager_));
 
 	//FBXモデル生成
 	actorManager_.CreateActor(new ActorFbxModel(&actorManager_));

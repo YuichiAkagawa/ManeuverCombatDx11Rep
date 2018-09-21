@@ -40,18 +40,19 @@ bool ActorCamera::Init()
 	pos_ = DEFAULT_POS;
 	posAt_ = DEFAULT_POS_AT;
 
-	vecFront_ = EditMath::Subtraction(posAt_, pos_);
-	vecFront_ = EditMath::Normalize(vecFront_);
+	EditMath::Subtraction(vecFront_, posAt_, pos_);
+	EditMath::Normalize(vecFront_, vecFront_);
 
 	vecUp_ = XMFLOAT3(0.0f, 1.0f, 0.0f);
-	vecUp_ = EditMath::Normalize(vecUp_);
+	EditMath::Normalize(vecUp_, vecUp_);
 
-	vecRight_ = EditMath::Cross(vecUp_, vecFront_);
-	vecRight_ = EditMath::Normalize(vecRight_);
+	EditMath::Cross(vecRight_, vecUp_, vecFront_);
+	EditMath::Normalize(vecRight_, vecRight_);
 
-	mtxView_ = EditMath::LookAtLH(pos_, posAt_, vecUp_);
+	EditMath::LookAtLH(mtxView_, pos_, posAt_, vecUp_);
 
-	mtxProjection_ = EditMath::PerspectiveFovLH(
+	EditMath::PerspectiveFovLH(
+		mtxProjection_,
 		XMConvertToRadians(CAMERA_FOV / 2.0f),
 		(float)SCREEN_WIDTH / SCREEN_HEIGHT,
 		CAMERA_NEAR,
@@ -67,7 +68,7 @@ void ActorCamera::Uninit()
 
 void ActorCamera::Update()
 {
-	mtxView_ = EditMath::LookAtLH(pos_, posAt_, vecUp_);
+	EditMath::LookAtLH(mtxView_, pos_, posAt_, vecUp_);
 }
 
 void ActorCamera::Stats()

@@ -143,11 +143,11 @@ void ActorCube::Update()
 {
 	{
 		ShaderCube::CONSTANT_BUFFER cb;
-		cb.mtxWorld = EditMath::Transpose(mtxWorld_);
-		cb.mtxView = EditMath::Transpose(pCameraSelecter_->GetSelectCamera()->GetMtxView());
-		cb.mtxProj = EditMath::Transpose(pCameraSelecter_->GetSelectCamera()->GetMtxProjection());
+		EditMath::Transpose(cb.mtxWorld, mtxWorld_);
+		EditMath::Transpose(cb.mtxView, pCameraSelecter_->GetSelectCamera()->GetMtxView());
+		EditMath::Transpose(cb.mtxProj, pCameraSelecter_->GetSelectCamera()->GetMtxProjection());
 		XMFLOAT3 vecLight = { 1.0f, -1.0f, 1.0f };
-		vecLight = EditMath::Normalize(vecLight);
+		EditMath::Normalize(vecLight, vecLight);
 		cb.vecLight = { -vecLight.x, -vecLight.y, -vecLight.z, 1.0f };
 
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::CUBE), 0, NULL, &cb, 0, 0);

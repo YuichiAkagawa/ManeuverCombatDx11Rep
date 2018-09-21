@@ -15,7 +15,7 @@ using namespace DirectX;
 
 Actor3d::Actor3d(ActorManager* pActorManager) : Actor(pActorManager)
 {
-	mtxWorld_ = EditMath::Identity();
+	EditMath::Identity(mtxWorld_);
 }
 
 Actor3d::~Actor3d()

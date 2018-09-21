@@ -43,11 +43,14 @@ bool ActorFbxModel::Init()
 	//FBX読み込み
 	pFbxManager_ = FbxManager::Create();
 	pFbxScene_ = FbxScene::Create(pFbxManager_, "fbxscene");
-	FbxString FileName("humanoid.fbx");
+	FbxString FileName("sample.fbx");
 	FbxImporter *fbxImporter = FbxImporter::Create(pFbxManager_, "imp");
 	fbxImporter->Initialize(FileName.Buffer(), -1, pFbxManager_->GetIOSettings());
 	fbxImporter->Import(pFbxScene_);
 	fbxImporter->Destroy();
+
+	// 三角形化(三角形以外のデータでもコレで安心)
+	TriangulateRecursive(pFbxScene_->GetRootNode());
 
 	//子ノードを検索してメッシュを見つけたら格納
 	for (int i = 0; i < pFbxScene_->GetRootNode()->GetChildCount(); i++) {
@@ -60,9 +63,9 @@ bool ActorFbxModel::Init()
 	//頂点情報取得
 	pVertices_ = new VERTEX[pMesh_->GetControlPointsCount()];
 	for (int i = 0; i < pMesh_->GetControlPointsCount(); i++) {
-		pVertices_[i].pos.x = (FLOAT)pMesh_->GetControlPointAt(i)[0];
-		pVertices_[i].pos.y = (FLOAT)pMesh_->GetControlPointAt(i)[1];
-		pVertices_[i].pos.z = (FLOAT)pMesh_->GetControlPointAt(i)[2];
+		pVertices_[i].pos.x = (float)pMesh_->GetControlPointAt(i)[0];
+		pVertices_[i].pos.y = (float)pMesh_->GetControlPointAt(i)[1];
+		pVertices_[i].pos.z = (float)pMesh_->GetControlPointAt(i)[2];
 	}
 
 	// 頂点データ用バッファの設定
@@ -88,9 +91,44 @@ bool ActorFbxModel::Init()
 	D3D11_SUBRESOURCE_DATA data_index;
 	data_index.pSysMem = pMesh_->GetPolygonVertices();
 
-	Renderer::GetDevice()->CreateBuffer(&bd_index, &data_index, &pIndexBuffer_);
+	HRESULT hr = Renderer::GetDevice()->CreateBuffer(&bd_index, &data_index, &pIndexBuffer_);
+	if (FAILED(hr))
+	{
+		return false;
+	}
+
+	EditMath::Scaling(mtxWorld_, 0.1f, 0.1f, 0.1f);
 
 	return true;
+}
+
+// 三角形化
+void ActorFbxModel::TriangulateRecursive(FbxNode* pNode)
+{
+	FbxNodeAttribute* lNodeAttribute = pNode->GetNodeAttribute();
+
+	if (lNodeAttribute)
+	{
+		if (lNodeAttribute->GetAttributeType() == FbxNodeAttribute::eMesh ||
+			lNodeAttribute->GetAttributeType() == FbxNodeAttribute::eNurbs ||
+			lNodeAttribute->GetAttributeType() == FbxNodeAttribute::eNurbsSurface ||
+			lNodeAttribute->GetAttributeType() == FbxNodeAttribute::ePatch)
+		{
+			FbxGeometryConverter lConverter(pNode->GetFbxManager());
+			// これでどんな形状も三角形化
+#if 0
+			lConverter.TriangulateInPlace(pNode);	// 古い手法
+#endif // 0
+			lConverter.Triangulate(pFbxScene_, true);
+		}
+	}
+
+	const int lChildCount = pNode->GetChildCount();
+	for (int lChildIndex = 0; lChildIndex < lChildCount; ++lChildIndex)
+	{
+		// 子ノードを探索
+		TriangulateRecursive(pNode->GetChild(lChildIndex));
+	}
 }
 
 void ActorFbxModel::Uninit()
@@ -111,9 +149,12 @@ void ActorFbxModel::Update()
 {
 	{
 		ShaderFbx::CONSTANT_BUFFER cb;
-		cb.mtxWorld = EditMath::Transpose(mtxWorld_);
-		cb.mtxView = EditMath::Transpose(pCameraSelecter_->GetSelectCamera()->GetMtxView());
-		cb.mtxProj = EditMath::Transpose(pCameraSelecter_->GetSelectCamera()->GetMtxProjection());
+		EditMath::Transpose(cb.mtxWorld, mtxWorld_);
+		EditMath::Transpose(cb.mtxView, pCameraSelecter_->GetSelectCamera()->GetMtxView());
+		EditMath::Transpose(cb.mtxProj, pCameraSelecter_->GetSelectCamera()->GetMtxProjection());
+		XMFLOAT3 vecLight = { 1.0f, -1.0f, 1.0f };
+		EditMath::Normalize(vecLight, vecLight);
+		cb.vecLight = { -vecLight.x, -vecLight.y, -vecLight.z, 1.0f };
 		
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::FBX), 0, NULL, &cb, 0, 0);
 	}
@@ -146,6 +187,10 @@ void ActorFbxModel::Draw()
 
 	//コンスタントバッファセット
 	Renderer::GetDeviceContext()->VSSetConstantBuffers(0, 1, ShaderManager::GetConstantBuffer(ShaderManager::FBX));
+
+	//テクスチャセット
+	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, pTextureManager_->GetInstance(TextureManager::SAMPLE)->GetTexture());
+	Renderer::GetDeviceContext()->PSSetSamplers(0, 1, SamplerState::GetSamplerState(SamplerState::SAMPLER_TYPE_01));
 
 	//描画
 	Renderer::GetDeviceContext()->DrawIndexed(pMesh_->GetPolygonVertexCount(), 0, 0);
