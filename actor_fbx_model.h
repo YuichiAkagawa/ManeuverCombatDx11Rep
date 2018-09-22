@@ -19,21 +19,6 @@ class ActorCameraSelecter;
 class ActorFbxModel : public Actor3d
 {
 private:
-	// 頂点情報構造体
-	struct VERTEX
-	{
-		DirectX::XMFLOAT3		pos;		// 頂点データ
-		DirectX::XMFLOAT3		normal;		// 法線データ
-		DirectX::XMFLOAT2		texcoord;	// UVデータ
-	};
-
-	FbxManager *pFbxManager_ = nullptr;
-	FbxScene *pFbxScene_ = nullptr;
-	FbxMesh *pMesh_ = nullptr;
-	ID3D11Buffer *pVertexBuffer_ = nullptr;
-	ID3D11Buffer *pIndexBuffer_ = nullptr;
-	VERTEX *pVertices_;
-
 	ActorCameraSelecter* pCameraSelecter_;
 public:
 	ActorFbxModel(ActorManager* pActorManager);
@@ -43,7 +28,6 @@ public:
 	virtual void Update()override;
 	virtual void Stats()override;
 	virtual void Draw()override;
-	void TriangulateRecursive(FbxNode* pNode);
 };
 
 #endif // !_ACTOR_FBX_MODEL_H_

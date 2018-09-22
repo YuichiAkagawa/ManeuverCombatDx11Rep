@@ -10,6 +10,8 @@
 
 #include "scene.h"
 #include "texture.h"
+#include "model.h"
+
 class Cube;
 
 class SceneGame01 : public Scene
@@ -19,6 +21,9 @@ public:
 	{
 		//読み込むテクスチャ
 		sceneTexture_.emplace_back(TextureManager::SAMPLE);
+
+		//読み込むモデル
+		sceneModel_.emplace_back(ModelManager::SAMPLE);
 	}
 	~SceneGame01()
 	{

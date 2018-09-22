@@ -14,6 +14,7 @@
 #include "actor_cube.h"
 #include "actor_free_camera.h"
 #include "main.h"
+#include "model.h"
 #include "process_calculator.h"
 #include "texture.h"
 #include "actor_manager.h"
@@ -106,6 +107,11 @@ Actor* ActorManager::GetActor(int name, int number)
 void ActorManager::SetTextureManager(TextureManager* pTextureManager)
 {
 	pTextureManager_ = pTextureManager;
+}
+
+void ActorManager::SetModelManager(ModelManager* pModelManager)
+{
+	pModelManager_ = pModelManager;
 }
 
 void ActorManager::Stats()

@@ -9,7 +9,10 @@ struct VS_IN
 {
 	float4 pos : POSITION0;
 	float4 normal : NORMAL0;
+	float4 color : COLOR0;
 	float2 texcoord : TEXCOORD0;
+	float4 boneIndex : TEXCOORD1;
+	float4 weight : TEXCOORD2;
 };
 
 struct VS_OUT
@@ -38,7 +41,7 @@ VS_OUT VS(VS_IN input)
 	normal = normalize(normal);
 
 	float color = saturate(dot(normal, (float3)vecLight));
-	color = color * 0.5f + 0.5f;
+	color = (color * 0.5f + 0.5f) * input.color;
 
 	output.color = float4(color, color, color, 1.0f);
 
@@ -59,6 +62,5 @@ SamplerState samplerState : register(s0);	//ÉTÉìÉvÉâÅ[
 
 float4 PS(PS_IN input) : SV_Target
 {
-	//return texture2d.Sample(samplerState, input.texcoord) * input.color;
-	return float4(0.0f, 0.5f, 0.5f, 1.0f);
+	return texture2d.Sample(samplerState, input.texcoord) * input.color;
 }

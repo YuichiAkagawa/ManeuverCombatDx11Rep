@@ -12,6 +12,7 @@
 #include "imgui/imgui.h"
 #include "input.h"
 #include "main.h"
+#include "model.h"
 #include "scene.h"
 #include "scene_game02.h"
 #include "scene_manager.h"
@@ -27,9 +28,17 @@ bool SceneGame01::Init()
 	{
 		return false;
 	}
-
 	//テクスチャマネージャセット
 	actorManager_.SetTextureManager(pTextureManager_);
+
+	//モデル読み込み
+	pModelManager_ = new ModelManager;
+	if (!pModelManager_->Init())
+	{
+		return false;
+	}
+	//モデルマネージャセット
+	actorManager_.SetModelManager(pModelManager_);
 
 	//セレクター生成
 	pCameraSelecter_ = new ActorCameraSelecter(&actorManager_);
@@ -44,6 +53,7 @@ bool SceneGame01::Init()
 	//時間初期化
 	startTime_ = timeGetTime();
 
+	//アクター初期化
 	if (!actorManager_.Init())
 	{
 		return false;
@@ -57,6 +67,8 @@ void SceneGame01::Uninit()
 	actorManager_.Uninit();
 	pTextureManager_->Uninit();
 	SafeDelete(pTextureManager_);
+	pModelManager_->Uninit();
+	SafeDelete(pModelManager_);
 }
 
 void SceneGame01::Update()

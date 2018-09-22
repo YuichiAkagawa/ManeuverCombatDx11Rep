@@ -14,12 +14,14 @@
 
 class ActorManager;
 class TextureManager;
+class ModelManager;
 
 class Actor
 {
 protected:
 	ActorManager* pActorManager_;
 	TextureManager* pTextureManager_;
+	ModelManager* pModelManager_;
 	int name_;
 	std::string nameUnique_;
 	const std::type_info* typeInfo_;
@@ -32,6 +34,7 @@ protected:
 	bool isDrawImgui_ = false;
 	ProcessCalculator updateProcessCalc_;
 	ProcessCalculator drawProcessCalc_;
+
 public:
 	Actor(ActorManager* pActorManager);
 	virtual ~Actor();
@@ -55,6 +58,7 @@ public:
 
 	//Setter
 	void SetTextureManager(TextureManager* pTextureManager);
+	void SetModelManager(ModelManager* pModelManager);
 	void SetName(int name);
 	void SetNameUnique(const std::string& nameUnique);
 	void SetTypeInfo(const std::type_info* typeInfo);

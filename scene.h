@@ -12,6 +12,7 @@
 #include "actor_camera_selecter.h"
 
 class TextureManager;
+class ModelManager;
 
 class Scene
 {
@@ -19,7 +20,9 @@ protected:
 	ActorManager actorManager_;
 	ActorCameraSelecter* pCameraSelecter_;
 	std::vector <int> sceneTexture_;
+	std::vector <int> sceneModel_;
 	TextureManager* pTextureManager_;
+	ModelManager* pModelManager_;
 	unsigned int startTime_;
 	float time_;
 public:
@@ -31,6 +34,8 @@ public:
 	virtual void Draw() = 0;
 
 	const std::vector <int>& GetSceneTexture()const;
+	const std::vector <int>& GetSceneModel()const;
+
 };
 
 #endif // !_SCENE_H_

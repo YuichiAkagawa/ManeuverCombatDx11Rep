@@ -1,5 +1,3 @@
-﻿  actor_cube.cpp
-  actor_3d.cpp
-  コードを生成中...
+﻿  actor_fbx_model.cpp
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.pdb (Full PDB)
