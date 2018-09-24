@@ -195,6 +195,7 @@ bool LoadFBX::GetMesh(FbxNode* pNode, MODEL& model)
 
 			int vertexCnt			= mesh->GetPolygonVertexCount();
 			int normalLayerCount	= mesh->GetElementNormalCount();
+			int binormalLayerCount = mesh->GetElementBinormalCount();
 			int UVLayerCount		= mesh->GetElementUVCount();
 			int vColorLayerCount	= mesh->GetElementVertexColorCount();
 
@@ -417,6 +418,10 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 	{
 		// 法線セットを取得
 		FbxGeometryElementNormal* normal = mesh->GetElementNormal(i);
+
+		//従法線生成
+		FbxGeometryElementBinormal* binormal = mesh->CreateElementBinormal();
+
 		// マッピングモードの取得
 		FbxGeometryElement::EMappingMode mapping = normal->GetMappingMode();
 		// リファレンスモードの取得
@@ -434,22 +439,33 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 				int normalCount = normal->GetDirectArray().GetCount();
 
 				std::vector<XMFLOAT3> directNormal;
+				std::vector<XMFLOAT3> directBinormal;
 				for (int j = 0; j < normalCount; ++j)
 				{
-					XMFLOAT3 temp;
+					XMFLOAT3 tempNormal;
 					// 法線の取得
-					temp.x = (float)normal->GetDirectArray().GetAt(j)[0];
-					temp.y = (float)normal->GetDirectArray().GetAt(j)[1];
-					temp.z = (float)normal->GetDirectArray().GetAt(j)[2];
-					directNormal.emplace_back(temp);
+					tempNormal.x = (float)normal->GetDirectArray().GetAt(j)[0];
+					tempNormal.y = (float)normal->GetDirectArray().GetAt(j)[1];
+					tempNormal.z = (float)normal->GetDirectArray().GetAt(j)[2];
+					directNormal.emplace_back(tempNormal);
+
+					XMFLOAT3 tempBinormal;
+					// 従法線の取得
+					tempBinormal.x = (float)binormal->GetDirectArray().GetAt(j)[0];
+					tempBinormal.y = (float)binormal->GetDirectArray().GetAt(j)[1];
+					tempBinormal.z = (float)binormal->GetDirectArray().GetAt(j)[2];
+					directBinormal.emplace_back(tempBinormal);
 				}
 
 				// 法線をインデックス順で格納
 				int* index = mesh->GetPolygonVertices();
 				for (int j = 0; j < indexCount_; j++)
 				{
-					XMFLOAT3 temp = { directNormal[index[j]].x, directNormal[index[j]].y, directNormal[index[j]].z };
-					tempNormal_.emplace_back(temp);
+					XMFLOAT3 tempNormal = { directNormal[index[j]].x, directNormal[index[j]].y, directNormal[index[j]].z };
+					tempNormal_.emplace_back(tempNormal);
+
+					XMFLOAT3 tempBinormal = { directBinormal[index[j]].x, directBinormal[index[j]].y, directBinormal[index[j]].z };
+					tempBinormal_.emplace_back(tempBinormal);
 				}
 			}
 			break;
@@ -469,20 +485,29 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 			int indexCount  = normal->GetIndexArray().GetCount();
 
 			std::vector<XMFLOAT3> directNormal;
+			std::vector<XMFLOAT3> directBinormal;
 			for (int j = 0; j < normalCount; ++j)
 			{
 				// 法線の取得
-				XMFLOAT3 temp;
-				temp.x = (float)normal->GetDirectArray().GetAt(j)[0];
-				temp.y = (float)normal->GetDirectArray().GetAt(j)[1];
-				temp.z = (float)normal->GetDirectArray().GetAt(j)[2];
-				directNormal.emplace_back(temp);
+				XMFLOAT3 tempNormal;
+				tempNormal.x = (float)normal->GetDirectArray().GetAt(j)[0];
+				tempNormal.y = (float)normal->GetDirectArray().GetAt(j)[1];
+				tempNormal.z = (float)normal->GetDirectArray().GetAt(j)[2];
+				directNormal.emplace_back(tempNormal);
+
+				// 従法線の取得
+				XMFLOAT3 tempBinormal;
+				tempBinormal.x = (float)binormal->GetDirectArray().GetAt(j)[0];
+				tempBinormal.y = (float)binormal->GetDirectArray().GetAt(j)[1];
+				tempBinormal.z = (float)binormal->GetDirectArray().GetAt(j)[2];
+				directBinormal.emplace_back(tempBinormal);
 			}
 
 			// 法線の数がインデックスの数と同じならそのまま
 			if (normalCount == indexCount_)
 			{
 				tempNormal_ = directNormal;
+				tempBinormal_ = directBinormal;
 			}
 			// 法線インデックスの数が頂点のインデックスと同じ時
 			else if (indexCount == indexCount_)
@@ -491,8 +516,11 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 				int* index = mesh->GetPolygonVertices();
 				for (int j = 0; j < normal->GetIndexArray().GetCount(); ++j)
 				{
-					XMFLOAT3 temp = { directNormal[index[j]].x, directNormal[index[j]].y, directNormal[index[j]].z };
-					tempNormal_.emplace_back(temp);
+					XMFLOAT3 tempNormal = { directNormal[index[j]].x, directNormal[index[j]].y, directNormal[index[j]].z };
+					tempNormal_.emplace_back(tempNormal);
+
+					XMFLOAT3 tempBinormal = { directBinormal[index[j]].x, directBinormal[index[j]].y, directBinormal[index[j]].z };
+					tempBinormal_.emplace_back(tempBinormal);
 				}
 			}
 		}
@@ -896,8 +924,10 @@ bool LoadFBX::CreateModelData(MODEL& model)
 bool LoadFBX::CreateVeretx(MODEL& model, int indexNum, const int* index, UVSet uv)
 {
 	UINT size = tempVertex_.size();
+
 	if (tempVertex_.size() == size &&
 		tempNormal_.size() == size &&
+		tempBinormal_.size() == size &&
 		tempTexcoord_[0].texcoord.size() == size &&
 		tempColor_.size() == size)
 	{
@@ -919,6 +949,7 @@ bool LoadFBX::CreateVeretx(MODEL& model, int indexNum, const int* index, UVSet u
 			VERTEX temp;
 			temp.position = tempVertex_[index[i]].position;
 			temp.normal   = tempNormal_[index[i]];
+			temp.binormal = tempBinormal_[index[i]];
 			temp.texcoord = tempTexcoord_[0].texcoord[index[i]];
 			temp.color    = tempColor_[index[i]];
 
@@ -957,10 +988,10 @@ bool LoadFBX::CreateVeretx(MODEL& model, int indexNum, const int* index, UVSet u
 	else
 	{
 		MessageBox(NULL, "頂点情報の数が合いません", "エラー", MB_OK | MB_ICONINFORMATION);
-		return E_FAIL;
+		return false;
 	}
 
-	return S_OK;
+	return true;
 }
 
 // FbxMatrixから変換
@@ -981,6 +1012,7 @@ void LoadFBX::ReleaseTempObj(void)
 	std::vector<VERTEXPOINTBONE>().swap(tempPoint_);
 	std::vector<VERTEXPOINTBONE>().swap(tempVertex_);
 	std::vector<XMFLOAT3>().swap(tempNormal_);
+	std::vector<XMFLOAT3>().swap(tempBinormal_);
 	std::vector<XMFLOAT4>().swap(tempColor_);
 	std::vector<FBXUV>().swap(tempTexcoord_);
 	std::vector<UVSet>().swap(tempUVSet_);

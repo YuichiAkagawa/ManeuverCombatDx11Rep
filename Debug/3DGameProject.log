@@ -1,3 +1,7 @@
-﻿  actor_fbx_model.cpp
+﻿E:\Programs\ManeuverCombatDx11Rep\fbx.hlsl(43,18-44): warning X3206: 'mul': implicit truncation of vector type
+E:\Programs\ManeuverCombatDx11Rep\fbx.hlsl(43,9-44): warning X3206: implicit truncation of vector type
+E:\Programs\ManeuverCombatDx11Rep\fbx.hlsl(47,2-44): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11Rep\Debug\fbx.cso
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.pdb (Full PDB)

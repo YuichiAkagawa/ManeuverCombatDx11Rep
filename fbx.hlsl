@@ -7,10 +7,11 @@
 
 struct VS_IN
 {
-	float4 pos : POSITION0;
-	float4 normal : NORMAL0;
+	float3 pos : POSITION0;
+	float3 normal : NORMAL0;
 	float4 color : COLOR0;
 	float2 texcoord : TEXCOORD0;
+	float3 binormal : BINORMAL0;
 	float4 boneIndex : TEXCOORD1;
 	float4 weight : TEXCOORD2;
 };
@@ -33,11 +34,13 @@ cbuffer ConstantBuffer
 VS_OUT VS(VS_IN input)
 {
 	VS_OUT output;
-	output.pos = mul(input.pos, mtxWorld);
-	output.pos = mul(output.pos, mtxView);
-	output.pos = mul(output.pos, mtxProj);
+	float4 pos = float4(input.pos, 1.0f);
+	pos = mul(pos, mtxWorld);
+	pos = mul(pos, mtxView);
+	pos = mul(pos, mtxProj);
+	output.pos = pos;
 
-	float3 normal = mul(input.normal, mtxWorld).xyz;
+	float3 normal = mul(input.normal, mtxWorld);
 	normal = normalize(normal);
 
 	float color = saturate(dot(normal, (float3)vecLight));

@@ -21,7 +21,7 @@ struct VERTEXFBX
 {
 	DirectX::XMFLOAT3  position;
 	DirectX::XMFLOAT3  normal;
-	DirectX::XMFLOAT4    color;
+	DirectX::XMFLOAT4  color;
 	DirectX::XMFLOAT2  texcoord;
 	DirectX::XMFLOAT3  positionDefault;
 //	std::vector<VERTEXBONE> bone;
@@ -117,8 +117,9 @@ private:
 	int		indexCount_;
 	std::vector<VERTEXPOINTBONE>			tempPoint_;
 	std::vector<VERTEXPOINTBONE>			tempVertex_;
-	std::vector<DirectX::XMFLOAT3>					tempNormal_;
-	std::vector<DirectX::XMFLOAT4>						tempColor_;
+	std::vector<DirectX::XMFLOAT3>			tempNormal_;
+	std::vector<DirectX::XMFLOAT3>			tempBinormal_;
+	std::vector<DirectX::XMFLOAT4>			tempColor_;
 	std::vector<FBXUV>						tempTexcoord_;
 	std::vector<UVSet>						tempUVSet_;
 	std::vector<FBXANIMATION>				tempAnim_;

@@ -22,11 +22,6 @@ bool Model::Init(int modelName)
 		return false;
 	}
 
-	//if (!pLoadFbx_->LoadAnimation(g_pModelFile[modelName], model_))
-	//{
-	//	return false;
-	//}
-
 	for (int i = 0; i < model_.mesh.size(); i++)
 	{
 		{
