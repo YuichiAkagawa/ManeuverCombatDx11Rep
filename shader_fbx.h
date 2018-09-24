@@ -21,6 +21,8 @@ public:
 		DirectX::XMFLOAT4X4 mtxView;
 		DirectX::XMFLOAT4X4 mtxProj;
 		DirectX::XMFLOAT4 vecLight;
+		DirectX::XMFLOAT4 posEye;
+		DirectX::XMFLOAT4 specularData;
 	};
 
 	bool Init()override;

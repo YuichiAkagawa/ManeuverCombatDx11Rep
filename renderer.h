@@ -9,6 +9,9 @@
 #define _RENDERER_H_
 
 #include <d3d11.h>
+#include <DirectXMath.h>
+
+static const DirectX::XMFLOAT3 DIRECTIONAL_LIGHT = { 0.0f, -1.0f, -0.5f };
 
 class Renderer
 {

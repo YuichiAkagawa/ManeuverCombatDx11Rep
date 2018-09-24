@@ -60,9 +60,11 @@ void ActorFbxModel::Update()
 		EditMath::Transpose(cb.mtxWorld, mtxWorld_);
 		EditMath::Transpose(cb.mtxView, pCameraSelecter_->GetSelectCamera()->GetMtxView());
 		EditMath::Transpose(cb.mtxProj, pCameraSelecter_->GetSelectCamera()->GetMtxProjection());
-		XMFLOAT3 vecLight = { 1.0f, -1.0f, 1.0f };
-		EditMath::Normalize(vecLight, vecLight);
-		cb.vecLight = { -vecLight.x, -vecLight.y, -vecLight.z, 1.0f };
+		cb.vecLight = { DIRECTIONAL_LIGHT.x, DIRECTIONAL_LIGHT.y, DIRECTIONAL_LIGHT.z, 1.0f };
+		XMFLOAT3 posEye = pCameraSelecter_->GetSelectCamera()->GetPos();
+		cb.posEye = { posEye.x, posEye.y, posEye.z, 1.0f };
+		cb.specularData.x = 100.0f;		//スペキュラの大きさ
+		cb.specularData.y = 1.0f;		//スペキュラの強さ
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::FBX), 0, NULL, &cb, 0, 0);
 
 	}

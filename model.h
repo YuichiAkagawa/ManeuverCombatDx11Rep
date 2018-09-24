@@ -56,7 +56,6 @@ struct MODEL
 {
 	DirectX::XMFLOAT4X4		frameTransMtx;
 	std::vector<MESH>	mesh;
-
 	std::vector<BONE>	bone;
 };
 
