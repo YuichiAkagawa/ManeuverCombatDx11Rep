@@ -87,8 +87,12 @@ void ActorFbxModel::Draw()
 	//コンスタントバッファセット
 	Renderer::GetDeviceContext()->VSSetConstantBuffers(0, 1, ShaderManager::GetConstantBuffer(ShaderManager::FBX));
 
+	//ノーマルマップセット
+	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, pTextureManager_->GetInstance(TextureManager::NORMAL01)->GetTexture());
+
 	//サンプラーセット
 	Renderer::GetDeviceContext()->PSSetSamplers(0, 1, SamplerState::GetSamplerState(SamplerState::SAMPLER_TYPE_01));
 
+	//モデル描画
 	pModelManager_->GetInstance(ModelManager::SAMPLE)->Draw();
 }

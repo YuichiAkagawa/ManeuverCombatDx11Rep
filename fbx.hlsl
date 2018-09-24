@@ -62,7 +62,8 @@ VS_OUT_PS_IN VS(VS_IN input)
 	return output;
 }
 
-Texture2D    texture2d : register(t0);	//テクスチャー
+Texture2D    colorMap : register(t0);		//カラーマップ
+Texture2D    normalMap : register(t1);		//ノーマルマップ
 SamplerState samplerState : register(s0);	//サンプラー
 
 float4 PS(VS_OUT_PS_IN input) : SV_Target
@@ -76,5 +77,5 @@ float4 PS(VS_OUT_PS_IN input) : SV_Target
 	//明度算出
 	float brightness = dot(input.normal, input.vecLight) + specular;
 
-	return min(1.0f, max(0.0f, texture2d.Sample(samplerState, input.texcoord) * brightness));
+	return min(1.0f, max(0.0f, colorMap.Sample(samplerState, input.texcoord) * brightness));
 }

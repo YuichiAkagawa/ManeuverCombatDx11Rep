@@ -114,8 +114,7 @@ void Model::Draw()
 		//描画方法
 		Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-
-		//テクスチャセット
+		//カラーマップセット
 		Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &model_.mesh[i].material.texture);
 
 		//描画

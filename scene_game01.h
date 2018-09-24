@@ -21,6 +21,7 @@ public:
 	{
 		//読み込むテクスチャ
 		sceneTexture_.emplace_back(TextureManager::SAMPLE);
+		sceneTexture_.emplace_back(TextureManager::NORMAL01);
 
 		//読み込むモデル
 		sceneModel_.emplace_back(ModelManager::SAMPLE);
