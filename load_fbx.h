@@ -90,6 +90,7 @@ private:
 	void	GetMeshMaterialList(FbxMesh* mesh);			// メッシュマテリアルリストの取得
 	void	GetBone(FbxMesh* mesh);						// ボーン
 	void	GetVertexNormal(FbxMesh* mesh);				// 法線
+	void	GetVertexTangent(FbxMesh* mesh);			// tangent
 	void	GetVertexUV(FbxMesh* mesh);					// テクスチャ座標
 	void	GetTextureNames(FbxMesh* mesh);				// テクスチャ
 	void	GetVertexColor(FbxMesh* mesh);				// 色
@@ -102,6 +103,11 @@ private:
 	void ReleaseTempAnimObj(void);			// 一時情報の解放
 
 	void GetAnimation(MODEL& model, FBXANIMATION& animInfo);
+	void CalcTangent(
+		DirectX::XMFLOAT3* p0, DirectX::XMFLOAT2* uv0,
+		DirectX::XMFLOAT3* p1, DirectX::XMFLOAT2* uv1,
+		DirectX::XMFLOAT3* p2, DirectX::XMFLOAT2* uv2,
+		DirectX::XMFLOAT3* outTangent);
 
 	// マテリアルの数(0 = CountMesh, 1 = GetMesh)
 	int materialCount_[2] = { 0, 0 };
@@ -118,7 +124,7 @@ private:
 	std::vector<VERTEXPOINTBONE>			tempPoint_;
 	std::vector<VERTEXPOINTBONE>			tempVertex_;
 	std::vector<DirectX::XMFLOAT3>			tempNormal_;
-	std::vector<DirectX::XMFLOAT3>			tempBinormal_;
+	std::vector<DirectX::XMFLOAT3>			tempTangent_;
 	std::vector<DirectX::XMFLOAT4>			tempColor_;
 	std::vector<FBXUV>						tempTexcoord_;
 	std::vector<UVSet>						tempUVSet_;

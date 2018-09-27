@@ -131,6 +131,10 @@ bool ActorCube::Init()
 		}
 	}
 
+	XMFLOAT4X4 mtxScaling;
+	EditMath::Scaling(mtxScaling, 5.0f, 5.0f, 5.0f);
+	mtxWorld_ = mtxScaling;
+
 	return true;
 }
 

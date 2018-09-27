@@ -195,13 +195,13 @@ bool LoadFBX::GetMesh(FbxNode* pNode, MODEL& model)
 
 			int vertexCnt			= mesh->GetPolygonVertexCount();
 			int normalLayerCount	= mesh->GetElementNormalCount();
-			int binormalLayerCount = mesh->GetElementBinormalCount();
+			int tangentLayerCount	= mesh->GetElementTangentCount();
 			int UVLayerCount		= mesh->GetElementUVCount();
 			int vColorLayerCount	= mesh->GetElementVertexColorCount();
 
 			GetPosition(mesh);
 			GetVertexNormal(mesh);
-
+			GetVertexTangent(mesh);
 			GetVertexUV(mesh);
 			GetTextureNames(mesh);
 			GetVertexColor(mesh);
@@ -249,9 +249,11 @@ void LoadFBX::GetPosition(FbxMesh* mesh)
 	// 頂点の取得
 	for (int i = 0; i < pointCount_; ++i)
 	{
-		// 頂点情報をインデックス順で取得
+		//頂点情報をインデックス順で取得
 		VERTEXPOINTBONE temp;
-		temp.position = { (float)vertex[i][0], (float)vertex[i][1], (float)vertex[i][2] };
+		//頂点座標反転
+		temp.position = { -(float)vertex[i][0], (float)vertex[i][1], (float)vertex[i][2] };
+
 		for (int j = 0; j < 4; ++j)
 		{
 			temp.boneData[j].boneIndex = 0;
@@ -419,9 +421,6 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 		// 法線セットを取得
 		FbxGeometryElementNormal* normal = mesh->GetElementNormal(i);
 
-		//従法線生成
-		FbxGeometryElementBinormal* binormal = mesh->CreateElementBinormal();
-
 		// マッピングモードの取得
 		FbxGeometryElement::EMappingMode mapping = normal->GetMappingMode();
 		// リファレンスモードの取得
@@ -439,22 +438,16 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 				int normalCount = normal->GetDirectArray().GetCount();
 
 				std::vector<XMFLOAT3> directNormal;
-				std::vector<XMFLOAT3> directBinormal;
 				for (int j = 0; j < normalCount; ++j)
 				{
 					XMFLOAT3 tempNormal;
-					// 法線の取得
-					tempNormal.x = (float)normal->GetDirectArray().GetAt(j)[0];
+					//法線の取得
+					//法線反転
+					tempNormal.x = -(float)normal->GetDirectArray().GetAt(j)[0];
 					tempNormal.y = (float)normal->GetDirectArray().GetAt(j)[1];
 					tempNormal.z = (float)normal->GetDirectArray().GetAt(j)[2];
-					directNormal.emplace_back(tempNormal);
 
-					XMFLOAT3 tempBinormal;
-					// 従法線の取得
-					tempBinormal.x = (float)binormal->GetDirectArray().GetAt(j)[0];
-					tempBinormal.y = (float)binormal->GetDirectArray().GetAt(j)[1];
-					tempBinormal.z = (float)binormal->GetDirectArray().GetAt(j)[2];
-					directBinormal.emplace_back(tempBinormal);
+					directNormal.emplace_back(tempNormal);
 				}
 
 				// 法線をインデックス順で格納
@@ -463,9 +456,6 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 				{
 					XMFLOAT3 tempNormal = { directNormal[index[j]].x, directNormal[index[j]].y, directNormal[index[j]].z };
 					tempNormal_.emplace_back(tempNormal);
-
-					XMFLOAT3 tempBinormal = { directBinormal[index[j]].x, directBinormal[index[j]].y, directBinormal[index[j]].z };
-					tempBinormal_.emplace_back(tempBinormal);
 				}
 			}
 			break;
@@ -485,29 +475,22 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 			int indexCount  = normal->GetIndexArray().GetCount();
 
 			std::vector<XMFLOAT3> directNormal;
-			std::vector<XMFLOAT3> directBinormal;
 			for (int j = 0; j < normalCount; ++j)
 			{
-				// 法線の取得
+				//法線の取得
+				//法線反転
 				XMFLOAT3 tempNormal;
-				tempNormal.x = (float)normal->GetDirectArray().GetAt(j)[0];
+				tempNormal.x = -(float)normal->GetDirectArray().GetAt(j)[0];
 				tempNormal.y = (float)normal->GetDirectArray().GetAt(j)[1];
 				tempNormal.z = (float)normal->GetDirectArray().GetAt(j)[2];
+				
 				directNormal.emplace_back(tempNormal);
-
-				// 従法線の取得
-				XMFLOAT3 tempBinormal;
-				tempBinormal.x = (float)binormal->GetDirectArray().GetAt(j)[0];
-				tempBinormal.y = (float)binormal->GetDirectArray().GetAt(j)[1];
-				tempBinormal.z = (float)binormal->GetDirectArray().GetAt(j)[2];
-				directBinormal.emplace_back(tempBinormal);
 			}
 
 			// 法線の数がインデックスの数と同じならそのまま
 			if (normalCount == indexCount_)
 			{
 				tempNormal_ = directNormal;
-				tempBinormal_ = directBinormal;
 			}
 			// 法線インデックスの数が頂点のインデックスと同じ時
 			else if (indexCount == indexCount_)
@@ -518,9 +501,112 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 				{
 					XMFLOAT3 tempNormal = { directNormal[index[j]].x, directNormal[index[j]].y, directNormal[index[j]].z };
 					tempNormal_.emplace_back(tempNormal);
+				}
+			}
+		}
+		break;
+		default:
+			break;
+		}
+	}
+}
 
-					XMFLOAT3 tempBinormal = { directBinormal[index[j]].x, directBinormal[index[j]].y, directBinormal[index[j]].z };
-					tempBinormal_.emplace_back(tempBinormal);
+// Tangentの取得
+void LoadFBX::GetVertexTangent(FbxMesh* mesh)
+{
+	// Tangentセット数を取得
+	int tangentLayerCount = mesh->GetElementTangentCount();
+	if (tangentLayerCount <= 0)
+	{
+		mesh->GenerateTangentsDataForAllUVSets();
+	}
+	tangentLayerCount = mesh->GetElementTangentCount();
+
+	// レイヤー数だけ回る
+	for (int i = 0; i < tangentLayerCount; ++i)
+	{
+		// Tangent生成
+		FbxGeometryElementTangent* tangent = mesh->GetElementTangent(i);
+
+		// マッピングモードの取得
+		FbxGeometryElement::EMappingMode mapping = tangent->GetMappingMode();
+
+		// リファレンスモードの取得
+		FbxGeometryElement::EReferenceMode reference = tangent->GetReferenceMode();
+
+		// マッピングモードの判別
+		switch (mapping)
+		{
+		case FbxGeometryElement::eByControlPoint:
+			// リファレンスモードの判別
+			switch (reference)
+			{
+			case FbxGeometryElement::eDirect:
+			{
+				int tangentCount = tangent->GetDirectArray().GetCount();
+
+				std::vector<XMFLOAT3> directTangent;
+				for (int j = 0; j < tangentCount; ++j)
+				{
+					XMFLOAT3 tempTangent;
+					//Tangentの取得
+					//Tangent反転
+					tempTangent.x = -(float)tangent->GetDirectArray().GetAt(j)[0];
+					tempTangent.y = (float)tangent->GetDirectArray().GetAt(j)[1];
+					tempTangent.z = (float)tangent->GetDirectArray().GetAt(j)[2];
+					directTangent.emplace_back(tempTangent);
+				}
+
+				// Tangentをインデックス順で格納
+				int* index = mesh->GetPolygonVertices();
+				for (int j = 0; j < indexCount_; j++)
+				{
+					XMFLOAT3 tempTangent = { directTangent[index[j]].x, directTangent[index[j]].y, directTangent[index[j]].z };
+					tempTangent_.emplace_back(tempTangent);
+				}
+			}
+			break;
+
+			case FbxGeometryElement::eIndexToDirect:
+				break;
+
+			default:
+				break;
+			}
+
+			break;
+		case FbxGeometryElement::eByPolygonVertex:
+		{
+			// Tangent数を取得
+			int tangentCount = tangent->GetDirectArray().GetCount();
+			int indexCount = tangent->GetIndexArray().GetCount();
+
+			std::vector<XMFLOAT3> directTangent;
+			for (int j = 0; j < tangentCount; ++j)
+			{
+				//Tangentの取得
+				//Tangent反転
+				XMFLOAT3 tempTangent;
+				tempTangent.x = -(float)tangent->GetDirectArray().GetAt(j)[0];
+				tempTangent.y = (float)tangent->GetDirectArray().GetAt(j)[1];
+				tempTangent.z = (float)tangent->GetDirectArray().GetAt(j)[2];
+				directTangent.emplace_back(tempTangent);
+			}
+
+			// Tangentの数がインデックスの数と同じならそのまま
+			if (tangentCount == indexCount_)
+			{
+				tempTangent_ = directTangent;
+			}
+			// Tangentインデックスの数が頂点のインデックスと同じ時
+			else if (indexCount == indexCount_)
+			{
+				// インデックスを取得
+				int* index = mesh->GetPolygonVertices();
+				for (int j = 0; j < tangent->GetIndexArray().GetCount(); ++j)
+				{
+					XMFLOAT3 tempTangent = { directTangent[index[j]].x, directTangent[index[j]].y, directTangent[index[j]].z };
+					tempTangent_.emplace_back(tempTangent);
 				}
 			}
 		}
@@ -567,6 +653,8 @@ void LoadFBX::GetVertexUV(FbxMesh* mesh)
 				for (int j = 0; j < indexCount; ++j)
 				{
 					int index = UV->GetIndexArray().GetAt(j);
+					
+					//テクスチャ座標反転
 					XMFLOAT2 temp = { (float)UV->GetDirectArray().GetAt(index)[0] , 1.0f - (float)UV->GetDirectArray().GetAt(index)[1] };
 					tempUV.texcoord.emplace_back(temp);
 				}
@@ -927,7 +1015,7 @@ bool LoadFBX::CreateVeretx(MODEL& model, int indexNum, const int* index, UVSet u
 
 	if (tempVertex_.size() == size &&
 		tempNormal_.size() == size &&
-		tempBinormal_.size() == size &&
+		tempTangent_.size() == size &&
 		tempTexcoord_[0].texcoord.size() == size &&
 		tempColor_.size() == size)
 	{
@@ -949,7 +1037,7 @@ bool LoadFBX::CreateVeretx(MODEL& model, int indexNum, const int* index, UVSet u
 			VERTEX temp;
 			temp.position = tempVertex_[index[i]].position;
 			temp.normal   = tempNormal_[index[i]];
-			temp.binormal = tempBinormal_[index[i]];
+			temp.tangent = tempTangent_[index[i]];
 			temp.texcoord = tempTexcoord_[0].texcoord[index[i]];
 			temp.color    = tempColor_[index[i]];
 
@@ -964,7 +1052,9 @@ bool LoadFBX::CreateVeretx(MODEL& model, int indexNum, const int* index, UVSet u
 			temp.weight.w = tempVertex_[index[i]].boneData[3].weight;
 
 			tempMesh.vertex.emplace_back(temp);
-			tempMesh.index.emplace_back(i);
+
+			//インデックス番号反転
+			tempMesh.index.emplace_back((indexNum - 1) - i);
 		}
 		tempMesh.material.textureName = uv.texName;
 
@@ -1012,7 +1102,7 @@ void LoadFBX::ReleaseTempObj(void)
 	std::vector<VERTEXPOINTBONE>().swap(tempPoint_);
 	std::vector<VERTEXPOINTBONE>().swap(tempVertex_);
 	std::vector<XMFLOAT3>().swap(tempNormal_);
-	std::vector<XMFLOAT3>().swap(tempBinormal_);
+	std::vector<XMFLOAT3>().swap(tempTangent_);
 	std::vector<XMFLOAT4>().swap(tempColor_);
 	std::vector<FBXUV>().swap(tempTexcoord_);
 	std::vector<UVSet>().swap(tempUVSet_);

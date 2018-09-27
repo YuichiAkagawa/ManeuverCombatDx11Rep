@@ -18,9 +18,10 @@ public:
 	struct CONSTANT_BUFFER
 	{
 		DirectX::XMFLOAT4X4 mtxWorld;
+		DirectX::XMFLOAT4X4 mtxWorldInv;
 		DirectX::XMFLOAT4X4 mtxView;
 		DirectX::XMFLOAT4X4 mtxProj;
-		DirectX::XMFLOAT4 vecLight;
+		DirectX::XMFLOAT4 vecDirLight;
 		DirectX::XMFLOAT4 posEye;
 		DirectX::XMFLOAT4 specularData;
 	};

@@ -58,15 +58,31 @@ void ActorFbxModel::Update()
 	{
 		ShaderFbx::CONSTANT_BUFFER cb;
 		EditMath::Transpose(cb.mtxWorld, mtxWorld_);
+		XMFLOAT4X4 mtxWorldInv;
+		EditMath::Inverse(mtxWorldInv, mtxWorld_);
+		EditMath::Transpose(cb.mtxWorldInv, mtxWorldInv);
 		EditMath::Transpose(cb.mtxView, pCameraSelecter_->GetSelectCamera()->GetMtxView());
 		EditMath::Transpose(cb.mtxProj, pCameraSelecter_->GetSelectCamera()->GetMtxProjection());
-		cb.vecLight = { DIRECTIONAL_LIGHT.x, DIRECTIONAL_LIGHT.y, DIRECTIONAL_LIGHT.z, 1.0f };
+		cb.vecDirLight = { DIRECTIONAL_LIGHT.x, DIRECTIONAL_LIGHT.y, DIRECTIONAL_LIGHT.z, 1.0f };
 		XMFLOAT3 posEye = pCameraSelecter_->GetSelectCamera()->GetPos();
 		cb.posEye = { posEye.x, posEye.y, posEye.z, 1.0f };
 		cb.specularData.x = 100.0f;		//スペキュラの大きさ
 		cb.specularData.y = 1.0f;		//スペキュラの強さ
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::FBX), 0, NULL, &cb, 0, 0);
 
+	}
+	{
+		XMFLOAT4X4 mtxRotX;
+		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.3f));
+		//EditMath::Multiplication(mtxWorld_, mtxRotX, mtxWorld_);
+
+		XMFLOAT4X4 mtxRotY;
+		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.4f));
+		//EditMath::Multiplication(mtxWorld_, mtxRotY, mtxWorld_);
+	
+		XMFLOAT4X4 mtxRotZ;
+		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.5f));
+		//EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
 	}
 }
 

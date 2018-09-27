@@ -76,6 +76,13 @@ void EditMath::Identity(XMFLOAT4X4& valueReturn)
 	XMStoreFloat4x4(&valueReturn, xmMtx);
 }
 
+void EditMath::Inverse(XMFLOAT4X4& valueReturn, const XMFLOAT4X4& value)
+{
+	XMMATRIX xmMtx = XMLoadFloat4x4(&value);
+	XMMatrixInverse(nullptr, xmMtx);
+	XMStoreFloat4x4(&valueReturn, xmMtx);
+}
+
 void EditMath::Transpose(XMFLOAT4X4& valueReturn, const XMFLOAT4X4& value)
 {
 	XMMATRIX xmMtx = XMLoadFloat4x4(&value);

@@ -37,6 +37,7 @@ bool SceneGame01::Init()
 	{
 		return false;
 	}
+
 	//モデルマネージャセット
 	actorManager_.SetModelManager(pModelManager_);
 

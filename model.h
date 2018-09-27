@@ -19,7 +19,7 @@ struct VERTEX
 	DirectX::XMFLOAT3 normal;
 	DirectX::XMFLOAT4 color;
 	DirectX::XMFLOAT2 texcoord;
-	DirectX::XMFLOAT3 binormal;
+	DirectX::XMFLOAT3 tangent;
 	DirectX::XMFLOAT4 boneIndex;
 	DirectX::XMFLOAT4 weight;
 };
