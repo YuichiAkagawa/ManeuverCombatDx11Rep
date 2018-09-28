@@ -85,8 +85,15 @@ VS_OUT_PS_IN VS(VS_IN input)
 
 float4 PS(VS_OUT_PS_IN input) : SV_Target
 {
-	//ノーマルマップから法線取得
-	float3 normalTangent = 2.0f * normalMap.Sample(samplerState, input.texcoord).xyz - 1.0f;
+	//ノーマルマップから値取得
+	float3 normalMapValue = normalMap.Sample(samplerState, input.texcoord).rgb;
+
+	//膨らむ方向反転
+	//normalMapValue.r = 1.0f - normalMapValue.r;
+	//normalMapValue.g = 1.0f - normalMapValue.g;
+
+	//法線算出
+	float3 normalTangent = normalMapValue * 2.0f - 1.0f;
 	normalTangent = normalize(normalTangent);
 
 	//正規化
@@ -99,5 +106,5 @@ float4 PS(VS_OUT_PS_IN input) : SV_Target
 	//スペキュラカラー計算
 	float specular = pow(max(0.0f, dot(normalTangent, vecHalf)), input.specularData.x) * input.specularData.y;
 
-	return colorMap.Sample(samplerState, input.texcoord) * input.color *  min(max(0.1f, dot(normalTangent, vecLightTangent)), 1.0f) + specular;
+	return colorMap.Sample(samplerState, input.texcoord) * input.color *  min(max(0.15f, dot(normalTangent, vecLightTangent)), 1.0f) + specular;
 }

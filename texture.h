@@ -21,7 +21,7 @@ struct TEXTURE_DATA
 static const TEXTURE_DATA g_pTextureFile[] =
 {
 	{ "resource/texture/sample.png", 256, 256 },
-	{ "resource/texture/NormalMap.jpg", 2048, 2048 },
+	{ "resource/texture/Normal_01.png", 2048, 2048 },
 };
 
 class Texture
