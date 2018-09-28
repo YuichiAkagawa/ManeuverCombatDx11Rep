@@ -69,7 +69,7 @@ void ActorFbxModel::Update()
 		cb.vecDirLight = { DIRECTIONAL_LIGHT.x, DIRECTIONAL_LIGHT.y, DIRECTIONAL_LIGHT.z, 1.0f };
 		XMFLOAT3 posEye = pCameraSelecter_->GetSelectCamera()->GetPos();
 		cb.posEye = { posEye.x, posEye.y, posEye.z, 1.0f };
-		cb.specularData.x = 100.0f;		//スペキュラの大きさ
+		cb.specularData.x = 150.0f;		//スペキュラの大きさ
 		cb.specularData.y = 1.0f;		//スペキュラの強さ
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::FBX), 0, NULL, &cb, 0, 0);
 
@@ -81,11 +81,11 @@ void ActorFbxModel::Update()
 
 		XMFLOAT4X4 mtxRotY;
 		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.2f));
-		//EditMath::Multiplication(mtxWorld_, mtxRotY, mtxWorld_);
+		EditMath::Multiplication(mtxWorld_, mtxRotY, mtxWorld_);
 	
 		XMFLOAT4X4 mtxRotZ;
 		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.3f));
-		EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
+		//EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
 	}
 }
 
