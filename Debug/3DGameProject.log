@@ -1,3 +1,41 @@
-﻿  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11Rep\Debug\fbx.cso
+﻿  texture.cpp
+  shader_manager.cpp
+  shader.cpp
+  scene_game02.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  scene_game01.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  sampler_state.cpp
+  renderer.cpp
+  model.cpp
+e:\programs\maneuvercombatdx11rep\model.cpp(25): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+e:\programs\maneuvercombatdx11rep\model.cpp(104): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+  main.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  actor_manager.cpp
+  actor_free_camera.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(92): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(103): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(114): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(125): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(134): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(143): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(152): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(165): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(178): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_free_camera.cpp(201): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  actor_camera_selecter.cpp
+  actor_camera.cpp
+  actor_3d.cpp
+  actor.cpp
+  コードを生成中...
+  コンパイル中...
+  scene_manager.cpp
+  actor_fbx_model.cpp
+e:\programs\maneuvercombatdx11rep\actor_fbx_model.cpp(80): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_fbx_model.cpp(84): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+e:\programs\maneuvercombatdx11rep\actor_fbx_model.cpp(88): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+  コードを生成中...
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.pdb (Full PDB)

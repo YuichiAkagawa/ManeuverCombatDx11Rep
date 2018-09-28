@@ -12,6 +12,8 @@
 #include "actor_camera_selecter.h"
 #include "actor_character.h"
 #include "actor_cube.h"
+#include "actor_fbx_model.h"
+#include "actor_field.h"
 #include "actor_free_camera.h"
 #include "main.h"
 #include "model.h"
@@ -132,6 +134,12 @@ void ActorManager::Stats()
 				CheckType(&typeid(ActorCamera*));
 				ImGui::EndMenu();
 			}
+			if (ImGui::BeginMenu("ActorField"))
+			{
+
+				CheckType(&typeid(ActorField*));
+				ImGui::EndMenu();
+			}
 			if (ImGui::BeginMenu("ActorCharcter"))
 			{
 
@@ -141,6 +149,12 @@ void ActorManager::Stats()
 			if (ImGui::BeginMenu("ActorCube"))
 			{
 				CheckType(&typeid(ActorCube*));
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("ActorFbxModel"))
+			{
+
+				CheckType(&typeid(ActorFbxModel*));
 				ImGui::EndMenu();
 			}
 			CheckType(&typeid(Actor3d*));

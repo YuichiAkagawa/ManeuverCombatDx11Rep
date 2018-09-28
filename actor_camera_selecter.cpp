@@ -9,6 +9,7 @@
 #include "actor_free_camera.h"
 #include "actor_manager.h"
 #include "imgui/imgui.h"
+#include "imgui_manager.h"
 #include "main.h"
 #include "actor_camera_selecter.h"
 
@@ -79,7 +80,7 @@ void ActorCameraSelecter::Update()
 
 void ActorCameraSelecter::Stats()
 {
-	if (isDrawImgui_ && GetIsImgui())
+	if (isDrawImgui_ && ImguiManager::GetIsDraw())
 	{
 		ImGui::SetNextWindowPos(ImVec2(880, 20), ImGuiSetCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(380, 450), ImGuiSetCond_Once);

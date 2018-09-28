@@ -9,28 +9,31 @@
 #include <DirectXMath.h>
 
 #include "imgui/imgui.h"
-#include "imgui/imgui_impl_dx11.h"
-
+#include "imgui_manager.h"
+#include "input.h"
 #include "process_calculator.h"
 #include "renderer.h"
 #include "resource.h"
 #include "scene_game01.h"
 #include "scene_manager.h"
-#include "input.h"
+
 #include "main.h"
 
 constexpr char*		CLASS_NAME = "ManeuverCombat";
 constexpr char*		WINDOW_NAME = "ManeuverCombat";
-constexpr double	FRAME_DIRAY = 1000.0f / 60.0f;
+
+LRESULT CALLBACK	WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+bool				Init(HINSTANCE hInstance, int nCmdShow);
+void				Uninit();
+void				Update();
+void				Draw();
+void				WaitFrame();
 
 static HWND							g_hWnd;									
 static LARGE_INTEGER				g_freq;
 static double						g_freqFrame;
 static ProcessCalculator			g_allProcessCal, g_updateProcessCal, g_drawProcessCal;
 static Scene*						g_pCurrentScene;
-static bool							g_isImgui;
-
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
@@ -39,6 +42,119 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
+	//初期化処理
+	if (!Init(hInstance, nCmdShow))
+	{
+		MessageBox(g_hWnd, "初期化できませんでした", "Error", MB_OK);
+		return -1;
+	}
+
+	//---GAME LOOP---//
+	MSG msg;
+	for (;;)
+	{
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT)
+			{
+				break;
+			}
+			else
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		else
+		{
+			//全処理時間計測開始
+			g_allProcessCal.StartCalculate();
+
+			//更新処理時間計測開始
+			g_updateProcessCal.StartCalculate();
+
+			//--更新処理--//
+			Update();
+
+			//更新処理時間計測終了
+			g_updateProcessCal.EndCalculate();
+
+			//描画処理時間計測開始
+			g_drawProcessCal.StartCalculate();
+
+			//--描画処理--//
+			Draw();
+
+			//描画処理時間計測終了
+			g_drawProcessCal.EndCalculate();
+
+			//処理時間計測終了
+			g_allProcessCal.EndCalculate();
+
+			//フレーム待機
+			WaitFrame();
+		}
+	}
+
+	//終了処理
+	Uninit();
+
+	return (int)msg.wParam;
+}
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	//imguiウィンドウプロシージャ
+	ImguiManager::ImguiWndProc(hWnd, uMsg, wParam, lParam);
+
+	switch (uMsg)
+	{
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	case WM_CLOSE:
+	{
+		int nID = MessageBox(hWnd, "終了しますか？", "Warning", MB_YESNO | MB_ICONASTERISK | MB_DEFBUTTON2);
+		if (nID == IDYES)
+		{
+			DestroyWindow(hWnd);
+		}
+		else
+		{
+			return 0;
+		}
+		break;
+	}
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_ESCAPE:
+		{
+			int nID = MessageBox(hWnd, "終了しますか？", "Warning", MB_YESNO | MB_ICONASTERISK | MB_DEFBUTTON2);
+			if (nID == IDYES)
+			{
+				DestroyWindow(hWnd);
+			}
+			break;
+		}
+		default:
+			break;
+		}
+		break;
+
+	case WM_LBUTTONDOWN:
+	{
+		SetFocus(hWnd);
+		break;
+	}
+	default:
+		break;
+	}
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+bool Init(HINSTANCE hInstance, int nCmdShow)
+{
 	WNDCLASSEX wcex;
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	wcex.style = CS_VREDRAW | CS_HREDRAW;
@@ -99,14 +215,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
 
-	//初期化処理
-	MSG msg;
-	if (!Init(hInstance, g_hWnd))
-	{
-		MessageBox(g_hWnd, "初期化できませんでした", "Error", MB_OK);
-		return -1;
-	}
-
 	//高精度タイマー単位取得
 	QueryPerformanceFrequency(&g_freq);
 
@@ -115,114 +223,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 	QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
 	g_freqFrame = freq / 1000.0f;
 
-	//---GAME LOOP---//
-	for (;;)
-	{
-		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT)
-			{
-				break;
-			}
-			else
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		}
-		else
-		{
-			//全処理時間計測開始
-			g_allProcessCal.StartCalculate();
-
-			//更新処理時間計測開始
-			g_updateProcessCal.StartCalculate();
-
-			//--更新処理--//
-			Update();
-
-			//更新処理時間計測終了
-			g_updateProcessCal.EndCalculate();
-
-			//描画処理時間計測開始
-			g_drawProcessCal.StartCalculate();
-
-			//--描画処理--//
-			Draw();
-
-			//描画処理時間計測終了
-			g_drawProcessCal.EndCalculate();
-
-			//処理時間計測終了
-			g_allProcessCal.EndCalculate();
-
-			//フレーム待機
-			WaitFrame();
-		}
-	}
-
-	//終了処理
-	Uninit();
-
-	return (int)msg.wParam;
-}
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	//imguiウィンドウプロシージャハンドラー
-	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
-		return true;
-
-	switch (uMsg)
-	{
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	case WM_CLOSE:
-	{
-		int nID = MessageBox(hWnd, "終了しますか？", "Warning", MB_YESNO | MB_ICONASTERISK | MB_DEFBUTTON2);
-		if (nID == IDYES)
-		{
-			DestroyWindow(hWnd);
-		}
-		else
-		{
-			return 0;
-		}
-		break;
-	}
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case VK_ESCAPE:
-		{
-			int nID = MessageBox(hWnd, "終了しますか？", "Warning", MB_YESNO | MB_ICONASTERISK | MB_DEFBUTTON2);
-			if (nID == IDYES)
-			{
-				DestroyWindow(hWnd);
-			}
-			break;
-		}
-		default:
-			break;
-		}
-		break;
-
-	case WM_LBUTTONDOWN:
-	{
-		SetFocus(hWnd);
-		break;
-	}
-	default:
-		break;
-	}
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}
-
-bool Init(HINSTANCE hInstance, HWND hWnd)
-{
 	//キーボード初期化処理
-	HRESULT hr = InitKeyboard(hInstance, hWnd);
+	HRESULT hr = InitKeyboard(hInstance, g_hWnd);
 	if (FAILED(hr))
 	{
 		return false;
@@ -240,8 +242,8 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 		return false;
 	}
 
-	//ImGuiセットアップ
-	ImGuiSetup();
+	//ImGui初期化
+	ImguiManager::Init(g_hWnd);
 
 	//現在のシーン初期化
 	g_pCurrentScene = nullptr;
@@ -252,17 +254,13 @@ bool Init(HINSTANCE hInstance, HWND hWnd)
 		return false;
 	}
 
-	//imgui描画フラグ
-	g_isImgui = false;
-
 	return true;
 }
 
 void Uninit()
 {
-	//imgui終了処理
-	ImGui_ImplDX11_Shutdown();
-	ImGui::DestroyContext();
+	//ImGui終了処理
+	ImguiManager::Uninit();
 
 	//シーン終了処理
 	SceneManager::Uninit();
@@ -276,27 +274,14 @@ void Uninit()
 
 void Update()
 {
-	//imgui更新
-	ImGui_ImplDX11_NewFrame();
-
 	//キーボード更新処理
 	UpdateKeyboard();
 
-	//imgui描画切り替え
-	if (GetKeyboardTrigger(DIK_TAB))
-	{
-		if (g_isImgui)
-		{
-			g_isImgui = false;
-		}
-		else
-		{
-			g_isImgui = true;
-		}
-	}
+	//imgui更新開始
+	ImguiManager::UpdateStart();
 
 	//ImGui
-	if (g_isImgui)
+	if (ImguiManager::GetIsDraw())
 	{
 		ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiSetCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(380, 450), ImGuiSetCond_Once);
@@ -340,8 +325,8 @@ void Update()
 	//シーン更新処理
 	SceneManager::Update();
 
-	//imgui更新終了
-	ImGui::EndFrame();
+	//Imgui更新終了
+	ImguiManager::UpdateEnd();
 }
 
 void Draw()
@@ -353,19 +338,13 @@ void Draw()
 	SceneManager::Draw();
 
 	//imgui描画
-	if (g_isImgui)
+	if (ImguiManager::GetIsDraw())
 	{
-		ImGui::Render();
-		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+		ImguiManager::Draw();
 	}
 
 	//レンダラー描画終了処理
 	Renderer::DrawEnd();
-}
-
-HWND GetHWND()
-{
-	return g_hWnd;
 }
 
 void WaitFrame()
@@ -375,7 +354,7 @@ void WaitFrame()
 
 	QueryPerformanceCounter((LARGE_INTEGER*)&currentTime);
 
-	const double WAIT_TIME = FRAME_DIRAY - (currentTime - lastTime) / g_freqFrame;
+	const double WAIT_TIME = (1000.0f / FRAME_RATE) - (currentTime - lastTime) / g_freqFrame;
 
 	do {
 		Sleep(0);
@@ -383,23 +362,7 @@ void WaitFrame()
 	} while ((lastTime - currentTime) / g_freqFrame < WAIT_TIME);
 }
 
-void ImGuiSetup()
+HWND GetHWND()
 {
-	//imguiセットアップ
-	ImGui_ImplDX11_InvalidateDeviceObjects();
-	ImGui_ImplDX11_CreateDeviceObjects();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	(void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-	ImGui_ImplDX11_Init(g_hWnd, Renderer::GetDevice(), Renderer::GetDeviceContext());
-
-	//imguiスタイルセットアップ
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
-}
-
-bool GetIsImgui()
-{
-	return g_isImgui;
+	return g_hWnd;
 }

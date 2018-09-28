@@ -207,12 +207,14 @@
     <ClCompile Include="actor_camera_selecter.cpp" />
     <ClCompile Include="actor_character.cpp" />
     <ClCompile Include="actor_cube.cpp" />
+    <ClCompile Include="actor_field.cpp" />
     <ClCompile Include="actor_free_camera.cpp" />
     <ClCompile Include="actor_manager.cpp" />
     <ClCompile Include="edit_math.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
     <ClCompile Include="imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="imgui_manager.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="load_fbx.cpp" />
     <ClCompile Include="main.cpp" />
@@ -241,6 +243,7 @@
     <ClInclude Include="actor_character.h" />
     <ClInclude Include="actor_cube.h" />
     <ClInclude Include="actor_fbx_model.h" />
+    <ClInclude Include="actor_field.h" />
     <ClInclude Include="actor_free_camera.h" />
     <ClInclude Include="actor_manager.h" />
     <ClInclude Include="edit_math.h" />
@@ -251,6 +254,7 @@
     <ClInclude Include="imgui\stb_rect_pack.h" />
     <ClInclude Include="imgui\stb_textedit.h" />
     <ClInclude Include="imgui\stb_truetype.h" />
+    <ClInclude Include="imgui_manager.h" />
     <ClInclude Include="load_fbx.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="process_calculator.h" />

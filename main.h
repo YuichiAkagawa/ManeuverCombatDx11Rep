@@ -12,21 +12,13 @@
 constexpr UINT SCREEN_WIDTH = 1280;
 constexpr UINT SCREEN_HEIGHT = 720;
 static const float SCREEN_COLOR[] = { 0.2f, 0.2f, 0.6f, 1.0f };
-constexpr bool WINDOW_MODE = true;
+constexpr float FRAME_RATE = 60.0f;
 
 constexpr float	CAMERA_NEAR = 0.1f;
-constexpr float	CAMERA_FAR = 200000.0f;
+constexpr float	CAMERA_FAR = 10000.0f;
 constexpr int	CAMERA_FOV = 90;
 
-LRESULT CALLBACK	WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-bool				Init(HINSTANCE hInstance, HWND hWnd);
-void				Uninit();
-void				Update();
-void				Draw();
 HWND				GetHWND();
-void				WaitFrame();
-void				ImGuiSetup();
-bool				GetIsImgui();
 
 template <typename T>
 inline void SafeDelete(T*& p) {

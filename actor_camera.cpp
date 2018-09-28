@@ -11,6 +11,7 @@
 #include "actor_manager.h"
 #include "edit_math.h"
 #include "imgui/imgui.h"
+#include "imgui_manager.h"
 #include "main.h"
 #include "renderer.h"
 #include "texture.h"
@@ -73,7 +74,7 @@ void ActorCamera::Update()
 
 void ActorCamera::Stats()
 {
-	if (isDrawImgui_ && GetIsImgui())
+	if (isDrawImgui_ && ImguiManager::GetIsDraw())
 	{
 		ImGui::SetNextWindowPos(ImVec2(880, 20), ImGuiSetCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(380, 450), ImGuiSetCond_Once);

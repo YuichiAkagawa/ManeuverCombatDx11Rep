@@ -37,8 +37,8 @@ bool Renderer::Init()
 		scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
 		// リフレッシュレート 60fps 
-		scd.BufferDesc.RefreshRate.Numerator = 60;		// 分子
-		scd.BufferDesc.RefreshRate.Denominator = 1;		// 分母
+		scd.BufferDesc.RefreshRate.Numerator = (UINT)FRAME_RATE;	// 分子
+		scd.BufferDesc.RefreshRate.Denominator = 1;					// 分母
 		scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		scd.OutputWindow = GetHWND();
 		scd.SampleDesc.Count = 1;

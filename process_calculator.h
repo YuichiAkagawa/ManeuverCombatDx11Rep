@@ -20,7 +20,6 @@ private:
 	LARGE_INTEGER				calcEnd_;
 	double						processTime_;
 	double						processTimeMax_;
-	DWORD						calcSpanCounter_;
 	DWORD						calcStartCounter_;
 
 public:

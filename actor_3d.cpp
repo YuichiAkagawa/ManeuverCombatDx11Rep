@@ -8,6 +8,7 @@
 #include "actor.h"
 #include "edit_math.h"
 #include "imgui/imgui.h"
+#include "imgui_manager.h"
 #include "main.h"
 #include "actor_3d.h"
 
@@ -41,7 +42,7 @@ void Actor3d::Update()
 
 void Actor3d::Stats()
 {
-	if (isDrawImgui_ && GetIsImgui())
+	if (isDrawImgui_ && ImguiManager::GetIsDraw())
 	{
 		ImGui::SetNextWindowPos(ImVec2(880, 20), ImGuiSetCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(380, 450), ImGuiSetCond_Once);

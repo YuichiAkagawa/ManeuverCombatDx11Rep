@@ -54,6 +54,12 @@
     <Filter Include="ヘッダー ファイル\actor\actor3d\actor_camera">
       <UniqueIdentifier>{02f936f6-838a-41b3-b74c-0667ac5e3b4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\actor\actor3d\actor_field">
+      <UniqueIdentifier>{806520da-4f9b-41ee-b00a-9d3e1aa24e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\actor\actor3d\actor_field">
+      <UniqueIdentifier>{c988182f-53e5-476c-b5ce-dd4840167ede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -148,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="model.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_field.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_field</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_manager.cpp">
+      <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +270,12 @@
     </ClInclude>
     <ClInclude Include="model.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_field.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_field</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_manager.h">
+      <Filter>imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

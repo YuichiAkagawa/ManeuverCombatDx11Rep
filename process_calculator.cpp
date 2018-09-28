@@ -7,10 +7,9 @@
 #include <math.h>
 #include "process_calculator.h"
 
-constexpr DWORD CALC_SPAN_COUNT = 30;
 constexpr DWORD CALC_START_COUNT = 60 * 2;
 
-ProcessCalculator::ProcessCalculator() : processTime_(0.0), processTimeMax_(0.0), calcSpanCounter_(0), calcStartCounter_(0)
+ProcessCalculator::ProcessCalculator() : processTime_(0.0), processTimeMax_(0.0), calcStartCounter_(0)
 {
 	//高精度タイマー単位取得
 	QueryPerformanceFrequency(&freq_);
@@ -37,17 +36,8 @@ void ProcessCalculator::EndCalculate()
 	//計測終了
 	QueryPerformanceCounter(&calcEnd_);
 
-	//処理時間計測間隔カウンタ
-	calcSpanCounter_++;
-
-	//一定フレームごとに計測
-	if (calcSpanCounter_ >= CALC_SPAN_COUNT)
-	{
-		calcSpanCounter_ = 0;
-
-		//処理時間算出(ms)
-		processTime_ = (double)(calcEnd_.QuadPart - calcStart_.QuadPart) / freq_.QuadPart * 1000.0f;
-	}
+	//処理時間算出(ms)
+	processTime_ = (double)(calcEnd_.QuadPart - calcStart_.QuadPart) / freq_.QuadPart * 1000.0f;
 
 	//最長処理時間計測開始カウンタ
 	calcStartCounter_++;
@@ -76,6 +66,5 @@ void ProcessCalculator::Reset()
 {
 	processTime_ = 0.0;
 	processTimeMax_ = 0.0;
-	calcSpanCounter_ = 0;
 	calcStartCounter_ = 0;
 }
