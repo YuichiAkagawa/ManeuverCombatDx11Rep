@@ -1,21 +1,3 @@
-﻿  load_fbx.cpp
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(124): warning C4389: '!=': signed と unsigned の数値を比較しようとしました。
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(200): warning C4189: 'vColorLayerCount': ローカル変数が初期化されましたが、参照されていません
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(199): warning C4189: 'UVLayerCount': ローカル変数が初期化されましたが、参照されていません
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(197): warning C4189: 'normalLayerCount': ローカル変数が初期化されましたが、参照されていません
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(198): warning C4189: 'tangentLayerCount': ローカル変数が初期化されましたが、参照されていません
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(196): warning C4189: 'vertexCnt': ローカル変数が初期化されましたが、参照されていません
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(319): warning C4389: '==': signed と unsigned の数値を比較しようとしました。
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(369): warning C4389: '==': signed と unsigned の数値を比較しようとしました。
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(635): warning C4189: 'uvCount': ローカル変数が初期化されましたが、参照されていません
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(774): warning C4456: 'material' を宣言すると、以前のローカル宣言が隠蔽されます
-  e:\programs\maneuvercombatdx11rep\load_fbx.cpp(694): note: 'material' の宣言を確認してください
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(824): warning C4456: 'k' を宣言すると、以前のローカル宣言が隠蔽されます
-  e:\programs\maneuvercombatdx11rep\load_fbx.cpp(815): note: 'k' の宣言を確認してください
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(831): warning C4456: 'k' を宣言すると、以前のローカル宣言が隠蔽されます
-  e:\programs\maneuvercombatdx11rep\load_fbx.cpp(815): note: 'k' の宣言を確認してください
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(706): warning C4189: 'layeredTexture': ローカル変数が初期化されましたが、参照されていません
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(950): warning C4389: '!=': signed と unsigned の数値を比較しようとしました。
-e:\programs\maneuvercombatdx11rep\load_fbx.cpp(1275): warning C4100: 'model': 引数は関数の本体部で 1 度も参照されません。
+﻿  actor_fbx_model.cpp
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\Debug\3DGameProject.pdb (Full PDB)

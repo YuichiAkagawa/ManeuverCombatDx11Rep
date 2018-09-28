@@ -79,7 +79,7 @@ void EditMath::Identity(XMFLOAT4X4& valueReturn)
 void EditMath::Inverse(XMFLOAT4X4& valueReturn, const XMFLOAT4X4& value)
 {
 	XMMATRIX xmMtx = XMLoadFloat4x4(&value);
-	XMMatrixInverse(nullptr, xmMtx);
+	xmMtx = XMMatrixInverse(nullptr, xmMtx);
 	XMStoreFloat4x4(&valueReturn, xmMtx);
 }
 

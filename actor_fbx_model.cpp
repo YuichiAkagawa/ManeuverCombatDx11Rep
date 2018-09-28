@@ -61,6 +61,9 @@ void ActorFbxModel::Update()
 		XMFLOAT4X4 mtxWorldInv;
 		EditMath::Inverse(mtxWorldInv, mtxWorld_);
 		EditMath::Transpose(cb.mtxWorldInv, mtxWorldInv);
+		mtxWorld_ = mtxWorld_;
+		mtxWorldInv = mtxWorldInv;
+
 		EditMath::Transpose(cb.mtxView, pCameraSelecter_->GetSelectCamera()->GetMtxView());
 		EditMath::Transpose(cb.mtxProj, pCameraSelecter_->GetSelectCamera()->GetMtxProjection());
 		cb.vecDirLight = { DIRECTIONAL_LIGHT.x, DIRECTIONAL_LIGHT.y, DIRECTIONAL_LIGHT.z, 1.0f };
@@ -73,16 +76,16 @@ void ActorFbxModel::Update()
 	}
 	{
 		XMFLOAT4X4 mtxRotX;
-		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.3f));
+		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.1f));
 		//EditMath::Multiplication(mtxWorld_, mtxRotX, mtxWorld_);
 
 		XMFLOAT4X4 mtxRotY;
-		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.4f));
+		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.2f));
 		//EditMath::Multiplication(mtxWorld_, mtxRotY, mtxWorld_);
 	
 		XMFLOAT4X4 mtxRotZ;
-		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.5f));
-		//EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
+		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.3f));
+		EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
 	}
 }
 

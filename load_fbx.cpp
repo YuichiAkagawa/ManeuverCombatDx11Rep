@@ -518,6 +518,7 @@ void LoadFBX::GetVertexTangent(FbxMesh* mesh)
 	int tangentLayerCount = mesh->GetElementTangentCount();
 	if (tangentLayerCount <= 0)
 	{
+		//Tangent‚ª–³‚©‚Á‚½ê‡¶¬
 		mesh->GenerateTangentsDataForAllUVSets();
 	}
 	tangentLayerCount = mesh->GetElementTangentCount();

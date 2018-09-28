@@ -16,8 +16,6 @@ struct VS_IN
 	float4 color : COLOR0;
 	float2 texcoord : TEXCOORD0;
 	float3 tangent : TANGENT0;
-	float4 boneIndex : TEXCOORD1;
-	float4 weight : TEXCOORD2;
 };
 
 struct VS_OUT_PS_IN
@@ -44,94 +42,7 @@ cbuffer ConstantBuffer
 
 VS_OUT_PS_IN VS(VS_IN input)
 {
-	VS_OUT_PS_IN output;
-
-	////t, b, n算出
-	//float3 normal = normalize(input.normal);
-	//float3 tangent = normalize(input.tangent);
-	//float3 binormal = normalize(cross(normal, tangent));
-
-	////ワールドビュープロジェクション行列
-	//float4x4 mtxWVP = mul(mul(mtxWorld, mtxView), mtxProj);
-
-	////頂点座標変換
-	//output.pos = mul(float4(input.pos, 1.0f), mtxWVP);
-
-	////ライトベクトル算出
-	//float3 vecLight = mul(-vecDirLight.xyz, mtxWorld);
-	//vecLight = normalize(vecLight);
-	////output.vecLight.x = dot(vecLight, tangent);
-	////output.vecLight.y = dot(vecLight, binormal);
-	////output.vecLight.z = dot(vecLight, normal);
-	////output.vecLight = normalize(output.vecLight);
-	//output.vecLight = vecLight;
-
-	////視点へのベクトル算出
-	//float3 vecEye = posEye.xyz - mul(input.pos.xyz, mtxWorld);
-	//vecEye = normalize(vecEye);
-	////output.vecEye.x = dot(vecEye, tangent);
-	////output.vecEye.y = dot(vecEye, binormal);
-	////output.vecEye.z = dot(vecEye, normal);
-	////output.vecEye = normalize(output.vecEye);
-	//output.vecEye = vecEye;
-
-	////頂点色
-	//output.color = input.color;
-
-	////UV座標
-	//output.texcoord = input.texcoord;
-
-	////スペキュラデータ
-	//output.specularData = specularData.xy;
-
-	////法線
-	//output.normal = mul(normal, mtxWorld);
-	//output.normal = normalize(output.normal);
-
-	///////////////////////////////////////
-
-
-
-
-
-
-	///////////////////////////////////////
-
-	////ワールドビュープロジェクション行列
-	//float4x4 mtxWVP = mul(mul(mtxWorld, mtxView), mtxProj);
-
-	////頂点座標変換
-	//output.pos = mul(float4(input.pos, 1.0f), mtxWVP);
-
-	////ライトベクトル算出
-	//float3 vecLight = -vecDirLight.xyz;
-	//output.vecLight = normalize(vecLight);
-
-	////視点へのベクトル算出
-	//float3 vecEye = posEye.xyz - mul(input.pos.xyz, mtxWorld);
-	//output.vecEye = normalize(vecEye);
-
-	////UV座標
-	//output.texcoord = input.texcoord;
-
-	////スペキュラデータ
-	//output.specularData = specularData.xy;
-
-	////法線算出
-	//float3 normal = input.normal;
-	//output.normal = mul(normal, mtxWorld);
-	//output.normal = normalize(output.normal);
-
-	////色
-	//output.color = input.color;
-
-	///////////////////////////////////////
-
-
-
-
-
-	/////////////////////////////////////
+	VS_OUT_PS_IN output = (VS_OUT_PS_IN)0;
 
 	//ワールドビュープロジェクション行列
 	float4x4 mtxWVP = mul(mul(mtxWorld, mtxView), mtxProj);
@@ -144,20 +55,21 @@ VS_OUT_PS_IN VS(VS_IN input)
 	float3 tangent = normalize(input.tangent);
 	float3 binormal = normalize(cross(normal, tangent));
 
-	float3x3 tbn;
-	tbn[0] = tangent;
-	tbn[1] = binormal;
-	tbn[2] = normal;
-	float3x3 toTangentSpace = transpose(tbn);
+	//接空間変換行列
+	float3x3 mtxTBN;
+	mtxTBN[0] = tangent;
+	mtxTBN[1] = binormal;
+	mtxTBN[2] = normal;
+	float3x3 mtxTransTBN = transpose(mtxTBN);
+
+	//ライトベクトル算出
+	float3 vecLightLocal = mul(float4(-vecDirLight.xyz, 1.0f), mtxWorldInv).xyz;
+	output.vecLightTangent = mul(vecLightLocal, mtxTransTBN);
 
 	//視線ベクトル算出
 	float3 posEyeLocal = mul(float4(posEye.xyz, 1.0f), mtxWorldInv).xyz;
 	float3 vecEyeLocal = posEyeLocal - input.pos.xyz;
-	output.vecEyeTangent = mul(vecEyeLocal, toTangentSpace);
-
-	//ライトベクトル算出
-	float3 vecLightLocal = mul(float4(-vecDirLight.xyz, 1.0f), mtxWorldInv).xyz;
-	output.vecLightTangent = mul(vecLightLocal, toTangentSpace);
+	output.vecEyeTangent = mul(vecEyeLocal, mtxTransTBN);
 
 	//UV座標
 	output.texcoord = input.texcoord;
@@ -168,30 +80,11 @@ VS_OUT_PS_IN VS(VS_IN input)
 	//色
 	output.color = input.color;
 
-	/////////////////////////////////////
-
-
 	return output;
 }
 
 float4 PS(VS_OUT_PS_IN input) : SV_Target
 {
-	////ハーフベクトルの計算
-	//float3 vecHalf = normalize(input.vecLight + input.vecEye);
-
-	////スペキュラカラー計算
-	//float specular = pow(max(0.0f, dot(input.normal, vecHalf)), input.specularData.x) * input.specularData.y;
-
-	//return colorMap.Sample(samplerState, input.texcoord) * input.color * min(max(0.1f, dot(input.normal, input.vecLight)), 1.0f) + specular;
-
-	///////////////////////////////////////
-
-
-
-
-
-	///////////////////////////////////////
-
 	//ノーマルマップから法線取得
 	float3 normalTangent = 2.0f * normalMap.Sample(samplerState, input.texcoord).xyz - 1.0f;
 	normalTangent = normalize(normalTangent);
@@ -206,5 +99,5 @@ float4 PS(VS_OUT_PS_IN input) : SV_Target
 	//スペキュラカラー計算
 	float specular = pow(max(0.0f, dot(normalTangent, vecHalf)), input.specularData.x) * input.specularData.y;
 
-	return colorMap.Sample(samplerState, input.texcoord) * input.color *  min(max(0.1f, dot(normalTangent, vecLightTangent)), 1.0f) +specular;
+	return colorMap.Sample(samplerState, input.texcoord) * input.color *  min(max(0.1f, dot(normalTangent, vecLightTangent)), 1.0f) + specular;
 }
