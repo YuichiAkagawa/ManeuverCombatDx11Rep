@@ -77,15 +77,15 @@ void ActorFbxModel::Update()
 	}
 	{
 		XMFLOAT4X4 mtxRotX;
-		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.1f * SceneManager::GetProcessMS()));
+		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.05f * SceneManager::GetProcessMS()));
 		//EditMath::Multiplication(mtxWorld_, mtxRotX, mtxWorld_);
 
 		XMFLOAT4X4 mtxRotY;
-		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.1f * SceneManager::GetProcessMS()));
+		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.05f * SceneManager::GetProcessMS()));
 		EditMath::Multiplication(mtxWorld_, mtxRotY, mtxWorld_);
 	
 		XMFLOAT4X4 mtxRotZ;
-		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.1f * SceneManager::GetProcessMS()));
+		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.05f * SceneManager::GetProcessMS()));
 		//EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
 	}
 }
