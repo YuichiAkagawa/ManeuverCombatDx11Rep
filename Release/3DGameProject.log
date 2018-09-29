@@ -1,64 +1,50 @@
-﻿  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11Rep\fbx.cso
+﻿  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11LocalRep\cube.cso
+  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11LocalRep\fbx.cso
+  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11LocalRep\test.cso
   actor.cpp
   actor_3d.cpp
   actor_camera.cpp
   actor_camera_selecter.cpp
   actor_character.cpp
   actor_cube.cpp
+  actor_field.cpp
   actor_free_camera.cpp
-  actor_manager.cpp
   C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  actor_manager.cpp
   edit_math.cpp
   imgui.cpp
   imgui_draw.cpp
   imgui_impl_dx11.cpp
+  imgui_manager.cpp
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   input.cpp
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   load_fbx.cpp
   main.cpp
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   model.cpp
   process_calculator.cpp
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   renderer.cpp
+  コンパイル中...
   sampler_state.cpp
   scene.cpp
   scene_game01.cpp
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   scene_game02.cpp
   C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   scene_manager.cpp
   shader.cpp
   shader_cube.cpp
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   shader_fbx.cpp
   shader_manager.cpp
   shader_test.cpp
-load_fbx.cpp(124): warning C4389: '!=': signed と unsigned の数値を比較しようとしました。
-load_fbx.cpp(200): warning C4189: 'vColorLayerCount': ローカル変数が初期化されましたが、参照されていません
-load_fbx.cpp(199): warning C4189: 'UVLayerCount': ローカル変数が初期化されましたが、参照されていません
-load_fbx.cpp(197): warning C4189: 'normalLayerCount': ローカル変数が初期化されましたが、参照されていません
-load_fbx.cpp(198): warning C4189: 'tangentLayerCount': ローカル変数が初期化されましたが、参照されていません
-load_fbx.cpp(196): warning C4189: 'vertexCnt': ローカル変数が初期化されましたが、参照されていません
-load_fbx.cpp(319): warning C4389: '==': signed と unsigned の数値を比較しようとしました。
-load_fbx.cpp(369): warning C4389: '==': signed と unsigned の数値を比較しようとしました。
-load_fbx.cpp(636): warning C4189: 'uvCount': ローカル変数が初期化されましたが、参照されていません
-load_fbx.cpp(775): warning C4456: 'material' を宣言すると、以前のローカル宣言が隠蔽されます
-  load_fbx.cpp(695): note: 'material' の宣言を確認してください
-load_fbx.cpp(825): warning C4456: 'k' を宣言すると、以前のローカル宣言が隠蔽されます
-  load_fbx.cpp(816): note: 'k' の宣言を確認してください
-load_fbx.cpp(832): warning C4456: 'k' を宣言すると、以前のローカル宣言が隠蔽されます
-  load_fbx.cpp(816): note: 'k' の宣言を確認してください
-load_fbx.cpp(707): warning C4189: 'layeredTexture': ローカル変数が初期化されましたが、参照されていません
-load_fbx.cpp(951): warning C4389: '!=': signed と unsigned の数値を比較しようとしました。
-load_fbx.cpp(1276): warning C4100: 'model': 引数は関数の本体部で 1 度も参照されません。
-model.cpp(25): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
-model.cpp(104): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
   actor_fbx_model.cpp
   texture.cpp
   WICTextureLoader.cpp
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   コード生成しています。
-  180 of 3165 functions ( 5.7%) were compiled, the rest were copied from previous compilation.
-    22 functions were new in current compilation
-    82 functions had inline decision re-evaluated but remain unchanged
+  3182 of 3187 functions (99.8%) were compiled, the rest were copied from previous compilation.
+    138 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\\3DGameProject.exe
-  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11Rep\\3DGameProject.pdb (Full PDB)
+  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\\3DGameProject.exe
+  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\\3DGameProject.pdb (Full PDB)

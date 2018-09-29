@@ -72,7 +72,7 @@ void ActorFreeCamera::Uninit()
 
 void ActorFreeCamera::Update()
 {
-	double processMS = SceneManager::GetProcessMS();
+	float processMS = SceneManager::GetProcessMS();
 
 	EditMath::Subtraction(vecFront_, posAt_, pos_);
 	EditMath::Normalize(vecFront_, vecFront_);

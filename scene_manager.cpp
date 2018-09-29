@@ -75,7 +75,7 @@ Scene* SceneManager::GetScene()
 	return pScene_;
 }
 
-double SceneManager::GetProcessMS()
+float SceneManager::GetProcessMS()
 {
-	return gameSystemProcessTime_;
+	return (float)gameSystemProcessTime_;
 }

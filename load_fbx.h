@@ -102,12 +102,7 @@ private:
 	void ReleaseTempObj(void);			// ˆêî•ñ‚Ì‰ğ•ú
 	void ReleaseTempAnimObj(void);			// ˆêî•ñ‚Ì‰ğ•ú
 
-	void GetAnimation(MODEL& model, FBXANIMATION& animInfo);
-	void CalcTangent(
-		DirectX::XMFLOAT3* p0, DirectX::XMFLOAT2* uv0,
-		DirectX::XMFLOAT3* p1, DirectX::XMFLOAT2* uv1,
-		DirectX::XMFLOAT3* p2, DirectX::XMFLOAT2* uv2,
-		DirectX::XMFLOAT3* outTangent);
+	void GetAnimation(FBXANIMATION& animInfo);
 
 	// ƒ}ƒeƒŠƒAƒ‹‚Ì”(0 = CountMesh, 1 = GetMesh)
 	int materialCount_[2] = { 0, 0 };
@@ -120,7 +115,7 @@ private:
 	std::string	fileName_;
 	int		pointCount_;
 	int		polygonCount_;
-	int		indexCount_;
+	unsigned int		indexCount_;
 	std::vector<VERTEXPOINTBONE>			tempPoint_;
 	std::vector<VERTEXPOINTBONE>			tempVertex_;
 	std::vector<DirectX::XMFLOAT3>			tempNormal_;

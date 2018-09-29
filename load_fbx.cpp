@@ -93,11 +93,11 @@ bool LoadFBX::LoadAnimation(std::string fileName, MODEL& model)
 	}
 
 	const BONE* isAnim = nullptr;
-	int animCnt = 0;
+	unsigned int animCnt = 0;
 	int size = (int)animationStack_.size();
 	for (int i = 0; i < size; ++i)
 	{
-		GetAnimation(tempModel, animationStack_[i]);
+		GetAnimation(animationStack_[i]);
 
 		if (animBoneList_.size() > 0)
 		{
@@ -118,13 +118,13 @@ bool LoadFBX::LoadAnimation(std::string fileName, MODEL& model)
 		}
 		ReleaseTempAnimObj();
 	}
-	int animFrame = (int)isAnim->animMtx[animCnt].size();
+	unsigned int animFrame = (int)isAnim->animMtx[animCnt].size();
 	for (auto& bone : model.bone)
 	{
 		if (bone.animMtx.size() != animCnt + 1)
 		{
 			std::vector<XMFLOAT4X4> temp;
-			for (int i = 0; i < animFrame; ++i)
+			for (unsigned int i = 0; i < animFrame; ++i)
 			{
 				XMFLOAT4X4 t;
 				EditMath::Identity(t);
@@ -192,12 +192,6 @@ bool LoadFBX::GetMesh(FbxNode* pNode, MODEL& model)
 				int a = 0;
 				a = 1;
 			}
-
-			int vertexCnt			= mesh->GetPolygonVertexCount();
-			int normalLayerCount	= mesh->GetElementNormalCount();
-			int tangentLayerCount	= mesh->GetElementTangentCount();
-			int UVLayerCount		= mesh->GetElementUVCount();
-			int vColorLayerCount	= mesh->GetElementVertexColorCount();
 
 			GetPosition(mesh);
 			GetVertexNormal(mesh);
@@ -307,7 +301,7 @@ void LoadFBX::GetBone(FbxMesh* mesh)
 		EditMath::Identity(ofBone.initMtx);
 		boneList_.emplace_back(ofBone);
 
-		int cnt = 0;
+		unsigned int cnt = 0;
 		for (const auto& bone : boneList_)
 		{
 			if (bone.name == ofBone.name)
@@ -357,7 +351,7 @@ void LoadFBX::GetBone(FbxMesh* mesh)
 			FbxAMatrix initMtx;
 			cluster->GetTransformLinkMatrix(initMtx);
 			this->CreateMtx(ofBone.initMtx, initMtx);
-			int cnt = 0;
+			unsigned int cnt = 0;
 			for (const auto& bone : boneList_)
 			{
 				if (bone.name == ofBone.name)
@@ -403,7 +397,7 @@ void LoadFBX::GetBone(FbxMesh* mesh)
 	int* index = mesh->GetPolygonVertices();
 
 	// インデックス分回す
-	for (int i = 0; i < indexCount_; ++i)
+	for (unsigned int i = 0; i < indexCount_; ++i)
 	{
 		tempVertex_.emplace_back(tempPoint_[index[i]]);
 	}
@@ -452,7 +446,7 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 
 				// 法線をインデックス順で格納
 				int* index = mesh->GetPolygonVertices();
-				for (int j = 0; j < indexCount_; j++)
+				for (unsigned int j = 0; j < indexCount_; j++)
 				{
 					XMFLOAT3 tempNormal = { directNormal[index[j]].x, directNormal[index[j]].y, directNormal[index[j]].z };
 					tempNormal_.emplace_back(tempNormal);
@@ -471,11 +465,11 @@ void LoadFBX::GetVertexNormal(FbxMesh* mesh)
 		case FbxGeometryElement::eByPolygonVertex:
 		{
 			// 法線数を取得
-			int normalCount = normal->GetDirectArray().GetCount();
-			int indexCount  = normal->GetIndexArray().GetCount();
+			unsigned int normalCount = normal->GetDirectArray().GetCount();
+			unsigned int indexCount  = normal->GetIndexArray().GetCount();
 
 			std::vector<XMFLOAT3> directNormal;
-			for (int j = 0; j < normalCount; ++j)
+			for (unsigned int j = 0; j < normalCount; ++j)
 			{
 				//法線の取得
 				//法線反転
@@ -560,7 +554,7 @@ void LoadFBX::GetVertexTangent(FbxMesh* mesh)
 
 				// Tangentをインデックス順で格納
 				int* index = mesh->GetPolygonVertices();
-				for (int j = 0; j < indexCount_; j++)
+				for (unsigned int j = 0; j < indexCount_; j++)
 				{
 					XMFLOAT3 tempTangent = { directTangent[index[j]].x, directTangent[index[j]].y, directTangent[index[j]].z };
 					tempTangent_.emplace_back(tempTangent);
@@ -579,11 +573,11 @@ void LoadFBX::GetVertexTangent(FbxMesh* mesh)
 		case FbxGeometryElement::eByPolygonVertex:
 		{
 			// Tangent数を取得
-			int tangentCount = tangent->GetDirectArray().GetCount();
-			int indexCount = tangent->GetIndexArray().GetCount();
+			unsigned int tangentCount = tangent->GetDirectArray().GetCount();
+			unsigned int indexCount = tangent->GetIndexArray().GetCount();
 
 			std::vector<XMFLOAT3> directTangent;
-			for (int j = 0; j < tangentCount; ++j)
+			for (unsigned int j = 0; j < tangentCount; ++j)
 			{
 				//Tangentの取得
 				//Tangent反転
@@ -632,8 +626,6 @@ void LoadFBX::GetVertexUV(FbxMesh* mesh)
 		FbxGeometryElement::EMappingMode mapping = UV->GetMappingMode();
 		// リファレンスモードの取得
 		FbxGeometryElement::EReferenceMode reference = UV->GetReferenceMode();
-		// UV数を取得
-		int uvCount = UV->GetDirectArray().GetCount();
 
 		// マッピングモードの判別
 		switch (mapping) {
@@ -703,8 +695,6 @@ void LoadFBX::GetTextureNames(FbxMesh* mesh)
 			// アタッチされたテクスチャの数だけ繰り返す
 			for (int j = 0; j < layeredTextureCount; ++j)
 			{
-				// テクスチャを取得
-				FbxLayeredTexture* layeredTexture = prop.GetSrcObject<FbxLayeredTexture>(j);
 				// レイヤー数を取得
 				int textureCount = 1;
 
@@ -772,12 +762,12 @@ void LoadFBX::GetTextureNames(FbxMesh* mesh)
 			}
 			else
 			{
-				FbxSurfaceMaterial*			material		= node->GetSrcObject<FbxSurfaceMaterial>(i);
-				const FbxImplementation*	implementation  = GetImplementation(material, FBXSDK_IMPLEMENTATION_HLSL);
+				FbxSurfaceMaterial*			mat		= node->GetSrcObject<FbxSurfaceMaterial>(i);
+				const FbxImplementation*	implementation  = GetImplementation(mat, FBXSDK_IMPLEMENTATION_HLSL);
 				FbxString implemenationType = "HLSL";
 				if (!implementation)
 				{
-					implementation = GetImplementation(material, FBXSDK_IMPLEMENTATION_CGFX);
+					implementation = GetImplementation(mat, FBXSDK_IMPLEMENTATION_CGFX);
 					implemenationType = "CGFX";
 				}
 
@@ -797,10 +787,10 @@ void LoadFBX::GetTextureNames(FbxMesh* mesh)
 
 						if (strcmp(FbxPropertyEntryView::sEntryType, entrySrcType) == 0)
 						{
-							fbxProp = material->FindPropertyHierarchical(entry.GetSource());
+							fbxProp = mat->FindPropertyHierarchical(entry.GetSource());
 							if (!fbxProp.IsValid())
 							{
-								fbxProp = material->RootProperty.FindHierarchical(entry.GetSource());
+								fbxProp = mat->RootProperty.FindHierarchical(entry.GetSource());
 							}
 						}
 						else
@@ -822,14 +812,14 @@ void LoadFBX::GetTextureNames(FbxMesh* mesh)
 										// テクスチャ名を取得
 										temp.texName = fileName_;
 										// テクスチャのディレクトリはモデルと同じ
-										for (unsigned int k = temp.texName.size() - 1; temp.texName[k] != '/' && k > 0; k--)
+										for (unsigned int l = temp.texName.size() - 1; temp.texName[l] != '/' && l > 0; l--)
 										{
 											temp.texName.pop_back();
 										}
 
 										std::string tempName = pTex->GetFileName();
 										std::string texName;
-										for (unsigned int k = tempName.size() - 1; tempName[k] != 92 && tempName[k] != '/' && k > 0; k--)
+										for (unsigned int l = tempName.size() - 1; tempName[l] != 92 && tempName[l] != '/' && l > 0; l--)
 										{
 											texName.insert(texName.begin(), tempName[k]);
 										}
@@ -866,7 +856,7 @@ void LoadFBX::GetVertexColor(FbxMesh* mesh)
 	// 設定がなかった時
 	if (vColorLayerCount == 0) 
 	{
-		for (int i = 0; i < indexCount_; ++i)
+		for (unsigned int i = 0; i < indexCount_; ++i)
 		{
 			XMFLOAT4 temp = XMFLOAT4(1, 1, 1, 1);
 			tempColor_.emplace_back(temp);
@@ -890,7 +880,7 @@ void LoadFBX::GetVertexColor(FbxMesh* mesh)
 			FbxSurfaceMaterial* material = mesh->GetNode()->GetMaterial(i);
 			if (material->GetClassId().Is(FbxSurfaceLambert::ClassId))
 			{
-				for (int j = 0; j < indexCount_; ++j)
+				for (unsigned int j = 0; j < indexCount_; ++j)
 				{
 					FbxSurfaceLambert* lambert = (FbxSurfaceLambert*)material;
 					XMFLOAT4 diffuse = XMFLOAT4(1, 1, 1, 1);
@@ -950,7 +940,7 @@ void LoadFBX::GetVertexColor(FbxMesh* mesh)
 
 	if (tempColor_.size() != indexCount_)
 	{
-		for (int j = (int)tempColor_.size(); j < indexCount_; ++j)
+		for (unsigned int j = tempColor_.size(); j < indexCount_; ++j)
 		{
 			tempColor_.emplace_back(XMFLOAT4(1, 1, 1, 1));
 		}
@@ -963,7 +953,7 @@ bool LoadFBX::CreateModelData(MODEL& model)
 	if (meshMaterialList_.size() / 3 == 1)
 	{
 		std::vector<int> index;
-		for (int i = 0; i < indexCount_; ++i)
+		for (unsigned int i = 0; i < indexCount_; ++i)
 		{
 			index.emplace_back(i);
 		}
@@ -1273,7 +1263,7 @@ bool LoadFBX::LoadScene(FbxManager* pManager, FbxDocument* pScene, const char* p
 	return lStatus;
 }
 
-void LoadFBX::GetAnimation(MODEL& model, FBXANIMATION& animInfo)
+void LoadFBX::GetAnimation(FBXANIMATION& animInfo)
 {
 	FbxAnimStack* pCurrentAnimationStack = lScene_->FindMember<FbxAnimStack>(animInfo.name.c_str());
 	if (pCurrentAnimationStack != nullptr)

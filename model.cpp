@@ -22,7 +22,7 @@ bool Model::Init(int modelName)
 		return false;
 	}
 
-	for (int i = 0; i < model_.mesh.size(); i++)
+	for (unsigned int i = 0; i < model_.mesh.size(); i++)
 	{
 		{
 			//頂点バッファ作成
@@ -101,7 +101,7 @@ void Model::Uninit()
 
 void Model::Draw()
 {
-	for (int i = 0; i < model_.mesh.size(); i++)
+	for (unsigned int i = 0; i < model_.mesh.size(); i++)
 	{
 		//頂点バッファセット
 		UINT stride = sizeof(VERTEX);
