@@ -68,11 +68,6 @@ const std::string& Actor::GetNameUnique()const
 	return nameUnique_;
 }
 
-const std::type_info* Actor::GetTypeInfo()const
-{
-	return typeInfo_;
-}
-
 int Actor::GetNumber()
 {
 	return number_;
@@ -126,11 +121,6 @@ void Actor::SetName(int name)
 void Actor::SetNameUnique(const std::string& nameUnique)
 {
 	nameUnique_ = nameUnique;
-}
-
-void Actor::SetTypeInfo(const std::type_info* typeInfo)
-{
-	typeInfo_ = typeInfo;
 }
 
 void Actor::SetNumber(int number)

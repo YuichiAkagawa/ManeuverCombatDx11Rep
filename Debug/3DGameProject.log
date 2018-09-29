@@ -1,17 +1,2 @@
-﻿  texture.cpp
-  scene_manager.cpp
-  scene_game02.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  scene_game01.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  model.cpp
-  main.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  load_fbx.cpp
-  actor_free_camera.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  actor_fbx_model.cpp
-  コードを生成中...
-  LINK : 前回のインクリメンタル リンクで E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
-  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.exe
+﻿  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.pdb (Full PDB)

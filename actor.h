@@ -24,7 +24,6 @@ protected:
 	ModelManager* pModelManager_;
 	int name_;
 	std::string nameUnique_;
-	const std::type_info* typeInfo_;
 	int number_;
 	int tag_;
 	int layer_;
@@ -47,7 +46,6 @@ public:
 	//Getter
 	int GetName();
 	const std::string& GetNameUnique()const;
-	const std::type_info* GetTypeInfo()const;
 	int GetNumber();
 	int GetLayer();
 	bool GetIsUpdate();

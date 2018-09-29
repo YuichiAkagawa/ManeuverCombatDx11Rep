@@ -10,7 +10,6 @@
 
 #include <vector>
 #include <algorithm>
-#include <typeinfo>
 
 class Actor;
 class TextureManager;
@@ -24,7 +23,6 @@ private:
 	ModelManager* pModelManager_;
 
 	void Stats();
-	void CheckType(const type_info* typeInfo);
 public:
 	ActorManager(){}
 	~ActorManager(){}
@@ -55,9 +53,6 @@ public:
 
 		//モデルマネージャのポインタセット
 		pActor->SetModelManager(pModelManager_);
-
-		//アクタの型情報セット
-		pActor->SetTypeInfo(&typeid(pActor));
 
 		//リストに格納
 		actorList_.emplace_back(pActor);

@@ -4,17 +4,8 @@
 //**               Author: Akagawa Yuichi
 //**
 //**-------------------------------------------------------**
-#include <typeinfo>
 #include "imgui/imgui.h"
 #include "actor.h"
-#include "actor_3d.h"
-#include "actor_camera.h"
-#include "actor_camera_selecter.h"
-#include "actor_character.h"
-#include "actor_cube.h"
-#include "actor_fbx_model.h"
-#include "actor_field.h"
-#include "actor_free_camera.h"
 #include "main.h"
 #include "model.h"
 #include "process_calculator.h"
@@ -122,53 +113,15 @@ void ActorManager::Stats()
 	ImGui::Begin("Stats");
 	if (ImGui::BeginMenu("Actor"))
 	{
-		if (ImGui::BeginMenu("Actor3d"))
+		std::for_each(actorList_.begin(), actorList_.end(), [&](Actor* pAllActor)
 		{
-			if (ImGui::BeginMenu("ActorCamera"))
+			if (ImGui::MenuItem(pAllActor->GetNameUnique().c_str()))
 			{
-				if (ImGui::BeginMenu("ActorFreeCamera"))
-				{
-					CheckType(&typeid(ActorFreeCamera*));
-					ImGui::EndMenu();
-				}
-				CheckType(&typeid(ActorCamera*));
-				ImGui::EndMenu();
+				pAllActor->SetIsDrawImgui(true);
 			}
-			if (ImGui::BeginMenu("ActorField"))
-			{
-
-				CheckType(&typeid(ActorField*));
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("ActorCharcter"))
-			{
-
-				CheckType(&typeid(ActorCharcter*));
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("ActorCube"))
-			{
-				CheckType(&typeid(ActorCube*));
-				ImGui::EndMenu();
-			}
-			if (ImGui::BeginMenu("ActorFbxModel"))
-			{
-
-				CheckType(&typeid(ActorFbxModel*));
-				ImGui::EndMenu();
-			}
-			CheckType(&typeid(Actor3d*));
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("ActorCameraSelecter"))
-		{
-			CheckType(&typeid(ActorCameraSelecter*));
-			ImGui::EndMenu();
-		}
-		CheckType(&typeid(Actor*));
+		});
 		ImGui::EndMenu();
 	}
-
 	ImGui::End();
 
 	//Stats•\Ž¦
@@ -182,18 +135,4 @@ void ActorManager::Stats()
 			}
 		});
 	}
-}
-
-void ActorManager::CheckType(const type_info* typeInfo)
-{
-	std::for_each(actorList_.begin(), actorList_.end(), [&](Actor* pAllActor)
-	{
-		if (*pAllActor->GetTypeInfo() == *typeInfo)
-		{
-			if (ImGui::MenuItem(pAllActor->GetNameUnique().c_str()))
-			{
-				pAllActor->SetIsDrawImgui(true);
-			}
-		}
-	});
 }
