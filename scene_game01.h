@@ -25,6 +25,7 @@ public:
 
 		//ì«Ç›çûÇﬁÉÇÉfÉã
 		sceneModel_.emplace_back(ModelManager::SAMPLE);
+		sceneModel_.emplace_back(ModelManager::SKYDOME);
 	}
 	~SceneGame01()
 	{

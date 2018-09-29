@@ -109,6 +109,12 @@ void EditMath::PerspectiveFovLH(XMFLOAT4X4& valueReturn, float fov, float aspect
 	XMStoreFloat4x4(&valueReturn, xmMtxProjection);
 }
 
+void EditMath::Scaling(XMFLOAT4X4& valueReturn, float value)
+{
+	XMMATRIX xmMtx = XMMatrixScaling(value, value, value);
+	XMStoreFloat4x4(&valueReturn, xmMtx);
+}
+
 void EditMath::Scaling(XMFLOAT4X4& valueReturn, float x, float y, float z)
 {
 	XMMATRIX xmMtx = XMMatrixScaling(x, y, z);

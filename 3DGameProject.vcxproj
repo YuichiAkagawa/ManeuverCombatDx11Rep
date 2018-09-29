@@ -210,6 +210,7 @@
     <ClCompile Include="actor_field.cpp" />
     <ClCompile Include="actor_free_camera.cpp" />
     <ClCompile Include="actor_manager.cpp" />
+    <ClCompile Include="actor_skydome.cpp" />
     <ClCompile Include="edit_math.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -230,6 +231,7 @@
     <ClCompile Include="shader_cube.cpp" />
     <ClCompile Include="shader_fbx.cpp" />
     <ClCompile Include="shader_manager.cpp" />
+    <ClCompile Include="shader_skydome.cpp" />
     <ClCompile Include="shader_test.cpp" />
     <ClCompile Include="actor_fbx_model.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -246,6 +248,7 @@
     <ClInclude Include="actor_field.h" />
     <ClInclude Include="actor_free_camera.h" />
     <ClInclude Include="actor_manager.h" />
+    <ClInclude Include="actor_skydome.h" />
     <ClInclude Include="edit_math.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
@@ -271,6 +274,7 @@
     <ClInclude Include="shader_cube.h" />
     <ClInclude Include="shader_fbx.h" />
     <ClInclude Include="shader_manager.h" />
+    <ClInclude Include="shader_skydome.h" />
     <ClInclude Include="shader_test.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="WICTextureLoader.h" />
@@ -283,6 +287,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="fbx.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="skydome.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

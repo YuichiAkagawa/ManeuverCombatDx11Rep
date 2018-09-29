@@ -9,6 +9,7 @@
 #include "actor_cube.h"
 #include "actor_fbx_model.h"
 #include "actor_manager.h"
+#include "actor_skydome.h"
 #include "imgui/imgui.h"
 #include "input.h"
 #include "main.h"
@@ -50,6 +51,9 @@ bool SceneGame01::Init()
 
 	//FBXƒ‚ƒfƒ‹¶¬
 	actorManager_.CreateActor(new ActorFbxModel(&actorManager_));
+
+	//“V‹…¶¬
+	actorManager_.CreateActor(new ActorSkydome(&actorManager_));
 
 	//ŠÔ‰Šú‰»
 	startTime_ = timeGetTime();

@@ -984,14 +984,17 @@ bool LoadFBX::CreateModelData(MODEL& model)
 				if (meshMaterialList_[j] == i) { index.emplace_back(j); }
 			}
 
-			polygonCount_ = index.size() / 3;
-			hr = this->CreateVeretx(model, (int)index.size(), &index[0], tempUVSet_[materialCount_[1]]);
-			if (FAILED(hr))
+			if (index.size() != 0)
 			{
-				return false;
-			}
+				polygonCount_ = index.size() / 3;
+				hr = this->CreateVeretx(model, (int)index.size(), &index[0], tempUVSet_[materialCount_[1]]);
+				if (FAILED(hr))
+				{
+					return false;
+				}
 
-			materialCount_[1]++;
+				materialCount_[1]++;
+			}
 		}
 	}
 

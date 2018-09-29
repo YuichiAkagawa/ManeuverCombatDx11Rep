@@ -15,7 +15,7 @@ static const float SCREEN_COLOR[] = { 0.2f, 0.2f, 0.6f, 1.0f };
 constexpr float FRAME_RATE = 60.0f;
 
 constexpr float	CAMERA_NEAR = 0.1f;
-constexpr float	CAMERA_FAR = 10000.0f;
+constexpr float	CAMERA_FAR = 100000.0f;
 constexpr int	CAMERA_FOV = 90;
 
 HWND				GetHWND();

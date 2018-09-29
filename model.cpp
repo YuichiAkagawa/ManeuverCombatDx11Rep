@@ -85,8 +85,17 @@ bool Model::Init(int modelName)
 			HRESULT hr = DirectX::CreateWICTextureFromFile(Renderer::GetDevice(), wsFileName.c_str(), &pResource, &model_.mesh[i].material.texture);
 			if (FAILED(hr))
 			{
-				MessageBox(nullptr, "テクスチャの読み込みに失敗しました", "ERROR", MB_OK);
-				return false;
+				//stringをwstringに変換
+				std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> wscWhite;
+				std::wstring wsFileNameWhite = wscWhite.from_bytes("resource/model/white.png");
+
+				hr = DirectX::CreateWICTextureFromFile(Renderer::GetDevice(), wsFileNameWhite.c_str(), &pResource, &model_.mesh[i].material.texture);
+
+				if (FAILED(hr))
+				{
+					MessageBox(GetHWND(), "テクスチャの読み込みに失敗しました", "ERROR", MB_OK);
+					return false;
+				}
 			}
 		}
 	}

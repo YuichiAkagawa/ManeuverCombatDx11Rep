@@ -23,6 +23,7 @@ public:
 		TEST,
 		CUBE,
 		FBX,
+		SKYDOME,
 		MAX
 	};
 

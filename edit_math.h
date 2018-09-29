@@ -29,6 +29,7 @@ public:
 	static void Transpose(DirectX::XMFLOAT4X4& valueReturn, const DirectX::XMFLOAT4X4& value);
 	static void LookAtLH(DirectX::XMFLOAT4X4& valueReturn, const DirectX::XMFLOAT3& pos, const DirectX::XMFLOAT3& posAt, const DirectX::XMFLOAT3& vecUp);
 	static void PerspectiveFovLH(DirectX::XMFLOAT4X4& valueReturn, float fov, float aspect, float nearZ, float farZ);
+	static void Scaling(DirectX::XMFLOAT4X4& valueReturn, float value);
 	static void Scaling(DirectX::XMFLOAT4X4& valueReturn, float x, float y, float z);
 	static void Scaling(DirectX::XMFLOAT4X4& valueReturn, const DirectX::XMFLOAT3& value);
 	static void RotationX(DirectX::XMFLOAT4X4& valueReturn, float angle);

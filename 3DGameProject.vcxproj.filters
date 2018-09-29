@@ -161,6 +161,12 @@
     <ClCompile Include="imgui_manager.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="actor_skydome.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_field</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_skydome.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -277,6 +283,12 @@
     <ClInclude Include="imgui_manager.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="actor_skydome.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_field</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_skydome.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="test.hlsl">
@@ -286,6 +298,9 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="fbx.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="skydome.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

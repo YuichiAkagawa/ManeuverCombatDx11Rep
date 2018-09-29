@@ -5,8 +5,8 @@
 //**
 //**-------------------------------------------------------**
 
-#ifndef _SHADER_FBX_H__
-#define _SHADER_FBX_H__
+#ifndef _SHADER_FBX_H_
+#define _SHADER_FBX_H_
 
 #include <DirectXMath.h>
 

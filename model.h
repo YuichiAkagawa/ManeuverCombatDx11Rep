@@ -62,6 +62,7 @@ struct MODEL
 static const std::string g_pModelFile[] =
 {
 	{ "resource/model/sample.fbx" },
+	{ "resource/model/skydome.fbx" },
 };
 
 class LoadFBX;
@@ -88,6 +89,7 @@ public:
 	{
 		UNKNOWN = -1,
 		SAMPLE,
+		SKYDOME,
 		MAX
 	};
 

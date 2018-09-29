@@ -44,7 +44,7 @@ bool ActorFbxModel::Init()
 	pCameraSelecter_ = dynamic_cast <ActorCameraSelecter*> (pActorManager_->GetActor(ActorManager::NAME_CAMERA_SELECTER, 0));
 	if (pCameraSelecter_ == nullptr) { return false; }
 
-	EditMath::Scaling(mtxWorld_, 0.1f, 0.1f, 0.1f);
+	EditMath::Scaling(mtxWorld_, 0.1f);
 
 	return true;
 }
@@ -57,35 +57,33 @@ void ActorFbxModel::Uninit()
 void ActorFbxModel::Update()
 {
 	{
+		//コンスタントバッファ作成
 		ShaderFbx::CONSTANT_BUFFER cb;
 		EditMath::Transpose(cb.mtxWorld, mtxWorld_);
 		XMFLOAT4X4 mtxWorldInv;
 		EditMath::Inverse(mtxWorldInv, mtxWorld_);
 		EditMath::Transpose(cb.mtxWorldInv, mtxWorldInv);
-		mtxWorld_ = mtxWorld_;
-		mtxWorldInv = mtxWorldInv;
-
 		EditMath::Transpose(cb.mtxView, pCameraSelecter_->GetSelectCamera()->GetMtxView());
 		EditMath::Transpose(cb.mtxProj, pCameraSelecter_->GetSelectCamera()->GetMtxProjection());
 		cb.vecDirLight = { DIRECTIONAL_LIGHT.x, DIRECTIONAL_LIGHT.y, DIRECTIONAL_LIGHT.z, 1.0f };
 		XMFLOAT3 posEye = pCameraSelecter_->GetSelectCamera()->GetPos();
 		cb.posEye = { posEye.x, posEye.y, posEye.z, 1.0f };
 		cb.specularData.x = 150.0f;		//スペキュラの大きさ
-		cb.specularData.y = 1.0f;		//スペキュラの強さ
+		cb.specularData.y = 0.3f;		//スペキュラの強さ
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::FBX), 0, NULL, &cb, 0, 0);
 
 	}
 	{
 		XMFLOAT4X4 mtxRotX;
-		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.05f * SceneManager::GetProcessMS()));
+		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.02f * SceneManager::GetProcessMS()));
 		//EditMath::Multiplication(mtxWorld_, mtxRotX, mtxWorld_);
 
 		XMFLOAT4X4 mtxRotY;
-		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.05f * SceneManager::GetProcessMS()));
+		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.02f * SceneManager::GetProcessMS()));
 		EditMath::Multiplication(mtxWorld_, mtxRotY, mtxWorld_);
 	
 		XMFLOAT4X4 mtxRotZ;
-		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.05f * SceneManager::GetProcessMS()));
+		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.02f * SceneManager::GetProcessMS()));
 		//EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
 	}
 }

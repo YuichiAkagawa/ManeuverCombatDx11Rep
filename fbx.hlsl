@@ -106,5 +106,12 @@ float4 PS(VS_OUT_PS_IN input) : SV_Target
 	//スペキュラカラー計算
 	float specular = pow(max(0.0f, dot(normalTangent, vecHalf)), input.specularData.x) * input.specularData.y;
 
-	return colorMap.Sample(samplerState, input.texcoord) * input.color *  min(max(0.15f, dot(normalTangent, vecLightTangent)), 1.0f) + specular;
+	//ランバード拡散反射
+	float ambient = 0.15f;
+	float diffuse = min(max(ambient, dot(normalTangent, vecLightTangent)), 1.0f);
+
+	//色調調整
+	float colorAdj = 2.0f;
+
+	return colorMap.Sample(samplerState, input.texcoord) * colorAdj * input.color * diffuse + specular;
 }
