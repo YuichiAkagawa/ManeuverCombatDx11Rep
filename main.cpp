@@ -16,6 +16,7 @@
 #include "resource.h"
 #include "scene_game01.h"
 #include "scene_manager.h"
+#include "xcontroller.h"
 
 #include "main.h"
 
@@ -230,6 +231,9 @@ bool Init(HINSTANCE hInstance, int nCmdShow)
 		return false;
 	}
 
+	//コントローラ初期化
+	XController::InitXcontroller();
+
 	//レンダラー初期化
 	if (!Renderer::Init())
 	{
@@ -268,6 +272,9 @@ void Uninit()
 	//キーボード終了処理
 	UninitKeyboard();
 
+	//コントローラ終了処理
+	XController::UninitXcontroller();
+
 	//レンダラー終了処理
 	Renderer::Uninit();
 }
@@ -276,6 +283,9 @@ void Update()
 {
 	//キーボード更新処理
 	UpdateKeyboard();
+
+	//コントローラ更新処理
+	XController::UpdateXcontroller();
 
 	//imgui更新開始
 	ImguiManager::UpdateStart();
@@ -324,6 +334,12 @@ void Update()
 
 	//シーン更新処理
 	SceneManager::Update();
+
+	//コントローラー情報表示
+	XController::DrawImgui();
+
+	//コントローラー旧情報格納
+	XController::UpdateXcontrollerCreateOld();
 
 	//Imgui更新終了
 	ImguiManager::UpdateEnd();
