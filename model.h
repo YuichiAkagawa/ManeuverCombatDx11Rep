@@ -61,7 +61,7 @@ struct MODEL
 
 static const std::string g_pModelFile[] =
 {
-	{ "resource/model/sample.fbx" },
+	{ "resource/model/hornet.fbx" },
 	{ "resource/model/skydome.fbx" },
 };
 

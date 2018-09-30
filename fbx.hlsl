@@ -88,9 +88,8 @@ float4 PS(VS_OUT_PS_IN input) : SV_Target
 	//ノーマルマップから値取得
 	float3 normalMapValue = normalMap.Sample(samplerState, input.texcoord).rgb;
 
-	//膨らむ方向反転
-	//normalMapValue.r = 1.0f - normalMapValue.r;
-	//normalMapValue.g = 1.0f - normalMapValue.g;
+	//見え方修正
+	normalMapValue.g = 1.0f - normalMapValue.g;
 
 	//法線算出
 	float3 normalTangent = normalMapValue * 2.0f - 1.0f;

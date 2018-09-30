@@ -39,6 +39,7 @@ bool ActorSkydome::Init()
 {
 	nameUnique_ = "ActorSkydome" + std::to_string(number_);
 
+	//ÉXÉPÅ[ÉãîΩì]
 	EditMath::Scaling(mtxWorld_, -SKYDOME_SCALE);
 
 	pCameraSelecter_ = dynamic_cast <ActorCameraSelecter*> (pActorManager_->GetActor(ActorManager::NAME_CAMERA_SELECTER, 0));
