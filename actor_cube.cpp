@@ -145,6 +145,16 @@ void ActorCube::Uninit()
 
 void ActorCube::Update()
 {
+
+}
+
+void ActorCube::Stats()
+{
+	Actor3d::Stats();
+}
+
+void ActorCube::Draw()
+{
 	{
 		ShaderCube::CONSTANT_BUFFER cb;
 		EditMath::Transpose(cb.mtxWorld, mtxWorld_);
@@ -156,15 +166,7 @@ void ActorCube::Update()
 
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::CUBE), 0, NULL, &cb, 0, 0);
 	}
-}
 
-void ActorCube::Stats()
-{
-	Actor3d::Stats();
-}
-
-void ActorCube::Draw()
-{
 	//頂点バッファセット
 	UINT stride = sizeof(VERTEX3D);
 	UINT offset = 0;

@@ -9,6 +9,7 @@
 #include "actor_cube.h"
 #include "actor_fbx_model.h"
 #include "actor_manager.h"
+#include "actor_player.h"
 #include "actor_skydome.h"
 #include "imgui/imgui.h"
 #include "input.h"
@@ -50,7 +51,10 @@ bool SceneGame01::Init()
 	actorManager_.CreateActor(new ActorCube(&actorManager_));
 
 	//FBXモデル生成
-	actorManager_.CreateActor(new ActorFbxModel(&actorManager_));
+	//actorManager_.CreateActor(new ActorFbxModel(&actorManager_));
+
+	//プレイヤー生成
+	actorManager_.CreateActor(new ActorPlayer(&actorManager_));
 
 	//天球生成
 	actorManager_.CreateActor(new ActorSkydome(&actorManager_));

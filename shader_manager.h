@@ -24,6 +24,8 @@ public:
 		CUBE,
 		FBX,
 		SKYDOME,
+		HORNET_BODY,
+		HORNET_GLASS,
 		MAX
 	};
 

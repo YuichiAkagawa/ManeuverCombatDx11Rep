@@ -60,6 +60,12 @@
     <Filter Include="ヘッダー ファイル\actor\actor3d\actor_field">
       <UniqueIdentifier>{c988182f-53e5-476c-b5ce-dd4840167ede}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\actor\actor3d\actor_hierarchy">
+      <UniqueIdentifier>{6ec0adc8-4ae3-4bb8-a8da-9ab5a179eea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\actor\actor3d\actor_hierarchy">
+      <UniqueIdentifier>{9e92bf2d-07de-425b-8fb3-b0c7b75d3ee3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -169,6 +175,60 @@
     </ClCompile>
     <ClCompile Include="xcontroller.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_hierarchy_animation_manager.cpp">
+      <Filter>ソース ファイル\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_hierarchy_animator.cpp">
+      <Filter>ソース ファイル\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_hierarchy.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_aileron_left.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_aileron_right.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_body.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_canopy.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_elevator_left.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_elevator_right.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_flap_left.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_flap_right.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_glass_back.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_glass_front.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_radder_left.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_plane_radder_right.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="actor_player.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_character</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_hornet_body.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_hornet_glass.cpp">
+      <Filter>ソース ファイル\shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +355,60 @@
     <ClInclude Include="xcontroller.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="actor_hierarchy_animation_manager.h">
+      <Filter>ヘッダー ファイル\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_hierarchy_animator.h">
+      <Filter>ヘッダー ファイル\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_hierarchy.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_aileron_left.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_aileron_right.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_body.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_canopy.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_elevator_left.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_elevator_right.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_flap_left.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_flap_right.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_glass_back.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_glass_front.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_radder_left.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_plane_radder_right.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_hierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_player.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_character</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_hornet_body.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_hornet_glass.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="test.hlsl">
@@ -307,6 +421,12 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="skydome.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="hornet_body.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="hornet_glass.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

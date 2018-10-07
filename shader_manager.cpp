@@ -10,6 +10,8 @@
 #include "shader.h"
 #include "shader_cube.h"
 #include "shader_fbx.h"
+#include "shader_hornet_body.h"
+#include "shader_hornet_glass.h"
 #include "shader_skydome.h"
 #include "shader_test.h"
 #include "shader_manager.h"
@@ -22,6 +24,8 @@ bool ShaderManager::Create()
 	pShader_[TEST] = new ShaderTest;
 	pShader_[FBX] = new ShaderFbx;
 	pShader_[SKYDOME] = new ShaderSkydome;
+	pShader_[HORNET_BODY] = new ShaderHornetBody;
+	pShader_[HORNET_GLASS] = new ShaderHornetGlass;
 
 	return true;
 }

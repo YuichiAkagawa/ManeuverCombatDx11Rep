@@ -8,6 +8,7 @@
 #define _SHADER_H_
 
 #include <string>
+#include <d3d11.h>
 
 class Shader
 {

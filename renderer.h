@@ -29,6 +29,7 @@ public:
 	static void					DrawEnd();
 	static ID3D11Device*		GetDevice();
 	static ID3D11DeviceContext*	GetDeviceContext();
+	static void					SetAlphaBlendConfig(bool isAlphaBlend, unsigned int numRenderTarget);
 };
 
 #endif // !_RENDERER_H_

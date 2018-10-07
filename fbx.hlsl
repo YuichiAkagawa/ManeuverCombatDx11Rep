@@ -62,8 +62,9 @@ VS_OUT_PS_IN VS(VS_IN input)
 	mtxTBN[2] = normal;
 	float3x3 mtxTransTBN = transpose(mtxTBN);
 
-	//ライトベクトル算出
-	float3 vecLightLocal = mul(float4(-vecDirLight.xyz, 1.0f), mtxWorldInv).xyz;
+	//ライト算出
+	float3 posLight = -vecDirLight * 100000.0f;
+	float3 vecLightLocal = mul(float4(posLight, 1.0f), mtxWorldInv).xyz;
 	output.vecLightTangent = mul(vecLightLocal, mtxTransTBN);
 
 	//視線ベクトル算出

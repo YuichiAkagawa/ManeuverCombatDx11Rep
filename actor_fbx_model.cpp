@@ -44,7 +44,14 @@ bool ActorFbxModel::Init()
 	pCameraSelecter_ = dynamic_cast <ActorCameraSelecter*> (pActorManager_->GetActor(ActorManager::NAME_CAMERA_SELECTER, 0));
 	if (pCameraSelecter_ == nullptr) { return false; }
 
-	EditMath::Scaling(mtxWorld_, 0.1f);
+	XMFLOAT4X4 mtxScaling;
+	EditMath::Scaling(mtxScaling, 0.1f);
+	EditMath::Multiplication(mtxWorld_, mtxWorld_, mtxScaling);
+
+	//XMFLOAT4X4 mtxTrans;
+	//EditMath::Translation(mtxTrans, 0.0f, -2.0f, 0.0f);
+	//EditMath::Multiplication(mtxWorld_, mtxWorld_, mtxTrans);
+
 
 	return true;
 }
@@ -55,6 +62,28 @@ void ActorFbxModel::Uninit()
 }
 
 void ActorFbxModel::Update()
+{
+	{
+		XMFLOAT4X4 mtxRotX;
+		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.01f * SceneManager::GetProcessMS()));
+		//EditMath::Multiplication(mtxWorld_, mtxRotX, mtxWorld_);
+
+		XMFLOAT4X4 mtxRotY;
+		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.01f * SceneManager::GetProcessMS()));
+		//EditMath::Multiplication(mtxWorld_, mtxRotY, mtxWorld_);
+	
+		XMFLOAT4X4 mtxRotZ;
+		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.01f * SceneManager::GetProcessMS()));
+		EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
+	}
+}
+
+void ActorFbxModel::Stats()
+{
+	Actor3d::Stats();
+}
+
+void ActorFbxModel::Draw()
 {
 	{
 		//コンスタントバッファ作成
@@ -71,30 +100,8 @@ void ActorFbxModel::Update()
 		cb.specularData.x = 150.0f;		//スペキュラの大きさ
 		cb.specularData.y = 0.3f;		//スペキュラの強さ
 		Renderer::GetDeviceContext()->UpdateSubresource(*ShaderManager::GetConstantBuffer(ShaderManager::FBX), 0, NULL, &cb, 0, 0);
-
 	}
-	{
-		XMFLOAT4X4 mtxRotX;
-		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.01f * SceneManager::GetProcessMS()));
-		//EditMath::Multiplication(mtxWorld_, mtxRotX, mtxWorld_);
 
-		XMFLOAT4X4 mtxRotY;
-		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.01f * SceneManager::GetProcessMS()));
-		EditMath::Multiplication(mtxWorld_, mtxRotY, mtxWorld_);
-	
-		XMFLOAT4X4 mtxRotZ;
-		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.01f * SceneManager::GetProcessMS()));
-		//EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
-	}
-}
-
-void ActorFbxModel::Stats()
-{
-	Actor3d::Stats();
-}
-
-void ActorFbxModel::Draw()
-{
 	//インプットレイアウト指定
 	Renderer::GetDeviceContext()->IASetInputLayout(ShaderManager::GetInputLayout(ShaderManager::FBX));
 

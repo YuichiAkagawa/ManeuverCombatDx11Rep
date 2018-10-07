@@ -22,6 +22,9 @@ static const TEXTURE_DATA g_pTextureFile[] =
 {
 	{ "resource/texture/sample.png", 256, 256 },
 	{ "resource/texture/Normal_01.png", 2048, 2048 },
+	{ "resource/texture/Normal_02.png", 2048, 2048 },
+	{ "resource/texture/Normal_03.png", 2048, 2048 },
+	{ "resource/texture/Normal_04.png", 2048, 2048 },
 };
 
 class Texture
@@ -46,6 +49,9 @@ public:
 		UNKNOWN = -1,
 		SAMPLE,
 		NORMAL01,
+		NORMAL02,
+		NORMAL03,
+		NORMAL04,
 		MAX
 	};
 

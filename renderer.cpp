@@ -194,3 +194,24 @@ ID3D11DeviceContext* Renderer::GetDeviceContext()
 {
 	return pDeviceContext_;
 }
+
+void Renderer::SetAlphaBlendConfig(bool isAlphaBlend, unsigned int numRenderTarget)
+{
+	ID3D11BlendState* pBlendState = NULL;
+	D3D11_BLEND_DESC BlendDesc;
+	ZeroMemory(&BlendDesc, sizeof(BlendDesc));
+	BlendDesc.AlphaToCoverageEnable = FALSE;
+	BlendDesc.IndependentBlendEnable = FALSE;
+	BlendDesc.RenderTarget[numRenderTarget].BlendEnable = isAlphaBlend;
+	BlendDesc.RenderTarget[numRenderTarget].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	BlendDesc.RenderTarget[numRenderTarget].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	BlendDesc.RenderTarget[numRenderTarget].BlendOp = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[numRenderTarget].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendDesc.RenderTarget[numRenderTarget].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc.RenderTarget[numRenderTarget].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[numRenderTarget].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	pDevice_->CreateBlendState(&BlendDesc, &pBlendState);
+	pDeviceContext_->OMSetBlendState(pBlendState, blendFactor, 0xffffffff);
+}

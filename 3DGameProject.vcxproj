@@ -209,7 +209,23 @@
     <ClCompile Include="actor_cube.cpp" />
     <ClCompile Include="actor_field.cpp" />
     <ClCompile Include="actor_free_camera.cpp" />
+    <ClCompile Include="actor_hierarchy.cpp" />
+    <ClCompile Include="actor_hierarchy_animation_manager.cpp" />
+    <ClCompile Include="actor_hierarchy_animator.cpp" />
     <ClCompile Include="actor_manager.cpp" />
+    <ClCompile Include="actor_plane_aileron_left.cpp" />
+    <ClCompile Include="actor_plane_aileron_right.cpp" />
+    <ClCompile Include="actor_plane_body.cpp" />
+    <ClCompile Include="actor_plane_canopy.cpp" />
+    <ClCompile Include="actor_plane_elevator_left.cpp" />
+    <ClCompile Include="actor_plane_elevator_right.cpp" />
+    <ClCompile Include="actor_plane_flap_left.cpp" />
+    <ClCompile Include="actor_plane_flap_right.cpp" />
+    <ClCompile Include="actor_plane_glass_back.cpp" />
+    <ClCompile Include="actor_plane_glass_front.cpp" />
+    <ClCompile Include="actor_plane_radder_left.cpp" />
+    <ClCompile Include="actor_plane_radder_right.cpp" />
+    <ClCompile Include="actor_player.cpp" />
     <ClCompile Include="actor_skydome.cpp" />
     <ClCompile Include="edit_math.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -230,7 +246,9 @@
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="shader_cube.cpp" />
     <ClCompile Include="shader_fbx.cpp" />
+    <ClCompile Include="shader_hornet_glass.cpp" />
     <ClCompile Include="shader_manager.cpp" />
+    <ClCompile Include="shader_hornet_body.cpp" />
     <ClCompile Include="shader_skydome.cpp" />
     <ClCompile Include="shader_test.cpp" />
     <ClCompile Include="actor_fbx_model.cpp" />
@@ -248,7 +266,23 @@
     <ClInclude Include="actor_fbx_model.h" />
     <ClInclude Include="actor_field.h" />
     <ClInclude Include="actor_free_camera.h" />
+    <ClInclude Include="actor_hierarchy.h" />
+    <ClInclude Include="actor_hierarchy_animation_manager.h" />
+    <ClInclude Include="actor_hierarchy_animator.h" />
     <ClInclude Include="actor_manager.h" />
+    <ClInclude Include="actor_plane_aileron_left.h" />
+    <ClInclude Include="actor_plane_aileron_right.h" />
+    <ClInclude Include="actor_plane_body.h" />
+    <ClInclude Include="actor_plane_canopy.h" />
+    <ClInclude Include="actor_plane_elevator_left.h" />
+    <ClInclude Include="actor_plane_elevator_right.h" />
+    <ClInclude Include="actor_plane_flap_left.h" />
+    <ClInclude Include="actor_plane_flap_right.h" />
+    <ClInclude Include="actor_plane_glass_back.h" />
+    <ClInclude Include="actor_plane_glass_front.h" />
+    <ClInclude Include="actor_plane_radder_left.h" />
+    <ClInclude Include="actor_plane_radder_right.h" />
+    <ClInclude Include="actor_player.h" />
     <ClInclude Include="actor_skydome.h" />
     <ClInclude Include="edit_math.h" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -274,7 +308,9 @@
     <ClInclude Include="shader.h" />
     <ClInclude Include="shader_cube.h" />
     <ClInclude Include="shader_fbx.h" />
+    <ClInclude Include="shader_hornet_glass.h" />
     <ClInclude Include="shader_manager.h" />
+    <ClInclude Include="shader_hornet_body.h" />
     <ClInclude Include="shader_skydome.h" />
     <ClInclude Include="shader_test.h" />
     <ClInclude Include="texture.h" />
@@ -289,6 +325,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="fbx.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="hornet_body.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="hornet_glass.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

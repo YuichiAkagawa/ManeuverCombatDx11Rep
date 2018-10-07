@@ -1,2 +1,5 @@
-﻿  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.exe
+﻿E:\Programs\ManeuverCombatDx11LocalRep\hornet_glass.hlsl(50,9-41): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11LocalRep\Debug\hornet_glass.cso
+  3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.pdb (Full PDB)
