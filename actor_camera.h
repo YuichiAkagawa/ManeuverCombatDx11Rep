@@ -28,6 +28,7 @@ public:
 	//Getter
 	const DirectX::XMFLOAT4X4& GetMtxView()const;
 	const DirectX::XMFLOAT4X4& GetMtxProjection()const;
+	const DirectX::XMFLOAT3& GetPosAt()const;
 };
 
 #endif // !_ACTOR_CAMERA_H_

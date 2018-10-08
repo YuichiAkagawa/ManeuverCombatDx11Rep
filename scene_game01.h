@@ -13,6 +13,7 @@
 #include "model.h"
 
 class Cube;
+class EffekseerEffect;
 
 class SceneGame01 : public Scene
 {
@@ -60,6 +61,7 @@ public:
 	void Update()override;
 	void Draw()override;
 private:
+	EffekseerEffect* pExp_;
 };
 
 #endif // !_SCENE_GAME01_H_

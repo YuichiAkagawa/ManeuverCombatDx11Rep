@@ -125,3 +125,8 @@ const XMFLOAT4X4& ActorCamera::GetMtxProjection()const
 {
 	return mtxProjection_;
 }
+
+const XMFLOAT3& ActorCamera::GetPosAt()const
+{
+	return posAt_;
+}

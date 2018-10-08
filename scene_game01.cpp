@@ -4,7 +4,9 @@
 //**               Author: Akagawa Yuichi
 //**
 //**-------------------------------------------------------**
+#include <DirectXMath.h>
 #include "actor.h"
+#include "actor_camera.h"
 #include "actor_camera_selecter.h"
 #include "actor_cube.h"
 #include "actor_fbx_model.h"
@@ -12,6 +14,8 @@
 #include "actor_player.h"
 #include "actor_sea.h"
 #include "actor_skydome.h"
+#include "edit_math.h"
+#include "effekseer_effect.h"
 #include "imgui/imgui.h"
 #include "input.h"
 #include "main.h"
@@ -22,6 +26,8 @@
 #include "texture.h"
 
 #include "scene_game01.h"
+
+using namespace DirectX;
 
 bool SceneGame01::Init()
 {
@@ -63,6 +69,11 @@ bool SceneGame01::Init()
 	//天球生成
 	actorManager_.CreateActor(new ActorSkydome(&actorManager_));
 
+	//爆発エフェクト初期化
+	pExp_ = new EffekseerEffect(EffekseerEffect::BURNER);
+	pExp_->SetRepeat(true);
+	pExp_->Play();
+
 	//時間初期化
 	startTime_ = timeGetTime();
 
@@ -77,6 +88,9 @@ bool SceneGame01::Init()
 
 void SceneGame01::Uninit()
 {
+	//爆発エフェクト終了
+	SafeDelete(pExp_);
+
 	actorManager_.Uninit();
 	pTextureManager_->Uninit();
 	SafeDelete(pTextureManager_);
@@ -106,9 +120,18 @@ void SceneGame01::Update()
 	{
 		SceneManager::SetScene(new SceneGame02);
 	}
+
+	pExp_->SetViewData(
+		pCameraSelecter_->GetSelectCamera()->GetPos(),
+		pCameraSelecter_->GetSelectCamera()->GetPosAt(),
+		pCameraSelecter_->GetSelectCamera()->GetVecUp());
+	XMFLOAT3 pos = { 0.0f, 30.0f, 0.0f };
+	pExp_->SetPos(pos);
+	pExp_->Update();
 }
 
 void SceneGame01::Draw()
 {
 	actorManager_.Draw();
+	pExp_->Draw();
 }

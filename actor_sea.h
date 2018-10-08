@@ -31,8 +31,6 @@ private:
 		float x, y, z;
 	};
 
-	std::vector<POS_WORLD>			posWorld_;
-	std::vector<POS_WORLD>			posWorldDraw_;
 	ID3D11Buffer*					pVertexBuffer_;
 	ID3D11Buffer*					pIndexBuffer_;
 	ID3D11Buffer*					pPosWorldBuffer_;
