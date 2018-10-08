@@ -28,6 +28,7 @@ bool ActorHierarchyAnimationManager::Init()
 {
 	nameUnique_ = "ActorHierarchyAnimationManager" + std::to_string(number_);
 
+	//アニメーションセーブ
 	//std::vector<KEYFRAME> keyFrame0;
 	//{
 	//	KEYFRAME kf = { 0, 0.0f };

@@ -26,6 +26,7 @@ public:
 		SKYDOME,
 		HORNET_BODY,
 		HORNET_GLASS,
+		SEA,
 		MAX
 	};
 

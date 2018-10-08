@@ -15,3 +15,8 @@ const std::vector <int>& Scene::GetSceneModel()const
 {
 	return sceneModel_;
 }
+
+float Scene::GetTime()
+{
+	return time_;
+}

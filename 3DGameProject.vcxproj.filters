@@ -230,6 +230,12 @@
     <ClCompile Include="shader_hornet_glass.cpp">
       <Filter>ソース ファイル\shader</Filter>
     </ClCompile>
+    <ClCompile Include="actor_sea.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_field</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_sea.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -409,6 +415,12 @@
     <ClInclude Include="shader_hornet_glass.h">
       <Filter>ヘッダー ファイル\shader</Filter>
     </ClInclude>
+    <ClInclude Include="actor_sea.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_field</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_sea.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="test.hlsl">
@@ -427,6 +439,9 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="hornet_glass.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="sea.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

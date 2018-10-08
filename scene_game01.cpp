@@ -10,6 +10,7 @@
 #include "actor_fbx_model.h"
 #include "actor_manager.h"
 #include "actor_player.h"
+#include "actor_sea.h"
 #include "actor_skydome.h"
 #include "imgui/imgui.h"
 #include "input.h"
@@ -55,6 +56,9 @@ bool SceneGame01::Init()
 
 	//プレイヤー生成
 	actorManager_.CreateActor(new ActorPlayer(&actorManager_));
+
+	//海生成
+	actorManager_.CreateActor(new ActorSea(&actorManager_));
 
 	//天球生成
 	actorManager_.CreateActor(new ActorSkydome(&actorManager_));

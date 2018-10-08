@@ -25,6 +25,10 @@ static const TEXTURE_DATA g_pTextureFile[] =
 	{ "resource/texture/Normal_02.png", 2048, 2048 },
 	{ "resource/texture/Normal_03.png", 2048, 2048 },
 	{ "resource/texture/Normal_04.png", 2048, 2048 },
+	{ "resource/texture/sea.png", 128, 128 },
+	{ "resource/texture/sea_normal01.png", 1024, 1024 },
+	{ "resource/texture/sea_normal02.png", 1024, 1024 },
+
 };
 
 class Texture
@@ -52,6 +56,9 @@ public:
 		NORMAL02,
 		NORMAL03,
 		NORMAL04,
+		SEA,
+		SEA_NORMAL01,
+		SEA_NORMAL02,
 		MAX
 	};
 

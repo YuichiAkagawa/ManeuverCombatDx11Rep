@@ -35,7 +35,7 @@ public:
 
 	const std::vector <int>& GetSceneTexture()const;
 	const std::vector <int>& GetSceneModel()const;
-
+	float GetTime();
 };
 
 #endif // !_SCENE_H_

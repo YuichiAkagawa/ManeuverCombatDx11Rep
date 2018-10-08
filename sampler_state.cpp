@@ -19,9 +19,9 @@ bool SamplerState::Init()
 
 		::ZeroMemory(&smpDesc, sizeof(D3D11_SAMPLER_DESC));
 		smpDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-		smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-		smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		smpDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		smpDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		smpDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 		HRESULT hr = Renderer::GetDevice()->CreateSamplerState(&smpDesc, &pSamplerState_[SAMPLER_TYPE_01]);
 		if (FAILED(hr))
 		{

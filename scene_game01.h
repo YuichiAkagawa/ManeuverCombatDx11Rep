@@ -25,6 +25,9 @@ public:
 		sceneTexture_.emplace_back(TextureManager::NORMAL02);
 		sceneTexture_.emplace_back(TextureManager::NORMAL03);
 		sceneTexture_.emplace_back(TextureManager::NORMAL04);
+		sceneTexture_.emplace_back(TextureManager::SEA);
+		sceneTexture_.emplace_back(TextureManager::SEA_NORMAL01);
+		sceneTexture_.emplace_back(TextureManager::SEA_NORMAL02);
 
 		//ì«Ç›çûÇﬁÉÇÉfÉã
 		sceneModel_.emplace_back(ModelManager::SAMPLE);

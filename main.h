@@ -8,6 +8,7 @@
 #define _MAIN_H_
 
 #include <Windows.h>
+#include <DirectXMath.h>
 
 constexpr UINT SCREEN_WIDTH = 1280;
 constexpr UINT SCREEN_HEIGHT = 720;
@@ -17,6 +18,10 @@ constexpr float FRAME_RATE = 60.0f;
 constexpr float	CAMERA_NEAR = 0.1f;
 constexpr float	CAMERA_FAR = 100000.0f;
 constexpr int	CAMERA_FOV = 90;
+
+static const DirectX::XMFLOAT3 VEC_X = { 1.0f, 0.0f, 0.0f };
+static const DirectX::XMFLOAT3 VEC_Y = { 0.0f, 1.0f, 0.0f };
+static const DirectX::XMFLOAT3 VEC_Z = { 0.0f, 0.0f, 1.0f };
 
 HWND				GetHWND();
 
