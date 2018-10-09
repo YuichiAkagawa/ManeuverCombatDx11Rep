@@ -25,8 +25,7 @@ private:
 
 	ActorCameraSelecter*	pCameraSelecter_;
 	ID3D11Buffer*			pVertexBuffer_;
-	ID3D11Buffer*			pIndexBuffer_;
-
+	ID3D11Buffer*			pVertexBufferCenter_;
 public:
 	ActorGrid(ActorManager* pActorManager);
 	virtual ~ActorGrid()override;

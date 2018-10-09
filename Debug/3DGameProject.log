@@ -1,5 +1,4 @@
-﻿E:\Programs\ManeuverCombatDx11LocalRep\sea.hlsl(72,9-41): warning X3206: implicit truncation of vector type
-  
-  compilation object save succeeded; see E:\Programs\ManeuverCombatDx11LocalRep\Debug\sea.cso
+﻿  actor_grid.cpp
+cl : コマンド ライン warning D9028: 簡易リビルド時のエラーです、通常のビルドに戻します
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.pdb (Full PDB)
