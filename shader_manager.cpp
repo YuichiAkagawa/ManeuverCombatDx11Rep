@@ -10,6 +10,7 @@
 #include "shader.h"
 #include "shader_cube.h"
 #include "shader_fbx.h"
+#include "shader_grid.h"
 #include "shader_hornet_body.h"
 #include "shader_hornet_glass.h"
 #include "shader_sea.h"
@@ -28,6 +29,7 @@ bool ShaderManager::Create()
 	pShader_[HORNET_BODY] = new ShaderHornetBody;
 	pShader_[HORNET_GLASS] = new ShaderHornetGlass;
 	pShader_[SEA] = new ShaderSea;
+	pShader_[GRID] = new ShaderGrid;
 
 	return true;
 }

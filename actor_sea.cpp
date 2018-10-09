@@ -151,36 +151,36 @@ bool ActorSea::Init()
 
 	{
 		//座標点バッファ作成
-		D3D11_BUFFER_DESC posWorldDesc;
-		posWorldDesc.ByteWidth = sizeof(POS_WORLD) * (WIDTH * WIDTH);
-		posWorldDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		posWorldDesc.CPUAccessFlags = 0;
-		posWorldDesc.MiscFlags = 0;
-		posWorldDesc.StructureByteStride = 0;
-		posWorldDesc.Usage = D3D11_USAGE_DEFAULT;
+		D3D11_BUFFER_DESC offsetDesc;
+		offsetDesc.ByteWidth = sizeof(OFFSET) * (WIDTH * WIDTH);
+		offsetDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		offsetDesc.CPUAccessFlags = 0;
+		offsetDesc.MiscFlags = 0;
+		offsetDesc.StructureByteStride = 0;
+		offsetDesc.Usage = D3D11_USAGE_DEFAULT;
 
-		unsigned int numPos = 0;
-		POS_WORLD pw[WIDTH * WIDTH];
+		unsigned int numOffset = 0;
+		OFFSET offset[WIDTH * WIDTH];
 		for (UINT i = 0; i < WIDTH; i++)
 		{
 			for (UINT j = 0; j < WIDTH; j++)
 			{
-				pw[numPos].x = SCALE * j - (SCALE * WIDTH) / 2.0f;
-				pw[numPos].y = 0.0f;
-				pw[numPos].z = SCALE * i - (SCALE * WIDTH) / 2.0f;
-				numPos++;
+				offset[numOffset].x = SCALE * j - (SCALE * WIDTH) / 2.0f;
+				offset[numOffset].y = 0.0f;
+				offset[numOffset].z = SCALE * i - (SCALE * WIDTH) / 2.0f;
+				numOffset++;
 			}
 		}
 
 		D3D11_SUBRESOURCE_DATA sd;
-		sd.pSysMem = pw;
+		sd.pSysMem = offset;
 		sd.SysMemPitch = 0;
 		sd.SysMemSlicePitch = 0;
 
 		HRESULT hr = Renderer::GetDevice()->CreateBuffer(
-			&posWorldDesc,
+			&offsetDesc,
 			&sd,
-			&pPosWorldBuffer_);
+			&pOffsetBuffer_);
 		if (FAILED(hr))
 		{
 			return false;
@@ -194,7 +194,7 @@ void ActorSea::Uninit()
 {
 	SafeRelease(pVertexBuffer_);
 	SafeRelease(pIndexBuffer_);
-	SafeRelease(pPosWorldBuffer_);
+	SafeRelease(pOffsetBuffer_);
 }
 
 void ActorSea::Update()
@@ -239,9 +239,9 @@ void ActorSea::Draw()
 
 	//座標バッファセット
 	{
-		UINT stride = sizeof(POS_WORLD);
+		UINT stride = sizeof(OFFSET);
 		UINT offset = 0;
-		Renderer::GetDeviceContext()->IASetVertexBuffers(1, 1, &pPosWorldBuffer_, &stride, &offset);
+		Renderer::GetDeviceContext()->IASetVertexBuffers(1, 1, &pOffsetBuffer_, &stride, &offset);
 	}
 
 	//描画方法

@@ -209,6 +209,7 @@
     <ClCompile Include="actor_cube.cpp" />
     <ClCompile Include="actor_field.cpp" />
     <ClCompile Include="actor_free_camera.cpp" />
+    <ClCompile Include="actor_grid.cpp" />
     <ClCompile Include="actor_hierarchy.cpp" />
     <ClCompile Include="actor_hierarchy_animation_manager.cpp" />
     <ClCompile Include="actor_hierarchy_animator.cpp" />
@@ -248,6 +249,7 @@
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="shader_cube.cpp" />
     <ClCompile Include="shader_fbx.cpp" />
+    <ClCompile Include="shader_grid.cpp" />
     <ClCompile Include="shader_hornet_glass.cpp" />
     <ClCompile Include="shader_manager.cpp" />
     <ClCompile Include="shader_hornet_body.cpp" />
@@ -269,6 +271,7 @@
     <ClInclude Include="actor_fbx_model.h" />
     <ClInclude Include="actor_field.h" />
     <ClInclude Include="actor_free_camera.h" />
+    <ClInclude Include="actor_grid.h" />
     <ClInclude Include="actor_hierarchy.h" />
     <ClInclude Include="actor_hierarchy_animation_manager.h" />
     <ClInclude Include="actor_hierarchy_animator.h" />
@@ -313,6 +316,7 @@
     <ClInclude Include="shader.h" />
     <ClInclude Include="shader_cube.h" />
     <ClInclude Include="shader_fbx.h" />
+    <ClInclude Include="shader_grid.h" />
     <ClInclude Include="shader_hornet_glass.h" />
     <ClInclude Include="shader_manager.h" />
     <ClInclude Include="shader_hornet_body.h" />
@@ -331,6 +335,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="fbx.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="grid.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

@@ -18,7 +18,7 @@ struct VS_IN
 	float4 color : COLOR0;
 	float2 texcoord : TEXCOORD0;
 	float3 tangent : TANGENT0;
-	float3 posWorld : TEXCOORD1;
+	float3 offset : TEXCOORD1;
 };
 
 struct VS_OUT_PS_IN
@@ -49,14 +49,11 @@ VS_OUT_PS_IN VS(VS_IN input)
 {
 	VS_OUT_PS_IN output = (VS_OUT_PS_IN)0;
 
-	//ワールドビュープロジェクション行列
-	float4x4 mtxWVP = mul(mul(mtxWorld, mtxView), mtxProj);
-
-	//インスタンス描画用各メッシュローカル座標
-	float4 posWorldLocal = mul(float4(input.posWorld, 1.0f), mtxWorldInv);
-
 	//頂点座標変換
-	float4 posLocal = float4(input.pos + posWorldLocal.xyz, 1.0f);
+	float4 posLocal = float4(input.pos.xyz + input.offset, 1.0f);
+
+	//ビュープロジェクション行列
+	float4x4 mtxWVP = mul(mul(mtxWorld, mtxView), mtxProj);
 	output.pos = mul(posLocal, mtxWVP);
 
 	//T, B, N算出
@@ -78,7 +75,7 @@ VS_OUT_PS_IN VS(VS_IN input)
 
 	//視線ベクトル算出
 	float3 posEyeLocal = mul(float4(posEye.xyz, 1.0f), mtxWorldInv).xyz;
-	float3 vecEyeLocal = posEyeLocal - (input.pos.xyz + posWorldLocal.xyz);
+	float3 vecEyeLocal = posEyeLocal - posLocal.xyz;
 	output.vecEyeTangent = mul(vecEyeLocal, mtxTransTBN);
 
 	//UV座標

@@ -239,6 +239,12 @@
     <ClCompile Include="effekseer_effect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="actor_grid.cpp">
+      <Filter>ソース ファイル\actor\actor3d</Filter>
+    </ClCompile>
+    <ClCompile Include="shader_grid.cpp">
+      <Filter>ソース ファイル\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -427,6 +433,12 @@
     <ClInclude Include="effekseer_effect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="actor_grid.h">
+      <Filter>ヘッダー ファイル\actor\actor3d</Filter>
+    </ClInclude>
+    <ClInclude Include="shader_grid.h">
+      <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="test.hlsl">
@@ -448,6 +460,9 @@
       <Filter>hlsl</Filter>
     </FxCompile>
     <FxCompile Include="sea.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="grid.hlsl">
       <Filter>hlsl</Filter>
     </FxCompile>
   </ItemGroup>

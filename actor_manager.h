@@ -86,6 +86,7 @@ public:
 		NAME_PLANE_RADDER_RIGHT,
 		NAME_PLAYER,
 		NAME_SEA,
+		NAME_GRID,
 		NAME_MAX
 	};
 

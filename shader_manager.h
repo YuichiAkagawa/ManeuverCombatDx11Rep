@@ -27,6 +27,7 @@ public:
 		HORNET_BODY,
 		HORNET_GLASS,
 		SEA,
+		GRID,
 		MAX
 	};
 

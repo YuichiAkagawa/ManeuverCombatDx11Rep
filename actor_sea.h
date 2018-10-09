@@ -26,14 +26,14 @@ private:
 		DirectX::XMFLOAT3 vecTangent;
 	};
 
-	struct POS_WORLD
+	struct OFFSET
 	{
 		float x, y, z;
 	};
 
 	ID3D11Buffer*					pVertexBuffer_;
 	ID3D11Buffer*					pIndexBuffer_;
-	ID3D11Buffer*					pPosWorldBuffer_;
+	ID3D11Buffer*					pOffsetBuffer_;
 	ActorCameraSelecter*			pCameraSelecter_;
 
 protected:

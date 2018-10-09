@@ -10,6 +10,7 @@
 #include "actor_camera_selecter.h"
 #include "actor_cube.h"
 #include "actor_fbx_model.h"
+#include "actor_grid.h"
 #include "actor_manager.h"
 #include "actor_player.h"
 #include "actor_sea.h"
@@ -68,6 +69,9 @@ bool SceneGame01::Init()
 
 	//天球生成
 	actorManager_.CreateActor(new ActorSkydome(&actorManager_));
+
+	//グリッド表示
+	actorManager_.CreateActor(new ActorGrid(&actorManager_));
 
 	//爆発エフェクト初期化
 	pExp_ = new EffekseerEffect(EffekseerEffect::BURNER);
