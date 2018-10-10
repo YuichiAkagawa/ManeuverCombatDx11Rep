@@ -99,7 +99,7 @@ bool ActorPlayer::Init()
 	nameUnique_ = "ActorPlayer" + std::to_string(number_);
 
 	//ƒXƒP[ƒ‹’²®
-	EditMath::Scaling(mtxWorld_, 0.1f);
+	EditMath::Scaling(mtxWorld_, 0.0075f);
 
 	return true;
 }

@@ -26,7 +26,7 @@
 
 using namespace DirectX;
 
-constexpr float SCALE = 500.0f;
+constexpr float SCALE = 100.0f;
 constexpr DWORD WIDTH = 200;
 
 ActorSea::ActorSea(ActorManager* pActorManager) : ActorField(pActorManager)
@@ -47,6 +47,9 @@ bool ActorSea::Init()
 
 	pCameraSelecter_ = dynamic_cast <ActorCameraSelecter*> (pActorManager_->GetActor(ActorManager::NAME_CAMERA_SELECTER, 0));
 	if (pCameraSelecter_ == nullptr) { return false; }
+
+	//Y座標調整
+	SetPos(XMFLOAT3(0.0f, -0.01f, 0.0f));
 
 	{
 		//頂点バッファ作成

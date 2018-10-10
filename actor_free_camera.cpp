@@ -21,7 +21,7 @@ using namespace DirectX;
 
 static const XMFLOAT3 DEFAULT_POS = { 0.0f, 20.0f, -50.0f };
 static const XMFLOAT3 DEFAULT_POS_AT = { 0.0f, 0.0f, 0.0f };
-constexpr float CAM_SPEED = 0.05f;
+constexpr float CAM_SPEED = 0.03f;
 constexpr float CAM_ROT_SPEED = 0.1f;
 constexpr float CAM_LIMIT = 0.2f;
 

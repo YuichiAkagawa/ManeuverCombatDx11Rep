@@ -80,9 +80,9 @@ VS_OUT_PS_IN VS(VS_IN input)
 
 	//UV座標
 	output.texcoord = input.texcoord;
-	float2 texcoord01 = { time.x * -0.008f, time.x * 0.006f };
+	float2 texcoord01 = { time.x * -0.006f, time.x * 0.004f };
 	output.texcoord01 = input.texcoord + texcoord01;
-	float2 texcoord02 = { time.x * 0.006f, time.x * 0.004f };
+	float2 texcoord02 = { time.x * 0.004f, time.x * 0.002f };
 	output.texcoord02 = input.texcoord + texcoord02;
 
 	//スペキュラデータ

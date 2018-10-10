@@ -15,58 +15,54 @@ constexpr double LEFT_STICK_DEADZONE = 8000.0;
 constexpr double RIGHT_STICK_DEADZONE = 8000.0;
 constexpr double TRIGGER_DEADZONE = 20.0;
 
-XController::XCONT_BUTTON_STATUS XController::buttonStatus_[MAX_CONTROLLERS];
-XController::XCONT_BUTTON_STATUS XController::buttonStatusOld_[MAX_CONTROLLERS];
+XController::XCONT_BUTTON_STATUS XController::buttonStatus_;
+XController::XCONT_BUTTON_STATUS XController::buttonStatusOld_;
 
-XINPUT_STATE XController::controllerState_[MAX_CONTROLLERS];
-bool XController::connected_[MAX_CONTROLLERS];
-bool XController::isDrawImgui_[MAX_CONTROLLERS];
+XINPUT_STATE XController::controllerState_;
+bool XController::connected_;
+bool XController::isDrawImgui_;
 
 void XController::InitXcontroller()
 {
+	buttonStatus_.DPAD_UP = false;
+	buttonStatus_.DPAD_DOWN = false;
+	buttonStatus_.DPAD_LEFT = false;
+	buttonStatus_.DPAD_RIGHT = false;
+	buttonStatus_.START = false;
+	buttonStatus_.BACK = false;
+	buttonStatus_.LEFT_THUMB = false;
+	buttonStatus_.RIGHT_THUMB = false;
+	buttonStatus_.LEFT_SHOULDER = false;
+	buttonStatus_.RIGHT_SHOULDER = false;
+	buttonStatus_.A = false;
+	buttonStatus_.B = false;
+	buttonStatus_.X = false;
+	buttonStatus_.Y = false;
+	buttonStatus_.L_STICK_UP = false;
+	buttonStatus_.L_STICK_DOWN = false;
+	buttonStatus_.L_STICK_RIGHT = false;
+	buttonStatus_.L_STICK_LEFT = false;
 
-	for (UINT i = 0; i < MAX_CONTROLLERS; i++)
-	{
-		buttonStatus_[i].DPAD_UP = false;
-		buttonStatus_[i].DPAD_DOWN = false;
-		buttonStatus_[i].DPAD_LEFT = false;
-		buttonStatus_[i].DPAD_RIGHT = false;
-		buttonStatus_[i].START = false;
-		buttonStatus_[i].BACK = false;
-		buttonStatus_[i].LEFT_THUMB = false;
-		buttonStatus_[i].RIGHT_THUMB = false;
-		buttonStatus_[i].LEFT_SHOULDER = false;
-		buttonStatus_[i].RIGHT_SHOULDER = false;
-		buttonStatus_[i].A = false;
-		buttonStatus_[i].B = false;
-		buttonStatus_[i].X = false;
-		buttonStatus_[i].Y = false;
-		buttonStatus_[i].L_STICK_UP = false;
-		buttonStatus_[i].L_STICK_DOWN = false;
-		buttonStatus_[i].L_STICK_RIGHT = false;
-		buttonStatus_[i].L_STICK_LEFT = false;
+	buttonStatusOld_.DPAD_UP = false;
+	buttonStatusOld_.DPAD_DOWN = false;
+	buttonStatusOld_.DPAD_LEFT = false;
+	buttonStatusOld_.DPAD_RIGHT = false;
+	buttonStatusOld_.START = false;
+	buttonStatusOld_.BACK = false;
+	buttonStatusOld_.LEFT_THUMB = false;
+	buttonStatusOld_.RIGHT_THUMB = false;
+	buttonStatusOld_.LEFT_SHOULDER = false;
+	buttonStatusOld_.RIGHT_SHOULDER = false;
+	buttonStatusOld_.A = false;
+	buttonStatusOld_.B = false;
+	buttonStatusOld_.X = false;
+	buttonStatusOld_.Y = false;
+	buttonStatusOld_.L_STICK_UP = false;
+	buttonStatusOld_.L_STICK_DOWN = false;
+	buttonStatusOld_.L_STICK_RIGHT = false;
+	buttonStatusOld_.L_STICK_LEFT = false;
 
-		buttonStatusOld_[i].DPAD_UP = false;
-		buttonStatusOld_[i].DPAD_DOWN = false;
-		buttonStatusOld_[i].DPAD_LEFT = false;
-		buttonStatusOld_[i].DPAD_RIGHT = false;
-		buttonStatusOld_[i].START = false;
-		buttonStatusOld_[i].BACK = false;
-		buttonStatusOld_[i].LEFT_THUMB = false;
-		buttonStatusOld_[i].RIGHT_THUMB = false;
-		buttonStatusOld_[i].LEFT_SHOULDER = false;
-		buttonStatusOld_[i].RIGHT_SHOULDER = false;
-		buttonStatusOld_[i].A = false;
-		buttonStatusOld_[i].B = false;
-		buttonStatusOld_[i].X = false;
-		buttonStatusOld_[i].Y = false;
-		buttonStatusOld_[i].L_STICK_UP = false;
-		buttonStatusOld_[i].L_STICK_DOWN = false;
-		buttonStatusOld_[i].L_STICK_RIGHT = false;
-		buttonStatusOld_[i].L_STICK_LEFT = false;
-
-		isDrawImgui_[i] = false;
-	}
+	isDrawImgui_ = false;
 }
 
 void XController::UninitXcontroller()
@@ -78,319 +74,304 @@ void XController::UpdateXcontroller()
 {
 	DWORD dwResult;
 
-	for (UINT i = 0; i < MAX_CONTROLLERS; i++)
+	ZeroMemory(&controllerState_, sizeof(XINPUT_STATE));
+
+	// Simply get the state of the controller from XInput.
+	dwResult = XInputGetState(0, &controllerState_);
+
+	connected_ = false;
+	if (dwResult == ERROR_SUCCESS)
 	{
-		ZeroMemory(&controllerState_[i], sizeof(XINPUT_STATE));
+		// Controller is connected
+		connected_ = true;
+	}
 
-		// Simply get the state of the controller from XInput.
-		dwResult = XInputGetState(i, &controllerState_[i]);
+	//コントローラー状態取得
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP)
+	{
+		buttonStatus_.DPAD_UP = true;
+	}
+	else
+	{
+		buttonStatus_.DPAD_UP = false;
+	}
 
-		connected_[i] = false;
-		if (dwResult == ERROR_SUCCESS)
-		{
-			// Controller is connected
-			connected_[i] = true;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN)
+	{
+		buttonStatus_.DPAD_DOWN = true;
+	}
+	else
+	{
+		buttonStatus_.DPAD_DOWN = false;
+	}
 
-		//コントローラー状態取得
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP)
-		{
-			buttonStatus_[i].DPAD_UP = true;
-		}
-		else
-		{
-			buttonStatus_[i].DPAD_UP = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT)
+	{
+		buttonStatus_.DPAD_LEFT = true;
+	}
+	else
+	{
+		buttonStatus_.DPAD_LEFT = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN)
-		{
-			buttonStatus_[i].DPAD_DOWN = true;
-		}
-		else
-		{
-			buttonStatus_[i].DPAD_DOWN = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
+	{
+		buttonStatus_.DPAD_RIGHT = true;
+	}
+	else
+	{
+		buttonStatus_.DPAD_RIGHT = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT)
-		{
-			buttonStatus_[i].DPAD_LEFT = true;
-		}
-		else
-		{
-			buttonStatus_[i].DPAD_LEFT = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_START)
+	{
+		buttonStatus_.START = true;
+	}
+	else
+	{
+		buttonStatus_.START = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
-		{
-			buttonStatus_[i].DPAD_RIGHT = true;
-		}
-		else
-		{
-			buttonStatus_[i].DPAD_RIGHT = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
+	{
+		buttonStatus_.BACK = true;
+	}
+	else
+	{
+		buttonStatus_.BACK = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_START)
-		{
-			buttonStatus_[i].START = true;
-		}
-		else
-		{
-			buttonStatus_[i].START = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB)
+	{
+		buttonStatus_.LEFT_THUMB = true;
+	}
+	else
+	{
+		buttonStatus_.LEFT_THUMB = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_BACK)
-		{
-			buttonStatus_[i].BACK = true;
-		}
-		else
-		{
-			buttonStatus_[i].BACK = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB)
+	{
+		buttonStatus_.RIGHT_THUMB = true;
+	}
+	else
+	{
+		buttonStatus_.RIGHT_THUMB = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB)
-		{
-			buttonStatus_[i].LEFT_THUMB = true;
-		}
-		else
-		{
-			buttonStatus_[i].LEFT_THUMB = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
+	{
+		buttonStatus_.LEFT_SHOULDER = true;
+	}
+	else
+	{
+		buttonStatus_.LEFT_SHOULDER = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB)
-		{
-			buttonStatus_[i].RIGHT_THUMB = true;
-		}
-		else
-		{
-			buttonStatus_[i].RIGHT_THUMB = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
+	{
+		buttonStatus_.RIGHT_SHOULDER = true;
+	}
+	else
+	{
+		buttonStatus_.RIGHT_SHOULDER = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER)
-		{
-			buttonStatus_[i].LEFT_SHOULDER = true;
-		}
-		else
-		{
-			buttonStatus_[i].LEFT_SHOULDER = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+	{
+		buttonStatus_.A = true;
+	}
+	else
+	{
+		buttonStatus_.A = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER)
-		{
-			buttonStatus_[i].RIGHT_SHOULDER = true;
-		}
-		else
-		{
-			buttonStatus_[i].RIGHT_SHOULDER = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_B)
+	{
+		buttonStatus_.B = true;
+	}
+	else
+	{
+		buttonStatus_.B = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_A)
-		{
-			buttonStatus_[i].A = true;
-		}
-		else
-		{
-			buttonStatus_[i].A = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_X)
+	{
+		buttonStatus_.X = true;
+	}
+	else
+	{
+		buttonStatus_.X = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_B)
-		{
-			buttonStatus_[i].B = true;
-		}
-		else
-		{
-			buttonStatus_[i].B = false;
-		}
+	if (controllerState_.Gamepad.wButtons & XINPUT_GAMEPAD_Y)
+	{
+		buttonStatus_.Y = true;
+	}
+	else
+	{
+		buttonStatus_.Y = false;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_X)
-		{
-			buttonStatus_[i].X = true;
-		}
-		else
-		{
-			buttonStatus_[i].X = false;
-		}
+	//LStickX
+	//DeadZone
+	if (controllerState_.Gamepad.sThumbLX < LEFT_STICK_DEADZONE && controllerState_.Gamepad.sThumbLX > -LEFT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbLX = (SHORT)0.0f;
+	}
+	else if (controllerState_.Gamepad.sThumbLX >= LEFT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbLX -= (SHORT)LEFT_STICK_DEADZONE;
+	}
+	else if (controllerState_.Gamepad.sThumbLX <= -LEFT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbLX += (SHORT)LEFT_STICK_DEADZONE;
+	}
 
-		if (controllerState_[i].Gamepad.wButtons & XINPUT_GAMEPAD_Y)
-		{
-			buttonStatus_[i].Y = true;
-		}
-		else
-		{
-			buttonStatus_[i].Y = false;
-		}
+	if (controllerState_.Gamepad.sThumbLX > LEFT_STICK_DEADZONE)
+	{
+		buttonStatus_.L_STICK_RIGHT = true;
+	}
+	else
+	{
+		buttonStatus_.L_STICK_RIGHT = false;
+	}
 
-		//LStickX
-		//DeadZone
-		if (controllerState_[i].Gamepad.sThumbLX < LEFT_STICK_DEADZONE && controllerState_[i].Gamepad.sThumbLX > -LEFT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbLX = (SHORT)0.0f;
-		}
-		else if (controllerState_[i].Gamepad.sThumbLX >= LEFT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbLX -= (SHORT)LEFT_STICK_DEADZONE;
-		}
-		else if (controllerState_[i].Gamepad.sThumbLX <= -LEFT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbLX += (SHORT)LEFT_STICK_DEADZONE;
-		}
+	if (controllerState_.Gamepad.sThumbLX < -LEFT_STICK_DEADZONE)
+	{
+		buttonStatus_.L_STICK_LEFT = true;
+	}
+	else
+	{
+		buttonStatus_.L_STICK_LEFT = false;
+	}
 
-		if (controllerState_[i].Gamepad.sThumbLX > LEFT_STICK_DEADZONE)
-		{
-			buttonStatus_[i].L_STICK_RIGHT = true;
-		}
-		else
-		{
-			buttonStatus_[i].L_STICK_RIGHT = false;
-		}
+	//LStickY
+	//DeadZone
+	if (controllerState_.Gamepad.sThumbLY < LEFT_STICK_DEADZONE && controllerState_.Gamepad.sThumbLY > -LEFT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbLY = (SHORT)0.0f;
+	}
+	else if (controllerState_.Gamepad.sThumbLY >= LEFT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbLY -= (SHORT)LEFT_STICK_DEADZONE;
+	}
+	else if (controllerState_.Gamepad.sThumbLY <= -LEFT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbLY += (SHORT)LEFT_STICK_DEADZONE;
+	}
 
-		if (controllerState_[i].Gamepad.sThumbLX < -LEFT_STICK_DEADZONE)
-		{
-			buttonStatus_[i].L_STICK_LEFT = true;
-		}
-		else
-		{
-			buttonStatus_[i].L_STICK_LEFT = false;
-		}
+	if (controllerState_.Gamepad.sThumbLY > LEFT_STICK_DEADZONE)
+	{
+		buttonStatus_.L_STICK_UP = true;
+	}
+	else
+	{
+		buttonStatus_.L_STICK_UP = false;
+	}
 
-		//LStickY
-		//DeadZone
-		if (controllerState_[i].Gamepad.sThumbLY < LEFT_STICK_DEADZONE && controllerState_[i].Gamepad.sThumbLY > -LEFT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbLY = (SHORT)0.0f;
-		}
-		else if (controllerState_[i].Gamepad.sThumbLY >= LEFT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbLY -= (SHORT)LEFT_STICK_DEADZONE;
-		}
-		else if (controllerState_[i].Gamepad.sThumbLY <= -LEFT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbLY += (SHORT)LEFT_STICK_DEADZONE;
-		}
+	if (controllerState_.Gamepad.sThumbLY < -LEFT_STICK_DEADZONE)
+	{
+		buttonStatus_.L_STICK_DOWN = true;
+	}
+	else
+	{
+		buttonStatus_.L_STICK_DOWN = false;
+	}
 
-		if (controllerState_[i].Gamepad.sThumbLY > LEFT_STICK_DEADZONE)
-		{
-			buttonStatus_[i].L_STICK_UP = true;
-		}
-		else
-		{
-			buttonStatus_[i].L_STICK_UP = false;
-		}
+	//RStickX
+	//DeadZone
+	if (controllerState_.Gamepad.sThumbRX < RIGHT_STICK_DEADZONE && controllerState_.Gamepad.sThumbRX > -RIGHT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbRX = (SHORT)0.0f;
+	}
+	else if (controllerState_.Gamepad.sThumbRX >= RIGHT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbRX -= (SHORT)RIGHT_STICK_DEADZONE;
+	}
+	else if (controllerState_.Gamepad.sThumbRX <= -RIGHT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbRX += (SHORT)RIGHT_STICK_DEADZONE;
+	}
 
-		if (controllerState_[i].Gamepad.sThumbLY < -LEFT_STICK_DEADZONE)
-		{
-			buttonStatus_[i].L_STICK_DOWN = true;
-		}
-		else
-		{
-			buttonStatus_[i].L_STICK_DOWN = false;
-		}
-
-		//RStickX
-		//DeadZone
-		if (controllerState_[i].Gamepad.sThumbRX < RIGHT_STICK_DEADZONE && controllerState_[i].Gamepad.sThumbRX > -RIGHT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbRX = (SHORT)0.0f;
-		}
-		else if (controllerState_[i].Gamepad.sThumbRX >= RIGHT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbRX -= (SHORT)RIGHT_STICK_DEADZONE;
-		}
-		else if (controllerState_[i].Gamepad.sThumbRX <= -RIGHT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbRX += (SHORT)RIGHT_STICK_DEADZONE;
-		}
-
-		//RStickY
-		//DeadZone
-		if (controllerState_[i].Gamepad.sThumbRY < RIGHT_STICK_DEADZONE && controllerState_[i].Gamepad.sThumbRY > -RIGHT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbRY = (SHORT)0.0f;
-		}
-		else if (controllerState_[i].Gamepad.sThumbRY >= RIGHT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbRY -= (SHORT)RIGHT_STICK_DEADZONE;
-		}
-		else if (controllerState_[i].Gamepad.sThumbRY <= -RIGHT_STICK_DEADZONE)
-		{
-			controllerState_[i].Gamepad.sThumbRY += (SHORT)RIGHT_STICK_DEADZONE;
-		}
+	//RStickY
+	//DeadZone
+	if (controllerState_.Gamepad.sThumbRY < RIGHT_STICK_DEADZONE && controllerState_.Gamepad.sThumbRY > -RIGHT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbRY = (SHORT)0.0f;
+	}
+	else if (controllerState_.Gamepad.sThumbRY >= RIGHT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbRY -= (SHORT)RIGHT_STICK_DEADZONE;
+	}
+	else if (controllerState_.Gamepad.sThumbRY <= -RIGHT_STICK_DEADZONE)
+	{
+		controllerState_.Gamepad.sThumbRY += (SHORT)RIGHT_STICK_DEADZONE;
 	}
 }
 
 void XController::UpdateXcontrollerCreateOld()
 {
-	for (int i = 0; i < MAX_CONTROLLERS; i++)
-	{
-		buttonStatusOld_[i] = buttonStatus_[i];
-	}
+
+	buttonStatusOld_ = buttonStatus_;
 }
 
 void XController::DrawImgui()
 {
 	//imgui
 	ImGui::Begin("Stats");
-	if (ImGui::BeginMenu("XInput"))
+
+	if (ImGui::MenuItem("Controller"))
 	{
-		for (UINT i = 0; i < MAX_CONTROLLERS; i++)
-		{
-			std::string str = "Controller " + std::to_string(i + 1);
-			if (ImGui::MenuItem(str.c_str()))
-			{
-				isDrawImgui_[i] = true;
-			}
-		}
-		ImGui::EndMenu();
+		isDrawImgui_ = true;
 	}
+
 	ImGui::End();
 
-	for (UINT i = 0; i < MAX_CONTROLLERS; i++)
-	{
-		XcontrollerValue(&isDrawImgui_[i], i + 1);
-	}
+	XcontrollerValue(&isDrawImgui_);
 }
 
-void XController::XcontrollerValue(bool* isDrawImgui, int number)
+void XController::XcontrollerValue(bool* isDrawImgui)
 {
 	if (*isDrawImgui && ImguiManager::GetIsDraw())
 	{
 		ImGui::SetNextWindowPos(ImVec2(880, 20), ImGuiSetCond_Once);
 		ImGui::SetNextWindowSize(ImVec2(380, 450), ImGuiSetCond_Once);
 
-		std::string str = "XInput Controller " + std::to_string(number);
-		ImGui::Begin(str.c_str(), isDrawImgui);
+		ImGui::Begin("Controller", isDrawImgui);
 
-		ImGui::Text("%s", connected_[number - 1] ? "Connected" : "No Connection");
+		ImGui::Text("%s", connected_ ? "Connected" : "No Connection");
 
 		if (ImGui::TreeNode("Axis"))
 		{
-			ImGui::Text("LeftStick X : %6d (%.6f)", controllerState_[number - 1].Gamepad.sThumbLX, (controllerState_[number - 1].Gamepad.sThumbLX - (-32768)) / 32768.0f - 1.0f);
-			ImGui::Text("LeftStick Y : %6d (%.6f)", controllerState_[number - 1].Gamepad.sThumbLY, (controllerState_[number - 1].Gamepad.sThumbLY - (-32768)) / 32768.0f - 1.0f);
-			ImGui::Text("RightStick X : %6d (%.6f)", controllerState_[number - 1].Gamepad.sThumbRX, (controllerState_[number - 1].Gamepad.sThumbRX - (-32768)) / 32768.0f - 1.0f);
-			ImGui::Text("RightStick Y : %6d (%.6f)", controllerState_[number - 1].Gamepad.sThumbRY, (controllerState_[number - 1].Gamepad.sThumbRY - (-32768)) / 32768.0f - 1.0f);
-			ImGui::Text("LeftTrigger : %6d (%.6f)", controllerState_[number - 1].Gamepad.bLeftTrigger, (controllerState_[number - 1].Gamepad.bLeftTrigger - 0) / 255.0f);
-			ImGui::Text("RightTrigger : %6d (%.6f)", controllerState_[number - 1].Gamepad.bRightTrigger, (controllerState_[number - 1].Gamepad.bRightTrigger - 0) / 255.0f);
+			ImGui::Text("LeftStick X : %6d (%.6f)", controllerState_.Gamepad.sThumbLX, GetXcontrollerLStickX());
+			ImGui::Text("LeftStick Y : %6d (%.6f)", controllerState_.Gamepad.sThumbLY, GetXcontrollerLStickY());
+			ImGui::Text("RightStick X : %6d (%.6f)", controllerState_.Gamepad.sThumbRX, GetXcontrollerRStickX());
+			ImGui::Text("RightStick Y : %6d (%.6f)", controllerState_.Gamepad.sThumbRY, GetXcontrollerRStickY());
+			ImGui::Text("LeftTrigger : %6d (%.6f)", controllerState_.Gamepad.bLeftTrigger, GetXcontrollerLTrigger());
+			ImGui::Text("RightTrigger : %6d (%.6f)", controllerState_.Gamepad.bRightTrigger, GetXcontrollerRTrigger());
 			ImGui::TreePop();
 		}
 		if (ImGui::TreeNode("Button"))
 		{
-			ImGui::Text("DPAD_UP : %s", buttonStatus_[number - 1].DPAD_UP ? "true" : "false");
-			ImGui::Text("DPAD_DOWN : %s", buttonStatus_[number - 1].DPAD_DOWN ? "true" : "false");
-			ImGui::Text("DPAD_LEFT : %s", buttonStatus_[number - 1].DPAD_LEFT ? "true" : "false");
-			ImGui::Text("DPAD_RIGHT : %s", buttonStatus_[number - 1].DPAD_RIGHT ? "true" : "false");
-			ImGui::Text("START : %s", buttonStatus_[number - 1].START ? "true" : "false");
-			ImGui::Text("BACK : %s", buttonStatus_[number - 1].BACK ? "true" : "false");
-			ImGui::Text("LEFT_THUMB : %s", buttonStatus_[number - 1].LEFT_THUMB ? "true" : "false");
-			ImGui::Text("RIGHT_THUMB : %s", buttonStatus_[number - 1].RIGHT_THUMB ? "true" : "false");
-			ImGui::Text("LEFT_SHOULDER : %s", buttonStatus_[number - 1].LEFT_SHOULDER ? "true" : "false");
-			ImGui::Text("RIGHT_SHOULDER : %s", buttonStatus_[number - 1].RIGHT_SHOULDER ? "true" : "false");
-			ImGui::Text("A : %s", buttonStatus_[number - 1].A ? "true" : "false");
-			ImGui::Text("B : %s", buttonStatus_[number - 1].B ? "true" : "false");
-			ImGui::Text("X : %s", buttonStatus_[number - 1].X ? "true" : "false");
-			ImGui::Text("Y : %s", buttonStatus_[number - 1].Y ? "true" : "false");
-			ImGui::Text("LEFT_STICK_UP : %s", buttonStatus_[number - 1].L_STICK_UP ? "true" : "false");
-			ImGui::Text("LEFT_STICK_DOWN : %s", buttonStatus_[number - 1].L_STICK_DOWN ? "true" : "false");
-			ImGui::Text("LEFT_STICK_LEFT : %s", buttonStatus_[number - 1].L_STICK_LEFT ? "true" : "false");
-			ImGui::Text("LEFT_STICK_RIGHT : %s", buttonStatus_[number - 1].L_STICK_RIGHT ? "true" : "false");
+			ImGui::Text("DPAD_UP : %s", buttonStatus_.DPAD_UP ? "true" : "false");
+			ImGui::Text("DPAD_DOWN : %s", buttonStatus_.DPAD_DOWN ? "true" : "false");
+			ImGui::Text("DPAD_LEFT : %s", buttonStatus_.DPAD_LEFT ? "true" : "false");
+			ImGui::Text("DPAD_RIGHT : %s", buttonStatus_.DPAD_RIGHT ? "true" : "false");
+			ImGui::Text("START : %s", buttonStatus_.START ? "true" : "false");
+			ImGui::Text("BACK : %s", buttonStatus_.BACK ? "true" : "false");
+			ImGui::Text("LEFT_THUMB : %s", buttonStatus_.LEFT_THUMB ? "true" : "false");
+			ImGui::Text("RIGHT_THUMB : %s", buttonStatus_.RIGHT_THUMB ? "true" : "false");
+			ImGui::Text("LEFT_SHOULDER : %s", buttonStatus_.LEFT_SHOULDER ? "true" : "false");
+			ImGui::Text("RIGHT_SHOULDER : %s", buttonStatus_.RIGHT_SHOULDER ? "true" : "false");
+			ImGui::Text("A : %s", buttonStatus_.A ? "true" : "false");
+			ImGui::Text("B : %s", buttonStatus_.B ? "true" : "false");
+			ImGui::Text("X : %s", buttonStatus_.X ? "true" : "false");
+			ImGui::Text("Y : %s", buttonStatus_.Y ? "true" : "false");
+			ImGui::Text("LEFT_STICK_UP : %s", buttonStatus_.L_STICK_UP ? "true" : "false");
+			ImGui::Text("LEFT_STICK_DOWN : %s", buttonStatus_.L_STICK_DOWN ? "true" : "false");
+			ImGui::Text("LEFT_STICK_LEFT : %s", buttonStatus_.L_STICK_LEFT ? "true" : "false");
+			ImGui::Text("LEFT_STICK_RIGHT : %s", buttonStatus_.L_STICK_RIGHT ? "true" : "false");
 
 			ImGui::TreePop();
 		}
@@ -398,43 +379,43 @@ void XController::XcontrollerValue(bool* isDrawImgui, int number)
 	}
 }
 
-double XController::GetXcontrollerLStickX(int number)
+double XController::GetXcontrollerLStickX()
 {
 	//NormalizeReturn
-	return (controllerState_[number - 1].Gamepad.sThumbLX - (-(32768 - LEFT_STICK_DEADZONE))) / (32768.0f - LEFT_STICK_DEADZONE) - 1.0f;
+	return (controllerState_.Gamepad.sThumbLX - (-(32768 - LEFT_STICK_DEADZONE))) / (32768.0f - LEFT_STICK_DEADZONE) - 1.0f;
 }
 
-double XController::GetXcontrollerLStickY(int number)
+double XController::GetXcontrollerLStickY()
 {
 	//NormalizeReturn
-	return (controllerState_[number - 1].Gamepad.sThumbLY - (-(32768 - LEFT_STICK_DEADZONE))) / (32768.0f - LEFT_STICK_DEADZONE) - 1.0f;
+	return (controllerState_.Gamepad.sThumbLY - (-(32768 - LEFT_STICK_DEADZONE))) / (32768.0f - LEFT_STICK_DEADZONE) - 1.0f;
 }
 
-bool XController::GetXcontrollerLStickUpPress(int number)
+bool XController::GetXcontrollerLStickUpPress()
 {
-	return buttonStatus_[number - 1].L_STICK_UP;
+	return buttonStatus_.L_STICK_UP;
 }
 
-bool XController::GetXcontrollerLStickDownPress(int number)
+bool XController::GetXcontrollerLStickDownPress()
 {
-	return buttonStatus_[number - 1].L_STICK_DOWN;
+	return buttonStatus_.L_STICK_DOWN;
 }
 
-bool XController::GetXcontrollerLStickRightPress(int number)
+bool XController::GetXcontrollerLStickRightPress()
 {
-	return buttonStatus_[number - 1].L_STICK_RIGHT;
+	return buttonStatus_.L_STICK_RIGHT;
 }
 
-bool XController::GetXcontrollerLStickLeftPress(int number)
+bool XController::GetXcontrollerLStickLeftPress()
 {
-	return buttonStatus_[number - 1].L_STICK_LEFT;
+	return buttonStatus_.L_STICK_LEFT;
 }
 
-bool XController::GetXcontrollerLStickUpTrigger(int number)
+bool XController::GetXcontrollerLStickUpTrigger()
 {
-	if (buttonStatusOld_[number - 1].L_STICK_UP == false)
+	if (buttonStatusOld_.L_STICK_UP == false)
 	{
-		return buttonStatus_[number - 1].L_STICK_UP;
+		return buttonStatus_.L_STICK_UP;
 	}
 	else
 	{
@@ -442,11 +423,11 @@ bool XController::GetXcontrollerLStickUpTrigger(int number)
 	}
 }
 
-bool XController::GetXcontrollerLStickDownTrigger(int number)
+bool XController::GetXcontrollerLStickDownTrigger()
 {
-	if (buttonStatusOld_[number - 1].L_STICK_DOWN == false)
+	if (buttonStatusOld_.L_STICK_DOWN == false)
 	{
-		return buttonStatus_[number - 1].L_STICK_DOWN;
+		return buttonStatus_.L_STICK_DOWN;
 	}
 	else
 	{
@@ -454,11 +435,11 @@ bool XController::GetXcontrollerLStickDownTrigger(int number)
 	}
 }
 
-bool XController::GetXcontrollerLStickRightTrigger(int number)
+bool XController::GetXcontrollerLStickRightTrigger()
 {
-	if (buttonStatusOld_[number - 1].L_STICK_RIGHT == false)
+	if (buttonStatusOld_.L_STICK_RIGHT == false)
 	{
-		return buttonStatus_[number - 1].L_STICK_RIGHT;
+		return buttonStatus_.L_STICK_RIGHT;
 	}
 	else
 	{
@@ -466,11 +447,11 @@ bool XController::GetXcontrollerLStickRightTrigger(int number)
 	}
 }
 
-bool XController::GetXcontrollerLStickLeftTrigger(int number)
+bool XController::GetXcontrollerLStickLeftTrigger()
 {
-	if (buttonStatusOld_[number - 1].L_STICK_LEFT == false)
+	if (buttonStatusOld_.L_STICK_LEFT == false)
 	{
-		return buttonStatus_[number - 1].L_STICK_LEFT;
+		return buttonStatus_.L_STICK_LEFT;
 	}
 	else
 	{
@@ -478,9 +459,9 @@ bool XController::GetXcontrollerLStickLeftTrigger(int number)
 	}
 }
 
-bool XController::GetXcontrollerLStickUpRelease(int number)
+bool XController::GetXcontrollerLStickUpRelease()
 {
-	if (buttonStatusOld_[number - 1].L_STICK_UP == true && buttonStatus_[number - 1].L_STICK_UP == false)
+	if (buttonStatusOld_.L_STICK_UP == true && buttonStatus_.L_STICK_UP == false)
 	{
 		return true;
 	}
@@ -490,9 +471,9 @@ bool XController::GetXcontrollerLStickUpRelease(int number)
 	}
 }
 
-bool XController::GetXcontrollerLStickDownRelease(int number)
+bool XController::GetXcontrollerLStickDownRelease()
 {
-	if (buttonStatusOld_[number - 1].L_STICK_DOWN == true && buttonStatus_[number - 1].L_STICK_DOWN == false)
+	if (buttonStatusOld_.L_STICK_DOWN == true && buttonStatus_.L_STICK_DOWN == false)
 	{
 		return true;
 	}
@@ -502,9 +483,9 @@ bool XController::GetXcontrollerLStickDownRelease(int number)
 	}
 }
 
-bool XController::GetXcontrollerLStickRightRelease(int number)
+bool XController::GetXcontrollerLStickRightRelease()
 {
-	if (buttonStatusOld_[number - 1].L_STICK_RIGHT == true && buttonStatus_[number - 1].L_STICK_RIGHT == false)
+	if (buttonStatusOld_.L_STICK_RIGHT == true && buttonStatus_.L_STICK_RIGHT == false)
 	{
 		return true;
 	}
@@ -514,9 +495,9 @@ bool XController::GetXcontrollerLStickRightRelease(int number)
 	}
 }
 
-bool XController::GetXcontrollerLStickLeftRelease(int number)
+bool XController::GetXcontrollerLStickLeftRelease()
 {
-	if (buttonStatusOld_[number - 1].L_STICK_LEFT == true && buttonStatus_[number - 1].L_STICK_LEFT == false)
+	if (buttonStatusOld_.L_STICK_LEFT == true && buttonStatus_.L_STICK_LEFT == false)
 	{
 		return true;
 	}
@@ -526,101 +507,101 @@ bool XController::GetXcontrollerLStickLeftRelease(int number)
 	}
 }
 
-double XController::GetXcontrollerRStickX(int number)
+double XController::GetXcontrollerRStickX()
 {
 	//NormalizeReturn
-	return (controllerState_[number - 1].Gamepad.sThumbRX - (-(32768 - RIGHT_STICK_DEADZONE))) / (32768.0f - RIGHT_STICK_DEADZONE) - 1.0f;
+	return (controllerState_.Gamepad.sThumbRX - (-(32768 - RIGHT_STICK_DEADZONE))) / (32768.0f - RIGHT_STICK_DEADZONE) - 1.0f;
 }
 
-double XController::GetXcontrollerRStickY(int number)
+double XController::GetXcontrollerRStickY()
 {
 	//NormalizeReturn
-	return (controllerState_[number - 1].Gamepad.sThumbRY - (-(32768 - RIGHT_STICK_DEADZONE))) / (32768.0f - RIGHT_STICK_DEADZONE) - 1.0f;
+	return (controllerState_.Gamepad.sThumbRY - (-(32768 - RIGHT_STICK_DEADZONE))) / (32768.0f - RIGHT_STICK_DEADZONE) - 1.0f;
 }
 
-double XController::GetXcontrollerLTrigger(int number)
+double XController::GetXcontrollerLTrigger()
 {
 	//DeadZone
-	if (controllerState_[number - 1].Gamepad.bLeftTrigger < TRIGGER_DEADZONE)
+	if (controllerState_.Gamepad.bLeftTrigger < TRIGGER_DEADZONE)
 	{
-		controllerState_[number - 1].Gamepad.bLeftTrigger = (SHORT)0.0f;
+		controllerState_.Gamepad.bLeftTrigger = (SHORT)0.0f;
 	}
 	
 	//NormalizeReturn
-	return (controllerState_[number - 1].Gamepad.bLeftTrigger - 0) / 255.0f;
+	return (controllerState_.Gamepad.bLeftTrigger - 0) / 255.0f;
 }
 
-double XController::GetXcontrollerRTrigger(int number)
+double XController::GetXcontrollerRTrigger()
 {
 	//DeadZone
-	if (controllerState_[number - 1].Gamepad.bRightTrigger < TRIGGER_DEADZONE)
+	if (controllerState_.Gamepad.bRightTrigger < TRIGGER_DEADZONE)
 	{
-		controllerState_[number - 1].Gamepad.bRightTrigger = (SHORT)0.0f;
+		controllerState_.Gamepad.bRightTrigger = (SHORT)0.0f;
 	}
 
 	//NormalizeReturn
-	return (controllerState_[number - 1].Gamepad.bRightTrigger - 0) / 255.0f;
+	return (controllerState_.Gamepad.bRightTrigger - 0) / 255.0f;
 }
 
-bool XController::GetXcontrollerButtonPress(int number, WORD button)
+bool XController::GetXcontrollerButtonPress(WORD button)
 {
 	switch (button)
 	{
 	case XINPUT_GAMEPAD_DPAD_UP:
-		return buttonStatus_[number - 1].DPAD_UP;
+		return buttonStatus_.DPAD_UP;
 		break;
 	case XINPUT_GAMEPAD_DPAD_DOWN:
-		return buttonStatus_[number - 1].DPAD_DOWN;
+		return buttonStatus_.DPAD_DOWN;
 		break;
 	case XINPUT_GAMEPAD_DPAD_LEFT:
-		return buttonStatus_[number - 1].DPAD_LEFT;
+		return buttonStatus_.DPAD_LEFT;
 		break;
 	case XINPUT_GAMEPAD_DPAD_RIGHT:
-		return buttonStatus_[number - 1].DPAD_RIGHT;
+		return buttonStatus_.DPAD_RIGHT;
 		break;
 	case XINPUT_GAMEPAD_START:
-		return buttonStatus_[number - 1].START;
+		return buttonStatus_.START;
 		break;
 	case XINPUT_GAMEPAD_BACK:
-		return buttonStatus_[number - 1].BACK;
+		return buttonStatus_.BACK;
 		break;
 	case XINPUT_GAMEPAD_LEFT_THUMB:
-		return buttonStatus_[number - 1].LEFT_THUMB;
+		return buttonStatus_.LEFT_THUMB;
 		break;
 	case XINPUT_GAMEPAD_RIGHT_THUMB:
-		return buttonStatus_[number - 1].RIGHT_THUMB;
+		return buttonStatus_.RIGHT_THUMB;
 		break;
 	case XINPUT_GAMEPAD_LEFT_SHOULDER:
-		return buttonStatus_[number - 1].LEFT_SHOULDER;
+		return buttonStatus_.LEFT_SHOULDER;
 		break;
 	case XINPUT_GAMEPAD_RIGHT_SHOULDER:
-		return buttonStatus_[number - 1].RIGHT_SHOULDER;
+		return buttonStatus_.RIGHT_SHOULDER;
 		break;
 	case XINPUT_GAMEPAD_A:
-		return buttonStatus_[number - 1].A;
+		return buttonStatus_.A;
 		break;
 	case XINPUT_GAMEPAD_B:
-		return buttonStatus_[number - 1].B;
+		return buttonStatus_.B;
 		break;
 	case XINPUT_GAMEPAD_X:
-		return buttonStatus_[number - 1].X;
+		return buttonStatus_.X;
 		break;
 	case XINPUT_GAMEPAD_Y:
-		return buttonStatus_[number - 1].Y;
+		return buttonStatus_.Y;
 		break;
 	default:
 		return false;
 		break;
 	}
 }
-bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
+bool XController::GetXcontrollerButtonTrigger(WORD button)
 {
 	switch (button)
 	{
 	case XINPUT_GAMEPAD_DPAD_UP:
-		if (buttonStatusOld_[number - 1].DPAD_UP == false)
+		if (buttonStatusOld_.DPAD_UP == false)
 		{
-			return buttonStatus_[number - 1].DPAD_UP;
+			return buttonStatus_.DPAD_UP;
 		}
 		else
 		{
@@ -628,9 +609,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_DPAD_DOWN:
-		if (buttonStatusOld_[number - 1].DPAD_DOWN == false)
+		if (buttonStatusOld_.DPAD_DOWN == false)
 		{
-			return buttonStatus_[number - 1].DPAD_DOWN;
+			return buttonStatus_.DPAD_DOWN;
 		}
 		else
 		{
@@ -638,9 +619,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_DPAD_LEFT:
-		if (buttonStatusOld_[number - 1].DPAD_LEFT == false)
+		if (buttonStatusOld_.DPAD_LEFT == false)
 		{
-			return buttonStatus_[number - 1].DPAD_LEFT;
+			return buttonStatus_.DPAD_LEFT;
 		}
 		else
 		{
@@ -648,9 +629,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_DPAD_RIGHT:
-		if (buttonStatusOld_[number - 1].DPAD_RIGHT == false)
+		if (buttonStatusOld_.DPAD_RIGHT == false)
 		{
-			return buttonStatus_[number - 1].DPAD_RIGHT;
+			return buttonStatus_.DPAD_RIGHT;
 		}
 		else
 		{
@@ -658,9 +639,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_START:
-		if (buttonStatusOld_[number - 1].START == false)
+		if (buttonStatusOld_.START == false)
 		{
-			return buttonStatus_[number - 1].START;
+			return buttonStatus_.START;
 		}
 		else
 		{
@@ -668,9 +649,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_BACK:
-		if (buttonStatusOld_[number - 1].BACK == false)
+		if (buttonStatusOld_.BACK == false)
 		{
-			return buttonStatus_[number - 1].BACK;
+			return buttonStatus_.BACK;
 		}
 		else
 		{
@@ -678,9 +659,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_LEFT_THUMB:
-		if (buttonStatusOld_[number - 1].LEFT_THUMB == false)
+		if (buttonStatusOld_.LEFT_THUMB == false)
 		{
-			return buttonStatus_[number - 1].LEFT_THUMB;
+			return buttonStatus_.LEFT_THUMB;
 		}
 		else
 		{
@@ -688,9 +669,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_RIGHT_THUMB:
-		if (buttonStatusOld_[number - 1].RIGHT_THUMB == false)
+		if (buttonStatusOld_.RIGHT_THUMB == false)
 		{
-			return buttonStatus_[number - 1].RIGHT_THUMB;
+			return buttonStatus_.RIGHT_THUMB;
 		}
 		else
 		{
@@ -698,9 +679,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_LEFT_SHOULDER:
-		if (buttonStatusOld_[number - 1].LEFT_SHOULDER == false)
+		if (buttonStatusOld_.LEFT_SHOULDER == false)
 		{
-			return buttonStatus_[number - 1].LEFT_SHOULDER;
+			return buttonStatus_.LEFT_SHOULDER;
 		}
 		else
 		{
@@ -708,9 +689,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_RIGHT_SHOULDER:
-		if (buttonStatusOld_[number - 1].RIGHT_SHOULDER == false)
+		if (buttonStatusOld_.RIGHT_SHOULDER == false)
 		{
-			return buttonStatus_[number - 1].RIGHT_SHOULDER;
+			return buttonStatus_.RIGHT_SHOULDER;
 		}
 		else
 		{
@@ -718,9 +699,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_A:
-		if (buttonStatusOld_[number - 1].A == false)
+		if (buttonStatusOld_.A == false)
 		{
-			return buttonStatus_[number - 1].A;
+			return buttonStatus_.A;
 		}
 		else
 		{
@@ -728,9 +709,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_B:
-		if (buttonStatusOld_[number - 1].B == false)
+		if (buttonStatusOld_.B == false)
 		{
-			return buttonStatus_[number - 1].B;
+			return buttonStatus_.B;
 		}
 		else
 		{
@@ -738,9 +719,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_X:
-		if (buttonStatusOld_[number - 1].X == false)
+		if (buttonStatusOld_.X == false)
 		{
-			return buttonStatus_[number - 1].X;
+			return buttonStatus_.X;
 		}
 		else
 		{
@@ -748,9 +729,9 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_Y:
-		if (buttonStatusOld_[number - 1].Y == false)
+		if (buttonStatusOld_.Y == false)
 		{
-			return buttonStatus_[number - 1].Y;
+			return buttonStatus_.Y;
 		}
 		else
 		{
@@ -762,12 +743,12 @@ bool XController::GetXcontrollerButtonTrigger(int number, WORD button)
 		break;
 	}
 }
-bool XController::GetXcontrollerButtonRelease(int number, WORD button)
+bool XController::GetXcontrollerButtonRelease(WORD button)
 {
 	switch (button)
 	{
 	case XINPUT_GAMEPAD_DPAD_UP:
-		if (buttonStatusOld_[number - 1].DPAD_UP == true && buttonStatus_[number - 1].DPAD_UP == false)
+		if (buttonStatusOld_.DPAD_UP == true && buttonStatus_.DPAD_UP == false)
 		{
 			return true;
 		}
@@ -777,7 +758,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_DPAD_DOWN:
-		if (buttonStatusOld_[number - 1].DPAD_DOWN == true && buttonStatus_[number - 1].DPAD_DOWN == false)
+		if (buttonStatusOld_.DPAD_DOWN == true && buttonStatus_.DPAD_DOWN == false)
 		{
 			return true;
 		}
@@ -787,7 +768,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_DPAD_LEFT:
-		if (buttonStatusOld_[number - 1].DPAD_LEFT == true && buttonStatus_[number - 1].DPAD_LEFT == false)
+		if (buttonStatusOld_.DPAD_LEFT == true && buttonStatus_.DPAD_LEFT == false)
 		{
 			return true;
 		}
@@ -797,7 +778,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_DPAD_RIGHT:
-		if (buttonStatusOld_[number - 1].DPAD_RIGHT == true && buttonStatus_[number - 1].DPAD_RIGHT == false)
+		if (buttonStatusOld_.DPAD_RIGHT == true && buttonStatus_.DPAD_RIGHT == false)
 		{
 			return true;
 		}
@@ -807,7 +788,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_START:
-		if (buttonStatusOld_[number - 1].START == true && buttonStatus_[number - 1].START == false)
+		if (buttonStatusOld_.START == true && buttonStatus_.START == false)
 		{
 			return true;
 		}
@@ -817,7 +798,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_BACK:
-		if (buttonStatusOld_[number - 1].BACK == true && buttonStatus_[number - 1].BACK == false)
+		if (buttonStatusOld_.BACK == true && buttonStatus_.BACK == false)
 		{
 			return true;
 		}
@@ -827,7 +808,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_LEFT_THUMB:
-		if (buttonStatusOld_[number - 1].LEFT_THUMB == true && buttonStatus_[number - 1].LEFT_THUMB == false)
+		if (buttonStatusOld_.LEFT_THUMB == true && buttonStatus_.LEFT_THUMB == false)
 		{
 			return true;
 		}
@@ -837,7 +818,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_RIGHT_THUMB:
-		if (buttonStatusOld_[number - 1].RIGHT_THUMB == true && buttonStatus_[number - 1].RIGHT_THUMB == false)
+		if (buttonStatusOld_.RIGHT_THUMB == true && buttonStatus_.RIGHT_THUMB == false)
 		{
 			return true;
 		}
@@ -847,7 +828,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_LEFT_SHOULDER:
-		if (buttonStatusOld_[number - 1].LEFT_SHOULDER == true && buttonStatus_[number - 1].LEFT_SHOULDER == false)
+		if (buttonStatusOld_.LEFT_SHOULDER == true && buttonStatus_.LEFT_SHOULDER == false)
 		{
 			return true;
 		}
@@ -857,7 +838,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_RIGHT_SHOULDER:
-		if (buttonStatusOld_[number - 1].RIGHT_SHOULDER == true && buttonStatus_[number - 1].RIGHT_SHOULDER == false)
+		if (buttonStatusOld_.RIGHT_SHOULDER == true && buttonStatus_.RIGHT_SHOULDER == false)
 		{
 			return true;
 		}
@@ -867,7 +848,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_A:
-		if (buttonStatusOld_[number - 1].A == true && buttonStatus_[number - 1].A == false)
+		if (buttonStatusOld_.A == true && buttonStatus_.A == false)
 		{
 			return true;
 		}
@@ -877,7 +858,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_B:
-		if (buttonStatusOld_[number - 1].B == true && buttonStatus_[number - 1].B == false)
+		if (buttonStatusOld_.B == true && buttonStatus_.B == false)
 		{
 			return true;
 		}
@@ -887,7 +868,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_X:
-		if (buttonStatusOld_[number - 1].X == true && buttonStatus_[number - 1].X == false)
+		if (buttonStatusOld_.X == true && buttonStatus_.X == false)
 		{
 			return true;
 		}
@@ -897,7 +878,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 		}
 		break;
 	case XINPUT_GAMEPAD_Y:
-		if (buttonStatusOld_[number - 1].Y == true && buttonStatus_[number - 1].Y == false)
+		if (buttonStatusOld_.Y == true && buttonStatus_.Y == false)
 		{
 			return true;
 		}
@@ -912,7 +893,7 @@ bool XController::GetXcontrollerButtonRelease(int number, WORD button)
 	}
 }
 
-bool	XController::GetConnectController(int number)
+bool	XController::GetConnectController()
 {
-	return connected_[number];
+	return connected_;
 }

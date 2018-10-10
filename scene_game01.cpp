@@ -62,7 +62,8 @@ bool SceneGame01::Init()
 	//actorManager_.CreateActor(new ActorFbxModel(&actorManager_));
 
 	//プレイヤー生成
-	actorManager_.CreateActor(new ActorPlayer(&actorManager_));
+	ActorPlayer* pPlayer =  new ActorPlayer(&actorManager_);
+	actorManager_.CreateActor(pPlayer);
 
 	//海生成
 	actorManager_.CreateActor(new ActorSea(&actorManager_));
@@ -86,6 +87,9 @@ bool SceneGame01::Init()
 	{
 		return false;
 	}
+
+	// プレイヤー初期位置設定
+	pPlayer->SetPos(XMFLOAT3(0.0f, 10.0f, 0.0f));
 
 	return true;
 }

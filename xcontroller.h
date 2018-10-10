@@ -9,8 +9,6 @@
 
 #include <Xinput.h>
 
-constexpr UINT MAX_CONTROLLERS = 4;
-
 class XController
 {
 private:
@@ -36,14 +34,14 @@ private:
 		bool L_STICK_LEFT;
 	};
 
-	static XCONT_BUTTON_STATUS buttonStatus_[MAX_CONTROLLERS];
-	static XCONT_BUTTON_STATUS buttonStatusOld_[MAX_CONTROLLERS];
+	static XCONT_BUTTON_STATUS buttonStatus_;
+	static XCONT_BUTTON_STATUS buttonStatusOld_;
 
-	static XINPUT_STATE controllerState_[MAX_CONTROLLERS];
-	static bool connected_[MAX_CONTROLLERS];
-	static bool isDrawImgui_[MAX_CONTROLLERS];
+	static XINPUT_STATE controllerState_;
+	static bool connected_;
+	static bool isDrawImgui_;
 
-	static void	XcontrollerValue(bool* isDrawImgui, int number);
+	static void	XcontrollerValue(bool* isDrawImgui);
 
 public:
 	static void	InitXcontroller();
@@ -52,28 +50,28 @@ public:
 	static void	UpdateXcontrollerCreateOld();
 	static void DrawImgui();
 	
-	static double	GetXcontrollerLStickX(int number);
-	static double	GetXcontrollerLStickY(int number);
-	static bool	GetXcontrollerLStickUpPress(int number);
-	static bool	GetXcontrollerLStickDownPress(int number);
-	static bool	GetXcontrollerLStickRightPress(int number);
-	static bool	GetXcontrollerLStickLeftPress(int number);
-	static bool	GetXcontrollerLStickUpTrigger(int number);
-	static bool	GetXcontrollerLStickDownTrigger(int number);
-	static bool	GetXcontrollerLStickRightTrigger(int number);
-	static bool	GetXcontrollerLStickLeftTrigger(int number);
-	static bool	GetXcontrollerLStickUpRelease(int number);
-	static bool	GetXcontrollerLStickDownRelease(int number);
-	static bool	GetXcontrollerLStickRightRelease(int number);
-	static bool	GetXcontrollerLStickLeftRelease(int number);
-	static double	GetXcontrollerRStickX(int number);
-	static double	GetXcontrollerRStickY(int number);
-	static double	GetXcontrollerLTrigger(int number);
-	static double	GetXcontrollerRTrigger(int number);
-	static bool	GetXcontrollerButtonPress(int number, WORD button);
-	static bool	GetXcontrollerButtonTrigger(int number, WORD button);
-	static bool	GetXcontrollerButtonRelease(int number, WORD button);
-	static bool	GetConnectController(int number);
+	static double	GetXcontrollerLStickX();
+	static double	GetXcontrollerLStickY();
+	static bool	GetXcontrollerLStickUpPress();
+	static bool	GetXcontrollerLStickDownPress();
+	static bool	GetXcontrollerLStickRightPress();
+	static bool	GetXcontrollerLStickLeftPress();
+	static bool	GetXcontrollerLStickUpTrigger();
+	static bool	GetXcontrollerLStickDownTrigger();
+	static bool	GetXcontrollerLStickRightTrigger();
+	static bool	GetXcontrollerLStickLeftTrigger();
+	static bool	GetXcontrollerLStickUpRelease();
+	static bool	GetXcontrollerLStickDownRelease();
+	static bool	GetXcontrollerLStickRightRelease();
+	static bool	GetXcontrollerLStickLeftRelease();
+	static double	GetXcontrollerRStickX();
+	static double	GetXcontrollerRStickY();
+	static double	GetXcontrollerLTrigger();
+	static double	GetXcontrollerRTrigger();
+	static bool	GetXcontrollerButtonPress(WORD button);
+	static bool	GetXcontrollerButtonTrigger(WORD button);
+	static bool	GetXcontrollerButtonRelease(WORD button);
+	static bool	GetConnectController();
 };
 
 #endif// !_XCONTROLLER_H_

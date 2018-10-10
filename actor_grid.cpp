@@ -17,7 +17,7 @@
 
 using namespace DirectX;
 
-constexpr unsigned int GRID_WIDTH_DEPTH = 100;
+constexpr unsigned int GRID_WIDTH_DEPTH = 20;
 
 ActorGrid::ActorGrid(ActorManager* pActorManager) : ActorField(pActorManager)
 {
