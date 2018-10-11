@@ -13,6 +13,7 @@
 #include "actor_grid.h"
 #include "actor_manager.h"
 #include "actor_player.h"
+#include "actor_player_controller.h"
 #include "actor_sea.h"
 #include "actor_skydome.h"
 #include "edit_math.h"
@@ -65,6 +66,9 @@ bool SceneGame01::Init()
 	ActorPlayer* pPlayer =  new ActorPlayer(&actorManager_);
 	actorManager_.CreateActor(pPlayer);
 
+	//プレイヤーコントローラー生成
+	actorManager_.CreateActor(new ActorPlayerController(&actorManager_));
+
 	//海生成
 	actorManager_.CreateActor(new ActorSea(&actorManager_));
 
@@ -77,6 +81,10 @@ bool SceneGame01::Init()
 	//爆発エフェクト初期化
 	pExp_ = new EffekseerEffect(EffekseerEffect::BURNER);
 	pExp_->SetRepeat(true);
+	pExp_->SetColor(255, 255, 255, 255);
+	XMFLOAT4X4 mtxExp;
+	EditMath::Translation(mtxExp, XMFLOAT3(0.0f, 20.0f, 0.0f));
+	pExp_->SetMatrix(mtxExp);
 	pExp_->Play();
 
 	//時間初期化
@@ -133,8 +141,6 @@ void SceneGame01::Update()
 		pCameraSelecter_->GetSelectCamera()->GetPos(),
 		pCameraSelecter_->GetSelectCamera()->GetPosAt(),
 		pCameraSelecter_->GetSelectCamera()->GetVecUp());
-	XMFLOAT3 pos = { 0.0f, 30.0f, 0.0f };
-	pExp_->SetPos(pos);
 	pExp_->Update();
 }
 

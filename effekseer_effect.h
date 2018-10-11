@@ -45,13 +45,13 @@ public:
 	void Update();
 	void Draw();
 
-	void SetPos(const DirectX::XMFLOAT3& pos);
 	void SetMatrix(const DirectX::XMFLOAT4X4& mtx);
 	void SetSpeed(float speed);
 	void SetRepeat(bool repeat);
 	void Play();
 	void Paused(bool paused);
 	void Stop();
+	void SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 	static void SetViewData(const DirectX::XMFLOAT3& posCam, const DirectX::XMFLOAT3& posCamAt, const DirectX::XMFLOAT3& vecCamUp);
 
@@ -61,9 +61,13 @@ private:
 	Effekseer::Effect*					effekseerEffect_;
 	Effekseer::Handle					effekseerHandle_;
 	
-	int		listNumber_;
+	int		listNumber_ = UNKNOWN;
 	bool	repeat_ = false;				//繰りかえし再生するか。
 	bool	paused_ = false;				//ポーズ中か。
+
+	Effekseer::Color color_ = { 255, 255, 255, 255 };
+	Effekseer::Matrix43 mtx_;
+	float speed_ = 1.0f;
 
 	static DirectX::XMFLOAT3		posCam_;
 	static DirectX::XMFLOAT3		posCamAt_;

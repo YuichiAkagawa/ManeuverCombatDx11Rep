@@ -245,6 +245,9 @@
     <ClCompile Include="shader_grid.cpp">
       <Filter>ソース ファイル\shader</Filter>
     </ClCompile>
+    <ClCompile Include="actor_player_controller.cpp">
+      <Filter>ソース ファイル\actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -438,6 +441,9 @@
     </ClInclude>
     <ClInclude Include="shader_grid.h">
       <Filter>ヘッダー ファイル\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_player_controller.h">
+      <Filter>ヘッダー ファイル\actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -89,6 +89,15 @@ void EffekseerEffect::Update()
 		}
 	}
 
+	//行列セット
+	effekseerManager_->SetMatrix(effekseerHandle_, mtx_);
+
+	//再生速度セット
+	effekseerManager_->SetSpeed(effekseerHandle_, speed_);
+
+	//色セット
+	effekseerManager_->SetAllColor(effekseerHandle_, color_);
+
 	//すべてのエフェクトの更新
 	effekseerManager_->Flip();
 	effekseerManager_->Update();
@@ -101,32 +110,25 @@ void EffekseerEffect::Draw()
 	effekseerRenderer_->EndRendering();
 }
 
-void EffekseerEffect::SetPos(const DirectX::XMFLOAT3& pos)
-{
-	effekseerManager_->SetLocation(effekseerHandle_, Effekseer::Vector3D(pos.x, pos.y, pos.z));
-}
-
 void EffekseerEffect::SetMatrix(const XMFLOAT4X4& mtx)
 {
-	Effekseer::Matrix43 matrix;
-	matrix.Value[0][0] = mtx._11;
-	matrix.Value[0][1] = mtx._12;
-	matrix.Value[0][2] = mtx._13;
-	matrix.Value[1][0] = mtx._21;
-	matrix.Value[1][1] = mtx._22;
-	matrix.Value[1][2] = mtx._23;
-	matrix.Value[2][0] = mtx._31;
-	matrix.Value[2][1] = mtx._32;
-	matrix.Value[2][2] = mtx._33;
-	matrix.Value[3][0] = mtx._41;
-	matrix.Value[3][1] = mtx._42;
-	matrix.Value[3][2] = mtx._43;
-	effekseerManager_->SetMatrix(effekseerHandle_, matrix);
+	mtx_.Value[0][0] = mtx._11;
+	mtx_.Value[0][1] = mtx._12;
+	mtx_.Value[0][2] = mtx._13;
+	mtx_.Value[1][0] = mtx._21;
+	mtx_.Value[1][1] = mtx._22;
+	mtx_.Value[1][2] = mtx._23;
+	mtx_.Value[2][0] = mtx._31;
+	mtx_.Value[2][1] = mtx._32;
+	mtx_.Value[2][2] = mtx._33;
+	mtx_.Value[3][0] = mtx._41;
+	mtx_.Value[3][1] = mtx._42;
+	mtx_.Value[3][2] = mtx._43;
 }
 
 void EffekseerEffect::SetSpeed(float speed)
 {
-	effekseerManager_->SetSpeed(effekseerHandle_, speed);
+	speed_ = speed;
 }
 
 void EffekseerEffect::SetRepeat(bool repeat)
@@ -150,6 +152,11 @@ void EffekseerEffect::Stop()
 {
 	//エフェクトの停止
 	effekseerManager_->StopEffect(effekseerHandle_);
+}
+
+void EffekseerEffect::SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+	color_ = { r, g, b, a };
 }
 
 void EffekseerEffect::LoadEffect()
