@@ -1,73 +1,7 @@
-﻿  xcontroller.cpp
-  WICTextureLoader.cpp
-  texture.cpp
-  actor_fbx_model.cpp
-  shader_test.cpp
-  shader_skydome.cpp
-  shader_sea.cpp
-  shader_hornet_body.cpp
-  shader_manager.cpp
-  shader_hornet_glass.cpp
-  shader_grid.cpp
-  shader_fbx.cpp
-  shader_cube.cpp
-  shader.cpp
-  scene_manager.cpp
-  scene_game02.cpp
+﻿  actor_tracking_camera.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  scene_game01.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  scene.cpp
-  sampler_state.cpp
-  renderer.cpp
-  コードを生成中...
-  コンパイル中...
-  process_calculator.cpp
-  model.cpp
-  main.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  load_fbx.cpp
-  input.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  imgui_manager.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  imgui_impl_dx11.cpp
-  imgui_draw.cpp
-  imgui.cpp
-  effekseer_effect.cpp
-  edit_math.cpp
-  actor_skydome.cpp
-  actor_sea.cpp
-  actor_player_controller.cpp
-  actor_player.cpp
-  actor_plane_radder_right.cpp
-  actor_plane_radder_left.cpp
-  actor_plane_glass_front.cpp
-  actor_plane_glass_back.cpp
-  actor_plane_flap_right.cpp
-  コードを生成中...
-  コンパイル中...
-  actor_plane_flap_left.cpp
-  actor_plane_elevator_right.cpp
-  actor_plane_elevator_left.cpp
-  actor_plane_canopy.cpp
-  actor_plane_body.cpp
-  actor_plane_aileron_right.cpp
-  actor_plane_aileron_left.cpp
-  actor_manager.cpp
-  actor_hierarchy_animator.cpp
-  actor_hierarchy_animation_manager.cpp
-  actor_hierarchy.cpp
-  actor_grid.cpp
   actor_free_camera.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  actor_field.cpp
-  actor_cube.cpp
-  actor_character.cpp
-  actor_camera_selecter.cpp
-  actor_camera.cpp
-  actor_3d.cpp
-  actor.cpp
   コードを生成中...
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.pdb (Full PDB)

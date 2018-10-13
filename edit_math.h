@@ -36,6 +36,7 @@ public:
 	static void RotationY(DirectX::XMFLOAT4X4& valueReturn, float angle);
 	static void RotationZ(DirectX::XMFLOAT4X4& valueReturn, float angle);
 	static void RotationAxis(DirectX::XMFLOAT4X4& valueReturn, const DirectX::XMFLOAT3& value, float angle);
+	static void RotationQuaternion(DirectX::XMFLOAT4X4& valueReturn, const DirectX::XMFLOAT3& value, float angle);
 	static void Translation(DirectX::XMFLOAT4X4& valueReturn, float x, float y, float z);
 	static void Translation(DirectX::XMFLOAT4X4& valueReturn, const DirectX::XMFLOAT3& value);
 	static void Multiplication(DirectX::XMFLOAT4X4& valueReturn, const DirectX::XMFLOAT4X4& valueLeft, const DirectX::XMFLOAT4X4& valueRight);

@@ -10,10 +10,18 @@
 
 #include "actor_character.h"
 
+class ActorPlayerController;
+
 class ActorPlayer : public ActorCharcter
 {
-protected:
+private:
+	ActorPlayerController* pActorPlayerController_;
+	float thrust_;
 
+	void Yaw();
+	void Pitch();
+	void Roll();
+	void Thrust();
 public:
 	ActorPlayer(ActorManager* pActorManager);
 	virtual ~ActorPlayer()override;

@@ -83,144 +83,147 @@ void ActorFreeCamera::Update()
 	EditMath::Subtraction(vecCamAt_, posAt_, pos_);
 	EditMath::Subtraction(vecAtCam_, pos_, posAt_);
 
-	//前進
-	if (GetKeyboardPress(DIK_W))
+	if (GetKeyboardPress(DIK_LSHIFT))
 	{
-		XMFLOAT3 vec = vecFront_;
-		vec.y = 0.0f;
-		EditMath::Normalize(vec, vec);
-		EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
-		EditMath::Addition(pos_, pos_, vec);
-		EditMath::Addition(posAt_, posAt_, vec);
-	}
-
-	//後退
-	if (GetKeyboardPress(DIK_S))
-	{
-		XMFLOAT3 vec = vecFront_;
-		vec.y = 0.0f;
-		EditMath::Normalize(vec, vec);
-		EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
-		EditMath::Subtraction(pos_, pos_, vec);
-		EditMath::Subtraction(posAt_, posAt_, vec);
-	}
-
-	//右移動
-	if (GetKeyboardPress(DIK_D))
-	{
-		XMFLOAT3 vec = vecRight_;
-		vec.y = 0.0f;
-		EditMath::Normalize(vec, vec);
-		EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
-		EditMath::Addition(pos_, pos_, vec);
-		EditMath::Addition(posAt_, posAt_, vec);
-	}
-
-	//左移動
-	if (GetKeyboardPress(DIK_A))
-	{
-		XMFLOAT3 vec = vecRight_;
-		vec.y = 0.0f;
-		EditMath::Normalize(vec, vec);
-		EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
-		EditMath::Subtraction(pos_, pos_, vec);
-		EditMath::Subtraction(posAt_, posAt_, vec);
-	}
-
-	//上昇
-	if (GetKeyboardPress(DIK_E))
-	{
-		XMFLOAT3 vec;
-		EditMath::Multiplication(vec, vecUp_, CAM_SPEED * processMS);
-		EditMath::Addition(pos_, pos_, vec);
-		EditMath::Addition(posAt_, posAt_, vec);
-	}
-
-	//下降
-	if (GetKeyboardPress(DIK_Q))
-	{
-		XMFLOAT3 vec;
-		EditMath::Multiplication(vec, vecUp_, CAM_SPEED * processMS);
-		EditMath::Subtraction(pos_, pos_, vec);
-		EditMath::Subtraction(posAt_, posAt_, vec);
-	}
-
-	//視点右移動
-	if (GetKeyboardPress(DIK_RIGHT) && !GetKeyboardPress(DIK_LSHIFT))
-	{
-		XMFLOAT4X4 mtxRotY;
-		EditMath::RotationY(mtxRotY, XMConvertToRadians(CAM_ROT_SPEED * processMS));
-
-		EditMath::Transform(vecCamAt_, vecCamAt_, mtxRotY);
-		EditMath::Transform(vecFront_, vecFront_, mtxRotY);
-		EditMath::Transform(vecRight_, vecRight_, mtxRotY);
-
-		EditMath::Addition(posAt_, pos_, vecCamAt_);
-	}
-
-	//視点左移動
-	if (GetKeyboardPress(DIK_LEFT) && !GetKeyboardPress(DIK_LSHIFT))
-	{
-		XMFLOAT4X4 mtxRotY;
-		EditMath::RotationY(mtxRotY, -XMConvertToRadians(CAM_ROT_SPEED * processMS));
-
-		EditMath::Transform(vecCamAt_, vecCamAt_, mtxRotY);
-		EditMath::Transform(vecFront_, vecFront_, mtxRotY);
-		EditMath::Transform(vecRight_, vecRight_, mtxRotY);
-
-		EditMath::Addition(posAt_, pos_, vecCamAt_);
-	}
-
-	//視点上移動
-	if (GetKeyboardPress(DIK_UP))
-	{
-		XMFLOAT4X4 mtxRot;
-		EditMath::RotationAxis(mtxRot, vecRight_, -XMConvertToRadians(CAM_ROT_SPEED * processMS));
-		XMFLOAT3 vecDir = vecFront_;
-		vecDir.y = 0.0f;
-		EditMath::Normalize(vecDir, vecDir);
-
-		XMFLOAT3 vecFrontCheck;
-		EditMath::Transform(vecFrontCheck, vecFront_, mtxRot);
-
-		float check = EditMath::Dot(vecFrontCheck, vecDir);
-		if (check >= CAM_LIMIT)
+		//前進
+		if (GetKeyboardPress(DIK_W))
 		{
-			EditMath::Transform(vecFront_, vecFront_, mtxRot);
-			EditMath::Transform(vecCamAt_, vecCamAt_, mtxRot);
-			EditMath::Transform(vecRight_, vecRight_, mtxRot);
+			XMFLOAT3 vec = vecFront_;
+			vec.y = 0.0f;
+			EditMath::Normalize(vec, vec);
+			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Addition(pos_, pos_, vec);
+			EditMath::Addition(posAt_, posAt_, vec);
+		}
+
+		//後退
+		if (GetKeyboardPress(DIK_S))
+		{
+			XMFLOAT3 vec = vecFront_;
+			vec.y = 0.0f;
+			EditMath::Normalize(vec, vec);
+			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Subtraction(pos_, pos_, vec);
+			EditMath::Subtraction(posAt_, posAt_, vec);
+		}
+
+		//右移動
+		if (GetKeyboardPress(DIK_D))
+		{
+			XMFLOAT3 vec = vecRight_;
+			vec.y = 0.0f;
+			EditMath::Normalize(vec, vec);
+			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Addition(pos_, pos_, vec);
+			EditMath::Addition(posAt_, posAt_, vec);
+		}
+
+		//左移動
+		if (GetKeyboardPress(DIK_A))
+		{
+			XMFLOAT3 vec = vecRight_;
+			vec.y = 0.0f;
+			EditMath::Normalize(vec, vec);
+			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Subtraction(pos_, pos_, vec);
+			EditMath::Subtraction(posAt_, posAt_, vec);
+		}
+
+		//上昇
+		if (GetKeyboardPress(DIK_E))
+		{
+			XMFLOAT3 vec;
+			EditMath::Multiplication(vec, vecUp_, CAM_SPEED * processMS);
+			EditMath::Addition(pos_, pos_, vec);
+			EditMath::Addition(posAt_, posAt_, vec);
+		}
+
+		//下降
+		if (GetKeyboardPress(DIK_Q))
+		{
+			XMFLOAT3 vec;
+			EditMath::Multiplication(vec, vecUp_, CAM_SPEED * processMS);
+			EditMath::Subtraction(pos_, pos_, vec);
+			EditMath::Subtraction(posAt_, posAt_, vec);
+		}
+
+		//視点右移動
+		if (GetKeyboardPress(DIK_RIGHT) && !GetKeyboardPress(DIK_LSHIFT))
+		{
+			XMFLOAT4X4 mtxRotY;
+			EditMath::RotationY(mtxRotY, XMConvertToRadians(CAM_ROT_SPEED * processMS));
+
+			EditMath::Transform(vecCamAt_, vecCamAt_, mtxRotY);
+			EditMath::Transform(vecFront_, vecFront_, mtxRotY);
+			EditMath::Transform(vecRight_, vecRight_, mtxRotY);
 
 			EditMath::Addition(posAt_, pos_, vecCamAt_);
 		}
-	}
 
-	//視点下移動
-	if (GetKeyboardPress(DIK_DOWN))
-	{
-		XMFLOAT4X4 mtxRot;
-		EditMath::RotationAxis(mtxRot, vecRight_, XMConvertToRadians(CAM_ROT_SPEED * processMS));
-		XMFLOAT3 vecDir = vecFront_;
-		vecDir.y = 0.0f;
-		EditMath::Normalize(vecDir, vecDir);
-
-		XMFLOAT3 vecFrontCheck;
-		EditMath::Transform(vecFrontCheck, vecFront_, mtxRot);
-
-		float check = EditMath::Dot(vecFrontCheck, vecDir);
-		if (check >= CAM_LIMIT)
+		//視点左移動
+		if (GetKeyboardPress(DIK_LEFT) && !GetKeyboardPress(DIK_LSHIFT))
 		{
-			EditMath::Transform(vecFront_, vecFront_, mtxRot);
-			EditMath::Transform(vecCamAt_, vecCamAt_, mtxRot);
-			EditMath::Transform(vecRight_, vecRight_, mtxRot);
+			XMFLOAT4X4 mtxRotY;
+			EditMath::RotationY(mtxRotY, -XMConvertToRadians(CAM_ROT_SPEED * processMS));
+
+			EditMath::Transform(vecCamAt_, vecCamAt_, mtxRotY);
+			EditMath::Transform(vecFront_, vecFront_, mtxRotY);
+			EditMath::Transform(vecRight_, vecRight_, mtxRotY);
 
 			EditMath::Addition(posAt_, pos_, vecCamAt_);
 		}
-	}
 
-	//カメラリセット
-	if (GetKeyboardTrigger(DIK_R))
-	{
-		Init();
+		//視点上移動
+		if (GetKeyboardPress(DIK_UP))
+		{
+			XMFLOAT4X4 mtxRot;
+			EditMath::RotationAxis(mtxRot, vecRight_, -XMConvertToRadians(CAM_ROT_SPEED * processMS));
+			XMFLOAT3 vecDir = vecFront_;
+			vecDir.y = 0.0f;
+			EditMath::Normalize(vecDir, vecDir);
+
+			XMFLOAT3 vecFrontCheck;
+			EditMath::Transform(vecFrontCheck, vecFront_, mtxRot);
+
+			float check = EditMath::Dot(vecFrontCheck, vecDir);
+			if (check >= CAM_LIMIT)
+			{
+				EditMath::Transform(vecFront_, vecFront_, mtxRot);
+				EditMath::Transform(vecCamAt_, vecCamAt_, mtxRot);
+				EditMath::Transform(vecRight_, vecRight_, mtxRot);
+
+				EditMath::Addition(posAt_, pos_, vecCamAt_);
+			}
+		}
+
+		//視点下移動
+		if (GetKeyboardPress(DIK_DOWN))
+		{
+			XMFLOAT4X4 mtxRot;
+			EditMath::RotationAxis(mtxRot, vecRight_, XMConvertToRadians(CAM_ROT_SPEED * processMS));
+			XMFLOAT3 vecDir = vecFront_;
+			vecDir.y = 0.0f;
+			EditMath::Normalize(vecDir, vecDir);
+
+			XMFLOAT3 vecFrontCheck;
+			EditMath::Transform(vecFrontCheck, vecFront_, mtxRot);
+
+			float check = EditMath::Dot(vecFrontCheck, vecDir);
+			if (check >= CAM_LIMIT)
+			{
+				EditMath::Transform(vecFront_, vecFront_, mtxRot);
+				EditMath::Transform(vecCamAt_, vecCamAt_, mtxRot);
+				EditMath::Transform(vecRight_, vecRight_, mtxRot);
+
+				EditMath::Addition(posAt_, pos_, vecCamAt_);
+			}
+		}
+
+		//カメラリセット
+		if (GetKeyboardTrigger(DIK_R))
+		{
+			Init();
+		}
 	}
 
 	EditMath::LookAtLH(mtxView_, pos_, posAt_, vecUp_);

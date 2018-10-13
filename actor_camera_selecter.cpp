@@ -7,6 +7,7 @@
 #include "actor.h"
 #include "actor_camera.h"
 #include "actor_free_camera.h"
+#include "actor_tracking_camera.h"
 #include "actor_manager.h"
 #include "imgui/imgui.h"
 #include "imgui_manager.h"
@@ -26,9 +27,9 @@ ActorCameraSelecter::ActorCameraSelecter(ActorManager* pActorManager) : Actor(pA
 	pActorManager_->CreateActor(pActorFreeCamera01);
 	cameraArray_[TYPE_FREE_CAMERA_01] = pActorFreeCamera01;
 
-	ActorFreeCamera* pActorFreeCamera02 = new ActorFreeCamera(pActorManager_);
-	pActorManager_->CreateActor(pActorFreeCamera02);
-	cameraArray_[TYPE_FREE_CAMERA_02] = pActorFreeCamera02;
+	ActorTrackingCamera* pActorTrackingCamera01 = new ActorTrackingCamera(pActorManager_);
+	pActorManager_->CreateActor(pActorTrackingCamera01);
+	cameraArray_[TYPE_TRACKING_CAMERA_01] = pActorTrackingCamera01;
 }
 
 ActorCameraSelecter::~ActorCameraSelecter()

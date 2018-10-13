@@ -4,6 +4,7 @@
 //**               Author: Akagawa Yuichi
 //**
 //**-------------------------------------------------------**
+#include <DirectXMath.h>
 #include "actor.h"
 #include "actor_3d.h"
 #include "actor_manager.h"
@@ -19,14 +20,35 @@
 #include "actor_plane_aileron_left.h"
 #include "actor_plane_flap_left.h"
 #include "actor_plane_flap_right.h"
+#include "actor_player_controller.h"
 #include "edit_math.h"
+#include "main.h"
 #include "actor_player.h"
+
+using namespace DirectX;
+
+constexpr float YAW_SPEED = 0.005f;
+constexpr float PITCH_SPEED = 0.02f;
+constexpr float ROLL_SPEED = 0.02f;
+
+constexpr float THRUST_BASE = 0.87f;		//基本推力
+constexpr float THRUST_MAX = 1.32f;			//最大推力
+constexpr float THRUST_MIN = 0.01f;			//最小推力
+constexpr float THRUST_INCREASE = 0.003f;	//推力増加量
+constexpr float THRUST_RETURN = 0.0005f;	//デフォルト値に戻す
 
 ActorPlayer::ActorPlayer(ActorManager* pActorManager) : ActorCharcter(pActorManager)
 {
 	name_ = ActorManager::NAME_PLAYER;
 	tag_ = ActorManager::TAG_PLAYER;
 	layer_ = ActorManager::LAYER_PLAYER;
+
+	//推力初期化
+	thrust_ = THRUST_BASE;
+
+	//プレイヤーコントローラー生成
+	pActorPlayerController_ = new ActorPlayerController(pActorManager_);
+	pActorManager_->CreateActor(pActorPlayerController_);
 
 	//機体ボディ生成
 	ActorPlaneBody* pPlaneBody = new ActorPlaneBody(pActorManager_);
@@ -111,7 +133,18 @@ void ActorPlayer::Uninit()
 
 void ActorPlayer::Update()
 {
+	Yaw();
+	Pitch();
+	Roll();
+	Thrust();
 
+	//移動
+	XMFLOAT3 trans;
+	EditMath::Multiplication(trans, vecFront_, thrust_);
+	EditMath::Addition(pos_, pos_, trans);
+	mtxWorld_._41 = pos_.x;
+	mtxWorld_._42 = pos_.y;
+	mtxWorld_._43 = pos_.z;
 }
 
 void ActorPlayer::Stats()
@@ -122,4 +155,72 @@ void ActorPlayer::Stats()
 void ActorPlayer::Draw()
 {
 
+}
+
+void ActorPlayer::Yaw()
+{
+	XMFLOAT4X4 mtxYaw;
+	EditMath::RotationQuaternion(mtxYaw, VEC_Y, pActorPlayerController_->Yaw() * YAW_SPEED);
+	EditMath::Multiplication(mtxWorld_, mtxYaw, mtxWorld_);
+
+	EditMath::RotationQuaternion(mtxYaw, vecUp_, pActorPlayerController_->Yaw() * YAW_SPEED);
+	
+	EditMath::Transform(vecFront_, vecFront_, mtxYaw);
+	EditMath::Normalize(vecFront_, vecFront_);
+	
+	EditMath::Transform(vecUp_, vecUp_, mtxYaw);
+	EditMath::Normalize(vecUp_, vecUp_);
+	
+	EditMath::Transform(vecRight_, vecRight_, mtxYaw);
+	EditMath::Normalize(vecRight_, vecRight_);
+}
+
+void ActorPlayer::Pitch()
+{
+	XMFLOAT4X4 mtxPitch;
+	EditMath::RotationQuaternion(mtxPitch, VEC_X, pActorPlayerController_->Pitch() * PITCH_SPEED);
+	EditMath::Multiplication(mtxWorld_, mtxPitch, mtxWorld_);
+
+	EditMath::RotationQuaternion(mtxPitch, vecRight_, pActorPlayerController_->Pitch() * PITCH_SPEED);
+	
+	EditMath::Transform(vecFront_, vecFront_, mtxPitch);
+	EditMath::Normalize(vecFront_, vecFront_);
+	
+	EditMath::Transform(vecUp_, vecUp_, mtxPitch);
+	EditMath::Normalize(vecUp_, vecUp_);
+	
+	EditMath::Transform(vecRight_, vecRight_, mtxPitch);
+	EditMath::Normalize(vecRight_, vecRight_);
+}
+
+void ActorPlayer::Roll()
+{
+	XMFLOAT4X4 mtxRoll;
+	EditMath::RotationQuaternion(mtxRoll, VEC_Z, pActorPlayerController_->Roll() * ROLL_SPEED);
+	EditMath::Multiplication(mtxWorld_, mtxRoll, mtxWorld_);
+
+	EditMath::RotationQuaternion(mtxRoll, vecFront_, pActorPlayerController_->Roll() * ROLL_SPEED);
+	
+	EditMath::Transform(vecFront_, vecFront_, mtxRoll);
+	EditMath::Normalize(vecFront_, vecFront_);
+	
+	EditMath::Transform(vecUp_, vecUp_, mtxRoll);
+	EditMath::Normalize(vecUp_, vecUp_);
+	
+	EditMath::Transform(vecRight_, vecRight_, mtxRoll);
+	EditMath::Normalize(vecRight_, vecRight_);
+}
+
+void ActorPlayer::Thrust()
+{
+	thrust_ += pActorPlayerController_->Thrust() * THRUST_INCREASE;
+	if (thrust_ > THRUST_BASE)
+	{
+		thrust_ -= THRUST_RETURN;
+	}
+	else if(thrust_ < THRUST_BASE)
+	{
+		thrust_ += THRUST_RETURN;
+	}
+	thrust_ = max(min(thrust_, THRUST_MAX), THRUST_MIN);
 }

@@ -16,6 +16,7 @@
 #include "actor_player_controller.h"
 #include "actor_sea.h"
 #include "actor_skydome.h"
+#include "actor_tracking_camera.h"
 #include "edit_math.h"
 #include "effekseer_effect.h"
 #include "imgui/imgui.h"
@@ -66,6 +67,14 @@ bool SceneGame01::Init()
 	ActorPlayer* pPlayer =  new ActorPlayer(&actorManager_);
 	actorManager_.CreateActor(pPlayer);
 
+	// プレイヤー初期位置設定
+	pPlayer->SetPos(XMFLOAT3(0.0f, 10.0f, 0.0f));
+
+	//トラッキングカメラ0にプレイヤーセット
+	ActorTrackingCamera* pTrackingcamera = dynamic_cast <ActorTrackingCamera*> (actorManager_.GetActor(ActorManager::NAME_TRACKING_CAMERA, 0));
+	if (pTrackingcamera == nullptr) { return false; }
+	pTrackingcamera->SetTrackingActor(pPlayer);
+
 	//プレイヤーコントローラー生成
 	actorManager_.CreateActor(new ActorPlayerController(&actorManager_));
 
@@ -96,9 +105,6 @@ bool SceneGame01::Init()
 		return false;
 	}
 
-	// プレイヤー初期位置設定
-	pPlayer->SetPos(XMFLOAT3(0.0f, 10.0f, 0.0f));
-
 	return true;
 }
 
@@ -121,6 +127,7 @@ void SceneGame01::Update()
 	ImGui::Text("Scene : Game01");
 	ImGui::End();
 
+	//アクタ更新
 	actorManager_.Update();
 
 	//時間更新
@@ -137,6 +144,7 @@ void SceneGame01::Update()
 		SceneManager::SetScene(new SceneGame02);
 	}
 
+	//エフェクト更新
 	pExp_->SetViewData(
 		pCameraSelecter_->GetSelectCamera()->GetPos(),
 		pCameraSelecter_->GetSelectCamera()->GetPosAt(),
@@ -146,6 +154,9 @@ void SceneGame01::Update()
 
 void SceneGame01::Draw()
 {
+	//アクタ描画
 	actorManager_.Draw();
+
+	//エフェクト描画
 	pExp_->Draw();
 }

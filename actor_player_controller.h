@@ -23,6 +23,10 @@ public:
 	virtual void Stats()override;
 	virtual void Draw()override;
 
+	float Yaw();
+	float Pitch();
+	float Roll();
+	float Thrust();
 };
 
 #endif // !_ACTOR_PLAYER_CONTROLLER_H_

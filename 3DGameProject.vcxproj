@@ -230,6 +230,7 @@
     <ClCompile Include="actor_player_controller.cpp" />
     <ClCompile Include="actor_sea.cpp" />
     <ClCompile Include="actor_skydome.cpp" />
+    <ClCompile Include="actor_tracking_camera.cpp" />
     <ClCompile Include="edit_math.cpp" />
     <ClCompile Include="effekseer_effect.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -293,6 +294,7 @@
     <ClInclude Include="actor_player_controller.h" />
     <ClInclude Include="actor_sea.h" />
     <ClInclude Include="actor_skydome.h" />
+    <ClInclude Include="actor_tracking_camera.h" />
     <ClInclude Include="edit_math.h" />
     <ClInclude Include="effekseer_effect.h" />
     <ClInclude Include="imgui\imconfig.h" />

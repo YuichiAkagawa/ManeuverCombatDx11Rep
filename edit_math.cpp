@@ -152,6 +152,14 @@ void EditMath::RotationAxis(XMFLOAT4X4& valueReturn, const XMFLOAT3& value, floa
 	XMStoreFloat4x4(&valueReturn, xmMtx);
 }
 
+void EditMath::RotationQuaternion(XMFLOAT4X4& valueReturn, const XMFLOAT3& value, float angle)
+{
+	XMVECTOR xmVec = XMLoadFloat3(&value);
+	XMVECTOR quaternion = XMQuaternionRotationAxis(xmVec, angle);
+	XMMATRIX xmMtx = XMMatrixRotationQuaternion(quaternion);
+	XMStoreFloat4x4(&valueReturn, xmMtx);
+}
+
 void EditMath::Translation(XMFLOAT4X4& valueReturn, float x, float y, float z)
 {
 	XMMATRIX xmMtx = XMMatrixTranslation(x, y, z);

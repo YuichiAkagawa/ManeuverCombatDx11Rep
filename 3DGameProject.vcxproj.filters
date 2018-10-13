@@ -248,6 +248,9 @@
     <ClCompile Include="actor_player_controller.cpp">
       <Filter>ソース ファイル\actor</Filter>
     </ClCompile>
+    <ClCompile Include="actor_tracking_camera.cpp">
+      <Filter>ソース ファイル\actor\actor3d\actor_camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -444,6 +447,9 @@
     </ClInclude>
     <ClInclude Include="actor_player_controller.h">
       <Filter>ヘッダー ファイル\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="actor_tracking_camera.h">
+      <Filter>ヘッダー ファイル\actor\actor3d\actor_camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
