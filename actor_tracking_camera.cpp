@@ -21,7 +21,7 @@ using namespace DirectX;
 
 static const XMFLOAT3 DEFAULT_POS = { 0.0f, 20.0f, -50.0f };
 static const XMFLOAT3 DEFAULT_POS_AT = { 0.0f, 0.0f, 0.0f };
-constexpr float CAM_SPEED = 0.03f;
+constexpr float CAM_SPEED = 10.0f * FRAME_VALUE;
 
 ActorTrackingCamera::ActorTrackingCamera(ActorManager* pActorManager) : ActorCamera(pActorManager)
 {
@@ -72,8 +72,6 @@ void ActorTrackingCamera::Uninit()
 
 void ActorTrackingCamera::Update()
 {
-	float processMS = SceneManager::GetProcessMS();
-
 	posAt_ = pTrackingActor_->GetPos();
 
 	EditMath::Subtraction(vecFront_, posAt_, pos_);
@@ -93,7 +91,7 @@ void ActorTrackingCamera::Update()
 			XMFLOAT3 vec = vecFront_;
 			vec.y = 0.0f;
 			EditMath::Normalize(vec, vec);
-			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vec, CAM_SPEED);
 			EditMath::Addition(pos_, pos_, vec);
 			EditMath::Addition(posAt_, posAt_, vec);
 		}
@@ -104,7 +102,7 @@ void ActorTrackingCamera::Update()
 			XMFLOAT3 vec = vecFront_;
 			vec.y = 0.0f;
 			EditMath::Normalize(vec, vec);
-			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vec, CAM_SPEED);
 			EditMath::Subtraction(pos_, pos_, vec);
 			EditMath::Subtraction(posAt_, posAt_, vec);
 		}
@@ -115,7 +113,7 @@ void ActorTrackingCamera::Update()
 			XMFLOAT3 vec = vecRight_;
 			vec.y = 0.0f;
 			EditMath::Normalize(vec, vec);
-			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vec, CAM_SPEED);
 			EditMath::Addition(pos_, pos_, vec);
 			EditMath::Addition(posAt_, posAt_, vec);
 		}
@@ -126,7 +124,7 @@ void ActorTrackingCamera::Update()
 			XMFLOAT3 vec = vecRight_;
 			vec.y = 0.0f;
 			EditMath::Normalize(vec, vec);
-			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vec, CAM_SPEED);
 			EditMath::Subtraction(pos_, pos_, vec);
 			EditMath::Subtraction(posAt_, posAt_, vec);
 		}
@@ -135,7 +133,7 @@ void ActorTrackingCamera::Update()
 		if (GetKeyboardPress(DIK_E))
 		{
 			XMFLOAT3 vec;
-			EditMath::Multiplication(vec, vecUp_, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vecUp_, CAM_SPEED);
 			EditMath::Addition(pos_, pos_, vec);
 			EditMath::Addition(posAt_, posAt_, vec);
 		}
@@ -144,7 +142,7 @@ void ActorTrackingCamera::Update()
 		if (GetKeyboardPress(DIK_Q))
 		{
 			XMFLOAT3 vec;
-			EditMath::Multiplication(vec, vecUp_, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vecUp_, CAM_SPEED);
 			EditMath::Subtraction(pos_, pos_, vec);
 			EditMath::Subtraction(posAt_, posAt_, vec);
 		}

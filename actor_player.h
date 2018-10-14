@@ -22,6 +22,7 @@ private:
 	void Pitch();
 	void Roll();
 	void Thrust();
+	void Movement();
 public:
 	ActorPlayer(ActorManager* pActorManager);
 	virtual ~ActorPlayer()override;

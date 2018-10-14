@@ -18,12 +18,9 @@ public:
 	static void Draw();
 	static bool SetScene(Scene* pScene);
 	static Scene* GetScene();
-	static float GetProcessMS();
 
 private:
 	static Scene* pScene_;
-	static ProcessCalculator	gameSystemProcessCal_;
-	static double				gameSystemProcessTime_;
 };
 
 #endif // !_SCENE_MANAGER_H_

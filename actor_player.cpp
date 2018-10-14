@@ -27,15 +27,18 @@
 
 using namespace DirectX;
 
-constexpr float YAW_SPEED = 0.005f;
-constexpr float PITCH_SPEED = 0.02f;
-constexpr float ROLL_SPEED = 0.02f;
+constexpr float YAW_SPEED = 0.1f * FRAME_VALUE;
+constexpr float PITCH_SPEED = 1.2f * FRAME_VALUE;
+constexpr float ROLL_SPEED = 3.2f * FRAME_VALUE;
 
-constexpr float THRUST_BASE = 0.87f;		//基本推力
-constexpr float THRUST_MAX = 1.32f;			//最大推力
-constexpr float THRUST_MIN = 0.01f;			//最小推力
-constexpr float THRUST_INCREASE = 0.003f;	//推力増加量
-constexpr float THRUST_RETURN = 0.0005f;	//デフォルト値に戻す
+constexpr float THRUST_BASE = 100.0f;			//基本推力
+constexpr float THRUST_MAX = 150.0f;			//最大推力
+constexpr float THRUST_MIN = 30.0f;				//最小推力
+constexpr float THRUST_INCREASE = 3.0f * FRAME_VALUE;		//推力増加量
+constexpr float THRUST_RETURN = 1.0f * FRAME_VALUE;			//デフォルト値に戻す
+
+constexpr float GRAVITY = 0.05f;
+constexpr float LIFT_FORCE = 0.05f;
 
 ActorPlayer::ActorPlayer(ActorManager* pActorManager) : ActorCharcter(pActorManager)
 {
@@ -119,10 +122,6 @@ ActorPlayer::~ActorPlayer()
 bool ActorPlayer::Init()
 {
 	nameUnique_ = "ActorPlayer" + std::to_string(number_);
-
-	//スケール調整
-	EditMath::Scaling(mtxWorld_, 0.0075f);
-
 	return true;
 }
 
@@ -137,14 +136,7 @@ void ActorPlayer::Update()
 	Pitch();
 	Roll();
 	Thrust();
-
-	//移動
-	XMFLOAT3 trans;
-	EditMath::Multiplication(trans, vecFront_, thrust_);
-	EditMath::Addition(pos_, pos_, trans);
-	mtxWorld_._41 = pos_.x;
-	mtxWorld_._42 = pos_.y;
-	mtxWorld_._43 = pos_.z;
+	Movement();
 }
 
 void ActorPlayer::Stats()
@@ -223,4 +215,29 @@ void ActorPlayer::Thrust()
 		thrust_ += THRUST_RETURN;
 	}
 	thrust_ = max(min(thrust_, THRUST_MAX), THRUST_MIN);
+}
+
+void ActorPlayer::Movement()
+{
+	XMFLOAT3 vecThrust;
+	EditMath::Multiplication(vecThrust, vecFront_, thrust_);
+
+	XMFLOAT3 vecGravity;
+	EditMath::Multiplication(vecGravity, VEC_Y, GRAVITY);
+	EditMath::Multiplication(vecGravity, vecGravity, -1);
+
+	XMFLOAT3 vecLiftForce;
+	EditMath::Multiplication(vecLiftForce, vecUp_, LIFT_FORCE);
+	EditMath::Multiplication(vecLiftForce, vecLiftForce, thrust_);
+
+	XMFLOAT3 vecMovement;
+	EditMath::Addition(vecMovement, vecThrust, vecGravity);
+	EditMath::Addition(vecMovement, vecMovement, vecLiftForce);
+
+	EditMath::Multiplication(vecMovement, vecMovement, FRAME_VALUE);
+
+	EditMath::Addition(pos_, pos_, vecMovement);
+	XMFLOAT4X4 mtxTrans;
+	EditMath::Translation(mtxTrans, vecMovement);
+	EditMath::Multiplication(mtxWorld_, mtxWorld_, mtxTrans);
 }

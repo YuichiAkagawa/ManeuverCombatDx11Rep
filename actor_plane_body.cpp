@@ -40,6 +40,9 @@ bool ActorPlaneBody::Init()
 	pCameraSelecter_ = dynamic_cast <ActorCameraSelecter*> (pActorManager_->GetActor(ActorManager::NAME_CAMERA_SELECTER, 0));
 	if (pCameraSelecter_ == nullptr) { return false; }
 
+	//ÉXÉPÅ[Éãí≤êÆ
+	scaleOffset_ = { 0.0075f, 0.0075f, 0.0075f };
+
 	return true;
 }
 

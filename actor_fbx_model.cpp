@@ -16,7 +16,6 @@
 #include "model.h"
 #include "renderer.h"
 #include "sampler_state.h"
-#include "scene_manager.h"
 #include "shader.h"
 #include "shader_fbx.h"
 #include "shader_manager.h"
@@ -65,15 +64,15 @@ void ActorFbxModel::Update()
 {
 	{
 		XMFLOAT4X4 mtxRotX;
-		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.01f * SceneManager::GetProcessMS()));
+		EditMath::RotationX(mtxRotX, XMConvertToRadians(0.01f * FRAME_VALUE));
 		//EditMath::Multiplication(mtxWorld_, mtxRotX, mtxWorld_);
 
 		XMFLOAT4X4 mtxRotY;
-		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.01f * SceneManager::GetProcessMS()));
+		EditMath::RotationY(mtxRotY, XMConvertToRadians(0.01f * FRAME_VALUE));
 		//EditMath::Multiplication(mtxWorld_, mtxRotY, mtxWorld_);
 	
 		XMFLOAT4X4 mtxRotZ;
-		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.01f * SceneManager::GetProcessMS()));
+		EditMath::RotationZ(mtxRotZ, XMConvertToRadians(0.01f * FRAME_VALUE));
 		EditMath::Multiplication(mtxWorld_, mtxRotZ, mtxWorld_);
 	}
 }

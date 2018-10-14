@@ -21,8 +21,8 @@ using namespace DirectX;
 
 static const XMFLOAT3 DEFAULT_POS = { 0.0f, 20.0f, -50.0f };
 static const XMFLOAT3 DEFAULT_POS_AT = { 0.0f, 0.0f, 0.0f };
-constexpr float CAM_SPEED = 0.03f;
-constexpr float CAM_ROT_SPEED = 0.1f;
+constexpr float CAM_SPEED = 10.0f * FRAME_VALUE;
+constexpr float CAM_ROT_SPEED = 30.0f * FRAME_VALUE;
 constexpr float CAM_LIMIT = 0.2f;
 
 ActorFreeCamera::ActorFreeCamera(ActorManager* pActorManager) : ActorCamera(pActorManager)
@@ -72,8 +72,6 @@ void ActorFreeCamera::Uninit()
 
 void ActorFreeCamera::Update()
 {
-	float processMS = SceneManager::GetProcessMS();
-
 	EditMath::Subtraction(vecFront_, posAt_, pos_);
 	EditMath::Normalize(vecFront_, vecFront_);
 
@@ -91,7 +89,7 @@ void ActorFreeCamera::Update()
 			XMFLOAT3 vec = vecFront_;
 			vec.y = 0.0f;
 			EditMath::Normalize(vec, vec);
-			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vec, CAM_SPEED);
 			EditMath::Addition(pos_, pos_, vec);
 			EditMath::Addition(posAt_, posAt_, vec);
 		}
@@ -102,7 +100,7 @@ void ActorFreeCamera::Update()
 			XMFLOAT3 vec = vecFront_;
 			vec.y = 0.0f;
 			EditMath::Normalize(vec, vec);
-			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vec, CAM_SPEED);
 			EditMath::Subtraction(pos_, pos_, vec);
 			EditMath::Subtraction(posAt_, posAt_, vec);
 		}
@@ -113,7 +111,7 @@ void ActorFreeCamera::Update()
 			XMFLOAT3 vec = vecRight_;
 			vec.y = 0.0f;
 			EditMath::Normalize(vec, vec);
-			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vec, CAM_SPEED);
 			EditMath::Addition(pos_, pos_, vec);
 			EditMath::Addition(posAt_, posAt_, vec);
 		}
@@ -124,7 +122,7 @@ void ActorFreeCamera::Update()
 			XMFLOAT3 vec = vecRight_;
 			vec.y = 0.0f;
 			EditMath::Normalize(vec, vec);
-			EditMath::Multiplication(vec, vec, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vec, CAM_SPEED);
 			EditMath::Subtraction(pos_, pos_, vec);
 			EditMath::Subtraction(posAt_, posAt_, vec);
 		}
@@ -133,7 +131,7 @@ void ActorFreeCamera::Update()
 		if (GetKeyboardPress(DIK_E))
 		{
 			XMFLOAT3 vec;
-			EditMath::Multiplication(vec, vecUp_, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vecUp_, CAM_SPEED);
 			EditMath::Addition(pos_, pos_, vec);
 			EditMath::Addition(posAt_, posAt_, vec);
 		}
@@ -142,16 +140,16 @@ void ActorFreeCamera::Update()
 		if (GetKeyboardPress(DIK_Q))
 		{
 			XMFLOAT3 vec;
-			EditMath::Multiplication(vec, vecUp_, CAM_SPEED * processMS);
+			EditMath::Multiplication(vec, vecUp_, CAM_SPEED);
 			EditMath::Subtraction(pos_, pos_, vec);
 			EditMath::Subtraction(posAt_, posAt_, vec);
 		}
 
 		//éãì_âEà⁄ìÆ
-		if (GetKeyboardPress(DIK_RIGHT) && !GetKeyboardPress(DIK_LSHIFT))
+		if (GetKeyboardPress(DIK_RIGHT))
 		{
 			XMFLOAT4X4 mtxRotY;
-			EditMath::RotationY(mtxRotY, XMConvertToRadians(CAM_ROT_SPEED * processMS));
+			EditMath::RotationY(mtxRotY, XMConvertToRadians(CAM_ROT_SPEED));
 
 			EditMath::Transform(vecCamAt_, vecCamAt_, mtxRotY);
 			EditMath::Transform(vecFront_, vecFront_, mtxRotY);
@@ -161,10 +159,10 @@ void ActorFreeCamera::Update()
 		}
 
 		//éãì_ç∂à⁄ìÆ
-		if (GetKeyboardPress(DIK_LEFT) && !GetKeyboardPress(DIK_LSHIFT))
+		if (GetKeyboardPress(DIK_LEFT))
 		{
 			XMFLOAT4X4 mtxRotY;
-			EditMath::RotationY(mtxRotY, -XMConvertToRadians(CAM_ROT_SPEED * processMS));
+			EditMath::RotationY(mtxRotY, -XMConvertToRadians(CAM_ROT_SPEED));
 
 			EditMath::Transform(vecCamAt_, vecCamAt_, mtxRotY);
 			EditMath::Transform(vecFront_, vecFront_, mtxRotY);
@@ -177,7 +175,7 @@ void ActorFreeCamera::Update()
 		if (GetKeyboardPress(DIK_UP))
 		{
 			XMFLOAT4X4 mtxRot;
-			EditMath::RotationAxis(mtxRot, vecRight_, -XMConvertToRadians(CAM_ROT_SPEED * processMS));
+			EditMath::RotationAxis(mtxRot, vecRight_, -XMConvertToRadians(CAM_ROT_SPEED));
 			XMFLOAT3 vecDir = vecFront_;
 			vecDir.y = 0.0f;
 			EditMath::Normalize(vecDir, vecDir);
@@ -200,7 +198,7 @@ void ActorFreeCamera::Update()
 		if (GetKeyboardPress(DIK_DOWN))
 		{
 			XMFLOAT4X4 mtxRot;
-			EditMath::RotationAxis(mtxRot, vecRight_, XMConvertToRadians(CAM_ROT_SPEED * processMS));
+			EditMath::RotationAxis(mtxRot, vecRight_, XMConvertToRadians(CAM_ROT_SPEED));
 			XMFLOAT3 vecDir = vecFront_;
 			vecDir.y = 0.0f;
 			EditMath::Normalize(vecDir, vecDir);

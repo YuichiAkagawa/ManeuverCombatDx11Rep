@@ -1,7 +1,49 @@
-﻿  actor_tracking_camera.cpp
+﻿  xcontroller.cpp
+  texture.cpp
+  shader_manager.cpp
+  shader.cpp
+  scene_manager.cpp
+  scene_game02.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  scene_game01.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  sampler_state.cpp
+  renderer.cpp
+  model.cpp
+  main.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  effekseer_effect.cpp
+  actor_tracking_camera.cpp
+  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  actor_sea.cpp
+  actor_plane_radder_right.cpp
+  actor_plane_radder_left.cpp
+  actor_plane_glass_front.cpp
+  actor_plane_glass_back.cpp
+  actor_plane_flap_right.cpp
+  actor_plane_flap_left.cpp
+  コードを生成中...
+  コンパイル中...
+  actor_plane_elevator_right.cpp
+  actor_plane_elevator_left.cpp
+  actor_plane_canopy.cpp
+  actor_plane_body.cpp
+  actor_plane_aileron_right.cpp
+  actor_plane_aileron_left.cpp
+  actor_manager.cpp
+  actor_hierarchy_animation_manager.cpp
+  actor_hierarchy.cpp
+  actor_grid.cpp
   actor_free_camera.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  actor_fbx_model.cpp
+  actor_camera_selecter.cpp
+  actor_camera.cpp
+  actor_3d.cpp
+  actor.cpp
+  コードを生成中...
+  コンパイル中...
+  actor_player.cpp
   コードを生成中...
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.exe
   3DGameProject.vcxproj -> E:\Programs\ManeuverCombatDx11LocalRep\Debug\3DGameProject.pdb (Full PDB)

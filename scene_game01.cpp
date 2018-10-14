@@ -158,5 +158,5 @@ void SceneGame01::Draw()
 	actorManager_.Draw();
 
 	//エフェクト描画
-	pExp_->Draw();
+	//pExp_->Draw();
 }
